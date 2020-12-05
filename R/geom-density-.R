@@ -1,0 +1,223 @@
+#' @title A more general smoothed density estimates
+#' @name geom_density_
+#' @description Computes and draws kernel density estimate. Compared with \code{geom_density}, it is more general case,
+#' accepting `x` and `y` simultaneously. Similar to box plot or violin plot, it could set one variable as category,
+#' the other as density. If only one is provided, \code{geom_density} will be executed.
+#' @inheritParams ggplot2::geom_density
+#' @param scale.x A length 2 numerical vector. Scale the n coordinates of the points where the density is estimated.
+#' @param scale.y one of 'data', 'variable' to specify.
+#'   \tabular{ll}{ \strong{Type} \tab \strong{Description}
+#'   \cr data (default) \tab The density estimates are scaled by the whole data set
+#'   \cr variable \tab The density estimates are scaled by each variable
+#'   }
+#'   If the \code{scale.y} is "data", it is meaningful to compare the density (shape and area) across all groups; else
+#'   it is only meaningful to compare the density under each variable.
+#' @param as.mix Logical. Under each variable, if \code{as.mix = TRUE}, the sum of the density estimate area is mixed and
+#' scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
+#' the area of each group is the same, with maximum 1.
+#' @param positive If `y` is set as the density estimate, where the smoothed curved is faced to,
+#' right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?
+#' @param adjust adjust the proportional maximum height of the estimate (density, histogram, ...).
+#' @details
+#' There are four combinations of \code{scale.y} and \code{as.mix}
+#' \describe{
+#'   \item{\code{scale.y} = "variable" and \code{as.mix} = FALSE}{The density estimates area of each group under the same variable
+#'   is the same and scaled to maximum of 1.}
+#'   \item{\code{scale.y} = "variable" and \code{as.mix} = TRUE}{The density estimates area of each group under the same variable
+#'   is proportional to its own counts (over this variable).}
+#'   \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimates area of all group is scaled to maximum of 1.
+#'   The sum of the density area for each variable is proportional to the its counts (over the whole dataset).
+#'   Under each variable, the area of each group is the same.}
+#'   \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimates area of all group is scaled to maximum of 1
+#'   and the area of each group is proportional to its own count.}
+#' }
+#' @export
+#' @eval rd_orientation()
+#' @seealso \code{\link{geom_density}}, \code{\link{geom_hist_}}
+#' @examples
+#' if(require(dplyr) && require(magrittr)) {
+#'   mpg %>%
+#'     dplyr::filter(drv != "f") %>%
+#'     ggplot(mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
+#'     geom_density_(alpha = 0.1)
+#'
+#'   # density and boxplot
+#'   # set the density estimate on the left
+#'   mpg %>%
+#'     dplyr::filter(drv != "f") %>%
+#'     ggplot(mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
+#'     geom_density_(alpha = 0.1, scale.y = "data", positive = FALSE) +
+#'     geom_boxplot()
+#'
+#'   # x as density
+#'   set.seed(12345)
+#'   suppressWarnings(
+#'     diamonds %>%
+#'       dplyr::sample_n(500) %>%
+#'       ggplot(mapping = aes(x = price, y = cut, fill = color)) +
+#'       geom_density_(orientation = "x", adjust = 0.25,
+#'                     position = "stack_",
+#'                     scale.y = "variable")
+#'   )
+#'
+#'   # only `x` or `y` is provided
+#'   # that would be equivalent to call function `geom_density()`
+#'   diamonds %>%
+#'     dplyr::sample_n(500) %>%
+#'     ggplot(mapping = aes(x = price)) +
+#'     geom_density_()
+#'
+#'   # settings of `scale.y` and `as.mix`
+#'   \donttest{
+#'   ggplots <- lapply(list(
+#'                       list(scale.y = "data", as.mix = TRUE),
+#'                       list(scale.y = "data", as.mix = FALSE),
+#'                       list(scale.y = "variable", as.mix = TRUE),
+#'                       list(scale.y = "variable", as.mix = FALSE)
+#'                     ),
+#'                    function(vars) {
+#'                      scale.y <- vars[["scale.y"]]
+#'                      as.mix <- vars[["as.mix"]]
+#'                      ggplot(mpg,
+#'                             mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
+#'                        geom_density_(alpha = 0.1, scale.y = scale.y, as.mix = as.mix) +
+#'                        labs(title = paste("scale.y =", scale.y),
+#'                             subtitle = paste("as.mix =", as.mix))
+#'                    })
+#'   gridExtra::grid.arrange(grobs = ggplots)
+#'   }
+#' }
+#'
+geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
+                          position = "identity_", ...,
+                          scale.x = NULL, scale.y = c("data", "variable"),
+                          as.mix = FALSE, positive = TRUE, adjust = 0.9, na.rm = FALSE,
+                          orientation = NA, show.legend = NA, inherit.aes = TRUE) {
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomDensity_,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      as.mix = as.mix,
+      positive = positive,
+      scale.x = scale.x,
+      scale.y = match.arg(scale.y),
+      adjust = adjust,
+      na.rm = na.rm,
+      orientation = orientation,
+      ...
+    )
+  )
+}
+
+#' @inherit ggplot2::GeomDensity
+#' @export
+GeomDensity_ <- ggplot2::ggproto(
+  "GeomDensity_",
+  ggplot2::GeomRibbon,
+  setup_params = function(data, params) {
+
+    params$flipped_aes <- has_flipped_aes(data, params, range_is_orthogonal = TRUE)
+    params$as.mix <- params$as.mix %||% FALSE
+    params$positive <- params$positive %||% TRUE
+    params$scale.y <- params$scale.y %||% "data"
+    params$adjust <- params$adjust %||% 0.9
+
+    if(!is.null(params$scale.x)) {
+      if(!all(is.numeric(params$scale.x)))
+        rlang::abort(glue::glue("`scale.x` must be numerical, but it is {class(params$scale.x)}"))
+      if(length(params$scale.x) != 2)
+        rlang::abort(
+          glue::glue("`scale.x` should be a length 2 vector, but it has length {length(params$scale.x)}")
+        )
+    }
+
+    params
+  },
+  setup_data = function(data, params) {
+
+    data <- ggplot2::flip_data(data, params$flipped_aes)
+    acceptBoth <- na.omit(data$acceptBoth)[1L]
+    if(!acceptBoth) {
+      # Question: should we allow `as.mix` to participate the settings of `geom_density`?
+      if(params$as.mix) {
+        data <- data %>%
+          dplyr::group_by(group, PANEL) %>%
+          summarise(sum.n = sum(n, na.rm = TRUE))%>%
+          dplyr::ungroup() %>%
+          dplyr::transmute(group = group, PANEL = PANEL, prop = sum.n/ sum(sum.n, na.rm = TRUE)) %>%
+          dplyr::right_join(data, by = c("group", "PANEL")) %>%
+          dplyr::mutate(density = density * prop,
+                        y = y * prop,
+                        count = count * prop,
+                        scaled = scaled * prop,
+                        ndensity = ndensity * prop)
+      }
+      data <- ggplot2::flip_data(data, params$flipped_aes)
+      return(ggplot2::GeomArea$setup_data(data, params))
+    }
+
+    if(!is.null(params$scale.x)) {
+
+      data <- data %>%
+        dplyr::group_by(location) %>%
+        dplyr::mutate(x = scales::rescale(x, params$scale.x)) %>%
+        dplyr::ungroup()
+    }
+
+    # at each variable, the sum of the area is **one** instead of **one** for each group
+    if(params$as.mix) {
+
+      sum.l <- data %>%
+        dplyr::group_by(location, PANEL) %>%
+        summarise(sum.l = sum(n, na.rm = TRUE))
+
+      sum.g <- data %>%
+        dplyr::group_by(group, location, PANEL) %>%
+        summarise(sum.g = sum(n, na.rm = TRUE))
+
+      data <- sum.g %>%
+        dplyr::left_join(sum.l,
+                         by = c("location", "PANEL")) %>%
+        dplyr::ungroup() %>%
+        dplyr::transmute(location = location, group = group, PANEL = PANEL, prop = sum.g/ sum.l) %>%
+        dplyr::right_join(data, by = c("location", "group", "PANEL")) %>%
+        dplyr::mutate(density = density * prop,
+                      count = count * prop,
+                      scaled = scaled * prop,
+                      ndensity = ndensity * prop)
+    }
+
+    data$positive <- params$positive
+
+    # swap x, y and such variables to make sure that
+    # **x** is always our interest.
+    data %>%
+      compute_scales("density", params) %>%
+      dplyr::mutate(
+        ymin = 0,
+        ymax = y
+      ) %>%
+      ggplot2::flip_data(params$flipped_aes)
+  },
+
+  draw_group = function(self, data, panel_scales, coord, positive = TRUE,
+                        scale.x = NULL, scale.y = "data", as.mix = FALSE,
+                        adjust = 0.9, na.rm = FALSE) {
+
+    flipped_aes <- ggplot2::has_flipped_aes(data)
+
+    return(ggplot2::ggproto_parent(ggplot2::GeomRibbon, self)$draw_group(data,
+                                                                         panel_scales,
+                                                                         coord, na.rm = na.rm,
+                                                                         flipped_aes = flipped_aes,
+                                                                         outline.type = "both"))
+  },
+  default_aes = ggplot2::aes(fill = NA, weight = 1, colour = "black",
+                             alpha = NA, size = 0.5, linetype = 1),
+  required_aes = c("x", "y")
+)

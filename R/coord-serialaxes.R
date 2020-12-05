@@ -1,0 +1,231 @@
+#' @title Serial axes coordinates
+#' @description It is used to visualize high dimensional data set.
+#' @param axes.layout Serial axes layout, either "parallel" or "radial".
+#' @param scaling One of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.
+#' @param axes.sequence A vector with variable names that defines the axes sequence.
+#' @param positive If `y` is set as the density estimate, where the smoothed curved is faced to,
+#' right (`positive`) or left (`negative`) as vertical layout;
+#' up (`positive`) or down (`negative`) as horizontal layout?
+#' @param ... other arguments used to modify layers
+#' @details Serial axes coordinate system is different from other conventional coordinate system (Cartesian, Polar, ...).
+#' It does not have a formal transformation (i.e. in polar coordinate system, "x = rcos(theta)",
+#' "y = rsin(theta)"). In serial axes coordinate system, mapping aesthetics does not really require "x" or "y".
+#' To project a \code{geom} layer, users can customize function \code{\link{add_serialaxes_layers}}.
+#' @importFrom utils getFromNamespace globalVariables getS3method
+#' @examples
+#' # set sequence by `axes.sequence`
+#' p <- ggplot(iris) +
+#'        geom_path(alpha = 0.2) +
+#'        coord_serialaxes(axes.sequence = colnames(iris))
+#' # an 'iris' parallel coordinate plot.
+#' p
+#' # histogram layer (parallel coord)
+#' p + geom_histogram(alpha = 0.8, mapping = aes(fill = Species))
+#' # density layer
+#' p + geom_density(alpha = 0.8)
+#' # quantile layer
+#' p + geom_quantiles(alpha = 0.8, colour = "red", size = 2)
+#'
+#' # radial axes
+#' # set sequence in `mapping`
+#' ggplot(iris,
+#'        mapping = aes(
+#'          Sepal.Length = Sepal.Length,
+#'          Sepal.Width = Sepal.Width,
+#'          Petal.Length = Petal.Length,
+#'          Petal.Width = Petal.Width,
+#'          colour = Species
+#'        )) +
+#'        geom_path() +
+#'        coord_serialaxes(axes.layout = "radial")
+#'
+#' @export
+coord_serialaxes <- function(axes.layout = c("parallel", "radial"),
+                             scaling = c("variable", "observation", "data", "none"),
+                             axes.sequence = character(0L),
+                             positive = TRUE, ...) {
+
+  ggplot2::ggproto("CoordSerialaxes",
+                   ggplot2::Coord,
+                   axes.layout = match.arg(axes.layout),
+                   scaling = match.arg(scaling),
+                   axes.sequence = axes.sequence,
+                   positive = positive,
+                   ...
+  )
+}
+
+#' @export
+ggplot_build.gg <- function(plot) {
+
+  object <- plot$coordinates
+  # regular call
+  if(!inherits(object, "CoordSerialaxes")) return(ggplot_build_ggplot(plot))
+
+  plot$coordinates <- switch(
+    object$axes.layout,
+    "parallel" = {
+      plot$coordinates <- coord_cartesian(xlim = object$xlim %||% NULL,
+                                          ylim = object$ylim %||% NULL,
+                                          expand = object$expand %||% TRUE,
+                                          clip = object$clip %||% "on")
+    },
+    "radial" = {
+      plot$coordinates <- coord_radar(theta = object$theta %||% "x",
+                                      start = object$start %||% 0,
+                                      direction = object$direction %||% 1,
+                                      clip = object$clip %||% "on")
+    }, NULL
+  )
+  plot <- update_CoordSerialaxes(plot, object)
+  ggplot_build_ggplot(plot)
+}
+
+update_CoordSerialaxes <- function(p, object) {
+
+  axes <- set_default_axes_sequence(p, object)
+
+  if(length(p$layers) > 0) {
+    p <- serialaxes_layers(p, object, axes)
+  } else {
+    rlang::warn("No layers are detected. Did you forget to add the `geom_path()` object?")
+  }
+
+  flipped_aes <- has_flipped_aes_(object$orientation)
+
+  # do not set any themes for p
+  if(is_dotProduct(p)) return(p)
+
+  # set labels and themes
+  p <- p +
+    ggplot2::labs(
+      x = if(flipped_aes) "axes sequence" else NULL,
+      y = if(flipped_aes) NULL else "axes sequence"
+    ) +
+    serialaxes_themes(flipped_aes)
+
+  # it has chance to fail
+  # as the x or y is discrete
+  # (users set `mapping = aes(x = discrete var, y = XXX, ...)`,
+  #  note that a quick way to fix this is to avoid x and y,
+  #  e.g. set `mapping = aes(xx = ..., yy = ...)`)
+  # rather than fixing it, we throw a warning to users
+  # try not avoid using names `x` or `y`, give more meaningful names
+
+  if(aes_xy(p)) {
+    p
+  } else {
+    # `scale_x_continous_` and `scale_y_continous_`
+    # are customized function. Don't confuse with the
+    # `scale_x_continous` and `scale_y_continous`
+    p +
+      scale_x_continous_(
+        flipped_aes = flipped_aes,
+        labels = axes,
+        breaks = object$axes.position %||% seq(axes),
+        expand = c(0,0)
+      ) +
+      scale_y_continous_(
+        flipped_aes = flipped_aes,
+        labels = axes,
+        breaks = object$axes.position %||% seq(axes),
+        expand = c(0,0)
+      )
+  }
+}
+
+aes_xy <- function(p) {
+
+  data <- p$data
+  mapping <- p$mapping
+  # is x or y in mapping aesthetics?
+  if(any(c("x", "y") %in% names(mapping))) return(TRUE)
+  for(layer in p$layers) {
+    if(any(c("x", "y") %in% names(layer$mapping))) return(TRUE)
+  }
+
+  return(FALSE)
+}
+
+scale_x_continous_ <- function(flipped_aes = FALSE,
+                               breaks = ggplot2::waiver(),
+                               labels = ggplot2::waiver(),
+                               expand = c(0, 0),
+                               ...) {
+  if(flipped_aes) {
+    ggplot2::scale_x_continuous(
+      labels = labels,
+      breaks = breaks,
+      expand = expand,
+      ...
+    )
+  } else {
+    ggplot2::scale_x_continuous(
+      expand = expand,
+      labels = NULL,
+      ...
+    )
+  }
+}
+
+scale_y_continous_ <- function(flipped_aes = FALSE,
+                               breaks = ggplot2::waiver(),
+                               labels = ggplot2::waiver(),
+                               expand = c(0, 0),
+                               ...) {
+  if(flipped_aes) {
+    ggplot2::scale_y_continuous(
+      expand = expand,
+      labels = NULL,
+      ...
+    )
+  } else {
+    ggplot2::scale_y_continuous(
+      labels = labels,
+      breaks = breaks,
+      expand = expand,
+      ...
+    )
+  }
+}
+
+serialaxes_layers <- function(p, object, axes) {
+
+  layers <- p$layers
+  # remove all layers
+  p$layers <- list()
+
+  if(length(layers) == 0) return(p)
+
+  for(layer in layers) {
+    p <- add_serialaxes_layers(layer, p, object, axes)
+  }
+
+  return(p)
+}
+
+# themes provides some default settings to make the serialaxes look better
+serialaxes_themes <- function(flipped_aes = TRUE) {
+
+  if(flipped_aes) {
+    ggplot2::theme(
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.title.x = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      plot.margin = grid::unit(c(5,12,5,12), "mm")
+    )
+  } else {
+    ggplot2::theme(
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      axis.title.x = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      plot.margin = grid::unit(c(5,12,5,12), "mm")
+    )
+  }
+}
