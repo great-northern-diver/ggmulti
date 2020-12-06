@@ -115,7 +115,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/great-northern-diver/ggmulti">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -263,7 +268,7 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 <span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"png"</span>)) {
 
 <span class='co'># Download images from github</span>
-<span class='no'>RaptorsURL</span> <span class='kw'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/z267xu/ggmulti/master/vignettes/glyph/raptors.png"</span>
+<span class='no'>RaptorsURL</span> <span class='kw'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/great-northern-diver/ggmulti/master/vignettes/glyph/raptors.png"</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span>(<span class='no'>RaptorsURL</span>, <span class='kw'>destfile</span> <span class='kw'>=</span> <span class='st'>"Raptors.png"</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>'wb'</span>)
 <span class='no'>Raptors</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>png</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span>(<span class='st'>"Raptors.png"</span>)
 

@@ -33,7 +33,7 @@
 #' if(requireNamespace("png")) {
 #'
 #' # Download images from github
-#' RaptorsURL <- "https://raw.githubusercontent.com/z267xu/ggmulti/master/vignettes/glyph/raptors.png"
+#' RaptorsURL <- "https://raw.githubusercontent.com/great-northern-diver/ggmulti/master/vignettes/glyph/raptors.png"
 #' download.file(RaptorsURL, destfile = "Raptors.png", mode = 'wb')
 #' Raptors <- png::readPNG("Raptors.png")
 #'
