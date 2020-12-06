@@ -138,12 +138,12 @@ If character, a rule to choose the bandwidth, as listed in
 estimated, should be a power of two, see \code{\link[=density]{density()}} for
 details}
 
-\item{trim}{If \code{FALSE}, the default, each density is computed on the
-full range of the data. If \code{TRUE}, each density is computed over the
-range of that group: this typically means the estimated x values will
-not line-up, and hence you won't be able to stack density values.
-This parameter only matters if you are displaying multiple densities in
-one plot or if you are manually adjusting the scale limits.}
+\item{trim}{This parameter only matters if you are displaying multiple
+densities in one plot. If \code{FALSE}, the default, each density is
+computed on the full range of the data. If \code{TRUE}, each density
+is computed over the range of that group: this typically means the
+estimated x values will not line-up, and hence you won't be able to
+stack density values.}
 }
 \description{
 Computes and draws kernel density estimate. It does not require `x` or `y` mapping aesthetics.
