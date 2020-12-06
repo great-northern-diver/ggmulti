@@ -5,3 +5,8 @@
 .travis.yml
 .Rhistory
 _pkgdown.yml
+codecov.yml
+config.yml
+docs/*
+favicon/*
+pkgdown/*
