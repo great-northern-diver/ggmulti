@@ -4,3 +4,4 @@
 .gitignore
 .travis.yml
 .Rhistory
+_pkgdown.yml
