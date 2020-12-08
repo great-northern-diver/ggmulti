@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>A more general histogram — geom_hist_ • ggmulti</title>
+<title>More general histogram — geom_hist_ • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,13 @@
 
 
 
-<meta property="og:title" content="A more general histogram — geom_hist_" />
-<meta property="og:description" content="A more general histogram (geom_histogram) or bar plot (geom_bar).
-It can accept both `x` and `y` simultaneously. If only one is provided,
-geom_histogram or geom_bar will be executed." />
+<meta property="og:title" content="More general histogram — geom_hist_" />
+<meta property="og:description" content="More general histogram (geom_histogram()) or bar plot (geom_bar()).
+Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
+`y` (or `x`) the target variable to be plotted.
+The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
+If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+the standard geom_histogram() will be executed." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -117,12 +120,7 @@ geom_histogram or geom_bar will be executed." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -136,122 +134,125 @@ geom_histogram or geom_bar will be executed." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>A more general histogram</h1>
+    <h1>More general histogram</h1>
     
     <div class="hidden name"><code>geom_hist_.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A more general histogram (<code>geom_histogram</code>) or bar plot (<code>geom_bar</code>).
-It can accept both `x` and `y` simultaneously. If only one is provided,
-<code>geom_histogram</code> or <code>geom_bar</code> will be executed.</p>
+    <p>More general histogram (<code>geom_histogram()</code>) or bar plot (<code>geom_bar()</code>).
+Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
+`y` (or `x`) the target variable to be plotted.
+The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
+If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+the standard <code>geom_histogram()</code> will be executed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_hist_</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"hist_"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"stack_"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>scale.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data"</span>, <span class='st'>"variable"</span>),
-  <span class='kw'>as.mix</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>geom_hist_</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"hist_"</span>,
+  position <span class='op'>=</span> <span class='st'>"stack_"</span>,
+  <span class='va'>...</span>,
+  scale.x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
+  as.mix <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bins <span class='op'>=</span> <span class='cn'>NULL</span>,
+  positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  adjust <span class='op'>=</span> <span class='fl'>0.9</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>geom_histogram_</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"bin_"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"stack_"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>scale.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data"</span>, <span class='st'>"variable"</span>),
-  <span class='kw'>as.mix</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>geom_histogram_</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"bin_"</span>,
+  position <span class='op'>=</span> <span class='st'>"stack_"</span>,
+  <span class='va'>...</span>,
+  scale.x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
+  as.mix <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  adjust <span class='op'>=</span> <span class='fl'>0.9</span>,
+  binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bins <span class='op'>=</span> <span class='cn'>NULL</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>geom_bar_</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"count_"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"stack_"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>scale.x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data"</span>, <span class='st'>"variable"</span>),
-  <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>geom_bar_</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"count_"</span>,
+  position <span class='op'>=</span> <span class='st'>"stack_"</span>,
+  <span class='va'>...</span>,
+  scale.x <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
+  positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  adjust <span class='op'>=</span> <span class='fl'>0.9</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>stat_hist_</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"bar_"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"stack_"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>center</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>boundary</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>closed</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"right"</span>, <span class='st'>"left"</span>),
-  <span class='kw'>pad</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>stat_hist_</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='st'>"bar_"</span>,
+  position <span class='op'>=</span> <span class='st'>"stack_"</span>,
+  <span class='va'>...</span>,
+  binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bins <span class='op'>=</span> <span class='cn'>NULL</span>,
+  center <span class='op'>=</span> <span class='cn'>NULL</span>,
+  boundary <span class='op'>=</span> <span class='cn'>NULL</span>,
+  breaks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  closed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"right"</span>, <span class='st'>"left"</span><span class='op'>)</span>,
+  pad <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>stat_bin_</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"bar_"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"stack_"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>binwidth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>center</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>boundary</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>breaks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>closed</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"right"</span>, <span class='st'>"left"</span>),
-  <span class='kw'>pad</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>stat_bin_</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='st'>"bar_"</span>,
+  position <span class='op'>=</span> <span class='st'>"stack_"</span>,
+  <span class='va'>...</span>,
+  binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  bins <span class='op'>=</span> <span class='cn'>NULL</span>,
+  center <span class='op'>=</span> <span class='cn'>NULL</span>,
+  boundary <span class='op'>=</span> <span class='cn'>NULL</span>,
+  breaks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  closed <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"right"</span>, <span class='st'>"left"</span><span class='op'>)</span>,
+  pad <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>stat_count_</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"bar_"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"stack_"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>stat_count_</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='st'>"bar_"</span>,
+  position <span class='op'>=</span> <span class='st'>"stack_"</span>,
+  <span class='va'>...</span>,
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -375,10 +376,10 @@ stat_hist_()/stat_bin_()/stat_count_().</p></td>
 <code>boundary</code>, may be specified for a single plot. <code>center</code> specifies the
 center of one of the bins. <code>boundary</code> specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of <code>width</code>.
-For example, to center on integers use <code>width = 1</code> and <code>center = 0</code>, even
+will be shifted by the appropriate integer multiple of <code>binwidth</code>.
+For example, to center on integers use <code>binwidth = 1</code> and <code>center = 0</code>, even
 if <code>0</code> is outside the range of the data. Alternatively, this same alignment
-can be specified with <code>width = 1</code> and <code>boundary = 0.5</code>, even if <code>0.5</code> is
+can be specified with <code>binwidth = 1</code> and <code>boundary = 0.5</code>, even if <code>0.5</code> is
 outside the range of the data.</p></td>
     </tr>
     <tr>
@@ -387,10 +388,10 @@ outside the range of the data.</p></td>
 <code>boundary</code>, may be specified for a single plot. <code>center</code> specifies the
 center of one of the bins. <code>boundary</code> specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of <code>width</code>.
-For example, to center on integers use <code>width = 1</code> and <code>center = 0</code>, even
+will be shifted by the appropriate integer multiple of <code>binwidth</code>.
+For example, to center on integers use <code>binwidth = 1</code> and <code>center = 0</code>, even
 if <code>0</code> is outside the range of the data. Alternatively, this same alignment
-can be specified with <code>width = 1</code> and <code>boundary = 0.5</code>, even if <code>0.5</code> is
+can be specified with <code>binwidth = 1</code> and <code>boundary = 0.5</code>, even if <code>0.5</code> is
 outside the range of the data.</p></td>
     </tr>
     <tr>
@@ -418,9 +419,9 @@ frequency polygons touch 0. Defaults to <code>FALSE</code>.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>1. `geom_hist_` is a wrapper of `geom_histogram_` and `geom_count_`. In other words, suppose the 'y' is our interest,
-<code>geom_hist_</code> can accommodate both continuous or discrete "y" but <code>geom_histogram_</code> is only for the continuous "y" and
-<code>geom_bar_</code> is only for the discrete "y".</p>
-<p>2. There are four combinations of <code>scale.y</code> and <code>as.mix</code></p><dl'>
+<code>geom_hist_()</code> can accommodate both continuous or discrete "y" but <code>geom_histogram_()</code> is only for the continuous "y" and
+<code>geom_bar_()</code> is only for the discrete "y".</p>
+<p>2. There are four combinations of <code>scale.y</code> and <code>as.mix</code></p><dl>
   <dt><code>scale.y</code> = "variable" and <code>as.mix</code> = FALSE</dt><dd><p>The density estimates area of each group under the same variable
   is the same and scaled to maximum of 1.</p></dd>
   <dt><code>scale.y</code> = "variable" and <code>as.mix</code> = TRUE</dt><dd><p>The density estimates area of each group under the same variable
@@ -443,64 +444,61 @@ parameter `as.mix` is meaningless.</p>
     <div class='dont-index'><p><code>geom_histogram</code>, <code><a href='geom_density_.html'>geom_density_</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>dplyr</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>magrittr</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>tidyr</span>)) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span><span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
   <span class='co'># histogram</span>
-  <span class='no'>p0</span> <span class='kw'>&lt;-</span> <span class='no'>mpg</span> <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>manufacturer</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dodge"</span>, <span class='st'>"ford"</span>, <span class='st'>"toyota"</span>, <span class='st'>"volkswagen"</span>)) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>manufacturer</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>cty</span>))
-  <span class='no'>p0</span> + <span class='fu'>geom_hist_</span>()
+  <span class='va'>p0</span> <span class='op'>&lt;-</span> <span class='va'>mpg</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>manufacturer</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dodge"</span>, <span class='st'>"ford"</span>, <span class='st'>"toyota"</span>, <span class='st'>"volkswagen"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>manufacturer</span>, y <span class='op'>=</span> <span class='va'>cty</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span><span class='op'>)</span>
 
   <span class='co'>## set position</span>
   <span class='co'>#### default is "stack_"</span>
-  <span class='no'>p0</span> + <span class='fu'>geom_hist_</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>fl</span>))
+  <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='co'>#### "dodge_"</span>
-  <span class='no'>p0</span> + <span class='fu'>geom_hist_</span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"dodge_"</span>,
-                  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>fl</span>))
+  <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"dodge_"</span>,
+                  mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='co'>#### "dodge2_"</span>
-  <span class='no'>p0</span> + <span class='fu'>geom_hist_</span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"dodge2_"</span>,
-                  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>fl</span>))
+  <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"dodge2_"</span>,
+                  mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># bar chart</span>
-  <span class='no'>mpg</span> <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>drv</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>class</span>)) +
-    <span class='fu'>geom_hist_</span>(<span class='kw'>orientation</span> <span class='kw'>=</span> <span class='st'>"y"</span>)
+  <span class='va'>mpg</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>drv</span>, y <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_hist_</span><span class='op'>(</span>orientation <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
 
   <span class='co'># scale.y as "variable"</span>
-  <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span>(<span class='kw'>cols</span> <span class='kw'>=</span> -<span class='no'>Species</span>,
-                        <span class='kw'>names_to</span> <span class='kw'>=</span> <span class='st'>"Outer sterile whorls"</span>,
-                        <span class='kw'>values_to</span> <span class='kw'>=</span> <span class='st'>"x"</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>`Outer sterile whorls`</span>,
-                         <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
-    <span class='fu'>stat_hist_</span>(<span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='st'>"variable"</span>,
-               <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
-               <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-  <span class='no'>p</span>
+  <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>iris</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='op'>-</span><span class='va'>Species</span>,
+                        names_to <span class='op'>=</span> <span class='st'>"Outer sterile whorls"</span>,
+                        values_to <span class='op'>=</span> <span class='st'>"x"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Outer sterile whorls`</span>,
+                         y <span class='op'>=</span> <span class='va'>x</span>, fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>stat_hist_</span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"variable"</span>,
+               adjust <span class='op'>=</span> <span class='fl'>0.6</span>,
+               alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+  <span class='va'>p</span>
   <span class='co'># with density on the left</span>
-  <span class='no'>p</span> + <span class='fu'><a href='geom_density_.html'>stat_density_</a></span>(<span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='st'>"variable"</span>,
-                    <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
-                    <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-                    <span class='kw'>positive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='va'>p</span> <span class='op'>+</span> <span class='fu'><a href='geom_density_.html'>stat_density_</a></span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"variable"</span>,
+                    adjust <span class='op'>=</span> <span class='fl'>0.6</span>,
+                    alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
+                    positive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
   <span class='co'>########### only `x` or `y` is provided ###########</span>
   <span class='co'># that would be equivalent to call function</span>
   <span class='co'># `geom_histogram()` or `geom_bar()`</span>
   <span class='co'>### histogram</span>
-  <span class='no'>diamonds</span> <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span>(<span class='fl'>500</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>price</span>)) +
-    <span class='fu'>geom_hist_</span>()
+  <span class='va'>diamonds</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>price</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_hist_</span><span class='op'>(</span><span class='op'>)</span>
   <span class='co'>### bar chart</span>
-  <span class='no'>diamonds</span> <span class='kw'>%&gt;%</span>
-    <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span>(<span class='fl'>500</span>) <span class='kw'>%&gt;%</span>
-    <span class='fu'>ggplot</span>(<span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>cut</span>)) +
-    <span class='fu'>geom_hist_</span>()
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: tidyr</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘tidyr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:magrittr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    extract</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Computation failed in `stat_hist_()`:</span>
-#&gt; <span class='warning'>argument is of length zero</span></div><div class='img'><img src='geom_hist_-1.png' alt='' width='700' height='433' /></div></pre>
+  <span class='va'>diamonds</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>cut</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>geom_hist_</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: tidyr</span></div><div class='img'><img src='geom_hist_-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -516,7 +514,7 @@ parameter `as.mix` is meaningless.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

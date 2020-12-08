@@ -1,5 +1,5 @@
 #' @title Add image glyphs on scatter plot
-#' @description Each point glyph can be a image (png, jpeg, etc) object.
+#' @description Each point glyph can be an image (png, jpeg, etc) object.
 #' @inheritParams geom_serialaxes_glyph
 #' @param images a list of images (a raster object, bitmap image). If not provided, \code{geom_point()} will be executed.
 #' @param imagewidth Numerical; width of image
@@ -33,9 +33,10 @@
 #' if(requireNamespace("png")) {
 #'
 #' # Download images from github
-#' RaptorsURL <- "https://raw.githubusercontent.com/great-northern-diver/ggmulti/master/vignettes/glyph/raptors.png"
-#' download.file(RaptorsURL, destfile = "Raptors.png", mode = 'wb')
-#' Raptors <- png::readPNG("Raptors.png")
+#' img_path <- list.files(file.path(find.package(package = 'ggmulti'),
+#'                                  "images"),
+#'                        full.names = TRUE)
+#' Raptors <- png::readPNG(img_path[1L])
 #'
 #' p <- ggplot(data = data.frame(x = 0, y = 0),
 #'             mapping = aes(x = x, y = y)) +

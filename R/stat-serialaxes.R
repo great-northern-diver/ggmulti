@@ -107,7 +107,7 @@ stat_dotProduct <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @inherit ggplot2::Stat
+#' @rdname Stat-ggproto
 #' @export
 StatSerialaxes <- ggplot2::ggproto(
   "StatSerialaxes",
@@ -139,14 +139,15 @@ StatSerialaxes <- ggplot2::ggproto(
   }
 )
 
-#' @inherit ggplot2::Stat
+#' @rdname Stat-ggproto
 #' @export
 StatDotProduct <- ggplot2::ggproto(
   "StatDotProduct",
   StatSerialaxes,
   setup_params = function(self, data, params) {
     if(!is.null(params$axes.position)) {
-      rlang::warn("`axes.position` will be omitted automatically in dot product transformation.")
+      warning("`axes.position` will be omitted automatically in dot product transformation.",
+              call. = FALSE)
     }
     ggplot2::ggproto_parent(StatSerialaxes, self)$setup_params(data, params)
   },
@@ -158,8 +159,8 @@ StatDotProduct <- ggplot2::ggproto(
     len_s <- length(axes.sequence)
     Trans <- do.call(transform,
                      c(params,
-                       k = len_s))
-    t <- Trans$series
+                       p = len_s))
+    t <- Trans$vector
     m <- Trans$matrix
 
     len_t <- length(t)

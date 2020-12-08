@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Layers on serial axes coordinate — add_serialaxes_layers • ggmulti</title>
+<title>Layers for serial axes coordinate — add_serialaxes_layers • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Layers on serial axes coordinate — add_serialaxes_layers" />
+<meta property="og:title" content="Layers for serial axes coordinate — add_serialaxes_layers" />
 <meta property="og:description" content="Project the regular geom layers onto the serial axes coordinate." />
 <meta property="og:image" content="/logo.png" />
 
@@ -115,12 +115,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -134,7 +129,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Layers on serial axes coordinate</h1>
+    <h1>Layers for serial axes coordinate</h1>
     
     <div class="hidden name"><code>add_serialaxes_layers.Rd</code></div>
     </div>
@@ -143,7 +138,7 @@
     <p>Project the regular <code>geom</code> layers onto the serial axes coordinate.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_serialaxes_layers</span>(<span class='no'>layer</span>, <span class='no'>plot</span>, <span class='no'>object</span>, <span class='no'>axes</span>)</pre>
+    <pre class="usage"><span class='fu'>add_serialaxes_layers</span><span class='op'>(</span><span class='va'>layer</span>, <span class='va'>plot</span>, <span class='va'>object</span>, <span class='va'>axes</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +161,13 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The class is determined by layers you add. For example, you want to add a boxplot layer
+on serial axes coordinate.
+By the ggplot syntax, it should be <code>ggplot(data, mapping) + geom_boxplot() + coord_serialaxes()</code>
+To make it work, object <code>add_serialaxes_layers.GeomBoxplot</code> must be created. In this function,
+some computations will be applied.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -182,7 +184,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

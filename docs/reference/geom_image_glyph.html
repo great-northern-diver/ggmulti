@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Add image glyphs on scatter plot — geom_image_glyph" />
-<meta property="og:description" content="Each point glyph can be a image (png, jpeg, etc) object." />
+<meta property="og:description" content="Each point glyph can be an image (png, jpeg, etc) object." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -115,12 +115,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -140,23 +135,23 @@
     </div>
 
     <div class="ref-description">
-    <p>Each point glyph can be a image (png, jpeg, etc) object.</p>
+    <p>Each point glyph can be an image (png, jpeg, etc) object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_image_glyph</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='no'>images</span>,
-  <span class='kw'>imagewidth</span> <span class='kw'>=</span> <span class='fl'>1.2</span>,
-  <span class='kw'>imageheight</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>units</span> <span class='kw'>=</span> <span class='st'>"cm"</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>geom_image_glyph</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"identity"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  <span class='va'>images</span>,
+  imagewidth <span class='op'>=</span> <span class='fl'>1.2</span>,
+  imageheight <span class='op'>=</span> <span class='fl'>0.9</span>,
+  units <span class='op'>=</span> <span class='st'>"cm"</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -265,22 +260,24 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># image glyph</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"png"</span>)) {
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"png"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='co'># Download images from github</span>
-<span class='no'>RaptorsURL</span> <span class='kw'>&lt;-</span> <span class='st'>"https://raw.githubusercontent.com/great-northern-diver/ggmulti/master/vignettes/glyph/raptors.png"</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span>(<span class='no'>RaptorsURL</span>, <span class='kw'>destfile</span> <span class='kw'>=</span> <span class='st'>"Raptors.png"</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>'wb'</span>)
-<span class='no'>Raptors</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>png</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span>(<span class='st'>"Raptors.png"</span>)
+<span class='va'>img_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'ggmulti'</span><span class='op'>)</span>,
+                                 <span class='st'>"images"</span><span class='op'>)</span>,
+                       full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>Raptors</span> <span class='op'>&lt;-</span> <span class='fu'>png</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span><span class='op'>(</span><span class='va'>img_path</span><span class='op'>[</span><span class='fl'>1L</span><span class='op'>]</span><span class='op'>)</span>
 
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>0</span>),
-            <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>y</span>)) +
-       <span class='fu'>geom_image_glyph</span>(<span class='kw'>images</span> <span class='kw'>=</span> <span class='no'>Raptors</span>,
-                        <span class='kw'>units</span> <span class='kw'>=</span> <span class='st'>"native"</span>,
-                        <span class='kw'>imagewidth</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-                        <span class='kw'>imageheight</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>p</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
+            mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+       <span class='fu'>geom_image_glyph</span><span class='op'>(</span>images <span class='op'>=</span> <span class='va'>Raptors</span>,
+                        units <span class='op'>=</span> <span class='st'>"native"</span>,
+                        imagewidth <span class='op'>=</span> <span class='fl'>1</span>,
+                        imageheight <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>p</span>
 
-}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: png</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: png</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -297,7 +294,7 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

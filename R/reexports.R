@@ -1,9 +1,6 @@
 #' @export
 ggplot2::aes
 
-#' @export
-magrittr::`%>%`
-
 # #' @export
 # #' @inherit ggplot2::geom_freqpoly
 # geom_freqpoly <- function (mapping = NULL, data = NULL, stat = "bin", position = "identity",

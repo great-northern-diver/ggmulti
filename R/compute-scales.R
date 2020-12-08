@@ -1,4 +1,4 @@
-#' @import dplyr scales
+#' @import dplyr
 compute_scales <- function(data, obj, params, ...) {
   class(obj) <- obj
   UseMethod("compute_scales", obj)
@@ -48,7 +48,7 @@ compute_scales.density <- function(data, obj, params) {
            data %>%
              dplyr::group_by(PANEL, group) %>%
              dplyr::mutate(
-               y = scales::rescale(density, c(0, 1))
+               y = rescale(density, c(0, 1))
              )
          },
          "none" = { # deprecated
@@ -102,7 +102,7 @@ compute_scales.histogram <- function(data, obj, params) {
          },
          "group" = { # deprecated
 
-           rlang::abort("`group` is aborted in `geom_hist_`")
+           stop("`group` is aborted in `geom_hist_`", call. = FALSE)
          },
          "none" = { # deprecated
            data

@@ -34,7 +34,13 @@ stat_density_ <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @inherit ggplot2::StatDensity
+#' @title Base Stat ggproto classes for ggplot2
+#' @name Stat-ggproto
+#' @description All \code{stat_} functions (like \code{stat_bin()})
+#' return a layer that contains a \code{Stat} object (like \code{StatBin}).
+#' The  \code{Stat} object is responsible for rendering the data in the plot.
+#' Each of the \code{Stat} objects is a \code{ggproto} object,
+#' descended from the top-level \code{Stat}, and each implements various methods and fields.
 #' @export
 StatDensity_ <- ggplot2::ggproto("StatDensity_",
                                  ggplot2::StatDensity,

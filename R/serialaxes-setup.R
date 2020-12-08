@@ -6,10 +6,12 @@ serialaxes_setup_params <- function(data, params) {
   axes.position <- char2null(params$axes.position) %||% seq(axes.sequence)
 
   if(length(axes.position) != length(axes.sequence)) {
-    rlang::warn(
-      glue::glue(
-        "The length of `axes.position` is {length(axes.position)}, which does not match the length of `axes.sequence` {length(axes.sequence)}"
-      )
+    warning(
+      "The length of `axes.position` is ",
+      length(axes.position),
+      " which does not match the length of `axes.sequence` ",
+      length(axes.sequence),
+      call. = FALSE
     )
 
     axes.position <- seq(axes.sequence)
@@ -30,12 +32,11 @@ serialaxes_setup_data <- function(data, params, setGroup = TRUE, as.data.frame =
   sequence <- names(params$axes.sequence) %||% params$axes.sequence
 
   if(any(sequence %in% c('x', 'y'))) {
-    rlang::warn(
-      glue::glue("The names for aesthetics 'x' and 'y' are meaningless in the serialaxes coordinate. Please consider to use more meaningful names?")
-    )
+    warning("The names for aesthetics 'x' and 'y' are meaningless in the serialaxes coordinate. ",
+            "Please consider to use more meaningful names?")
   }
 
-  d <- data %>%
+  d1 <- data %>%
     get_scaledData(sequence = sequence,
                    scaling = params$scaling,
                    reserve = TRUE,
@@ -44,13 +45,25 @@ serialaxes_setup_data <- function(data, params, setGroup = TRUE, as.data.frame =
     tidyr::pivot_longer(cols = dplyr::all_of(make.names(sequence, unique = TRUE)),
                         names_to = "names",
                         values_to = ggplot2::flipped_names(params$flipped_aes)$x) %>%
-    dplyr::mutate(!!ggplot2::flipped_names(params$flipped_aes)$y := rep(params$axes.position, n),
-                  flipped_aes = params$flipped_aes) %>%
     dplyr::select(-names)
 
+  ### Remove dependency `rlang`
+  ### manipulations would not be able to accomplish in one pipe
+  # dplyr::mutate(!!ggplot2::flipped_names(params$flipped_aes)$y := rep(params$axes.position, n),
+  #               flipped_aes = params$flipped_aes)
+  d2 <- stats::setNames(
+    data.frame(
+      rep(params$axes.position, n),
+      params$flipped_aes
+    ),
+    nm = c(ggplot2::flipped_names(params$flipped_aes)$y,
+           "flipped_aes")
+  )
+
+  d <- cbind(d1, d2)
+
   if(setGroup) {
-    d <- d %>%
-      setup_group(params)
+    d <- setup_group(d, params)
   }
 
   if(as.data.frame) {

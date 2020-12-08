@@ -62,7 +62,6 @@ y_hexagon <-
   c(0.446917314894843, 0.894194756554307, 0.446917314894843,
     -0.447637568424085, -0.892754249495822, -0.447637568424085)
 
-
 airplane <- function(boxxrange = c(-1, 1), boxyrange = c(-1, 1)) {
 
   airplane_coords <- c(30.8,0.5,57.4,27.1,85.6,16.5,89.9,17,78.7,30.9,183.5,27.7,
@@ -98,11 +97,21 @@ scale_in_box <- function(x, y,
   else
     boxxrange <- boxxrange * xyprop
 
+  rescale <- function(x, range) {
+
+    minx <- min(x, na.rm = TRUE)
+    maxx <- max(x, na.rm = TRUE)
+    range <- sort(range)
+
+    (x - minx)/(maxx - minx) * diff(range) + range[1L]
+  }
+
   list(
-    x = scales::rescale(x, boxxrange),
-    y = scales::rescale(y, boxyrange)
+    x = rescale(x, boxxrange),
+    y = rescale(y, boxyrange)
   )
 }
+
 
 #' @rdname polygon_glyph
 #' @export

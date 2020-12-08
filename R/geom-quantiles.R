@@ -1,7 +1,7 @@
-#' @title Quantile layer for serial axes
-#' @description In \code{ggplot2}, \code{geom_quantile} is used to fit a quantile regression to the data and draws
-#' the fitted quantiles with lines. However, \code{geom_quantiles} is mainly used to draw quantile lines
-#' for serial axes.
+#' @title Add quantile layers on serial axes coordinate
+#' @description In \code{ggplot2}, \code{geom_quantile()} is used to fit a quantile regression to the data and draws
+#' the fitted quantiles with lines. However, \code{geom_quantiles()} is mainly used to draw quantile lines
+#' on serial axes. See examples
 #' @inheritParams ggplot2::geom_quantile
 #' @export
 #' @seealso \code{\link{geom_serialaxes_quantile}}
@@ -33,7 +33,7 @@ geom_quantiles <- function (mapping = NULL, data = NULL, stat = "quantile",
   )
 }
 
-#' @inherit ggplot2::GeomQuantile
+#' @rdname Geom-ggproto
 #' @export
 GeomQuantiles <- ggplot2::ggproto(
   "GeomQuantiles",

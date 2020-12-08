@@ -76,7 +76,8 @@ loon_get_scaledData <-  function(data,
     sequence <- make.names(sequence)
 
     if(!all(sequence %in% col_name)) {
-      rlang::warn("unknown variable names in sequence")
+      warning("unknown variable names in sequence",
+              call. = FALSE)
       sequence <- intersect(sequence, col_name)
     }
     data <-  data[, sequence]
@@ -108,12 +109,14 @@ loon_get_scaledData <-  function(data,
                 })
   # give warning once
   if(is_char || is_factor || is_logical)
-    rlang::warn("No numerical columns exist")
+    warning("No numerical columns exist",
+            call. = FALSE)
 
   if(length(displayOrder) == 1) {
     dat <- setNames(as.data.frame(matrix(dat, nrow = 1)), names(dat))
     if(scaling == "variable") {
-      rlang::warn("Only one observation in serialAxesData, 'scaling' will be set as 'data' by default")
+      warning("Only one observation in serialAxesData, 'scaling' will be set as 'data' by default",
+              call. = FALSE)
       scaling <- 'data'
     }
   }

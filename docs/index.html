@@ -72,14 +72,7 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -92,13 +85,13 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div id="ggmulti-" class="section level1">
-
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#ggmulti-" class="anchor"></a>ggmulti <img src="reference/figures/logo.png" align="right" width="120">
+</h1></div>
 
 <p>It provides materials (i.e. serialaxes objects) to visualize high dimensional data in <code>ggplot</code>.</p>
-<p><code>ggmulti</code> can be achieved directly from github repo</p>
+<p>The developped version of <code>ggmulti</code> can be achieved directly from github repo</p>
 <pre><code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("https://github.com/z267xu/ggmulti")</a></code></pre>
-<p>Launch R, then install the required package dependencies</p>
-<pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("ggplot2")</a></code></pre>
 <p>Documents: <a href="https://z267xu.github.io/ggmulti/" class="uri">https://z267xu.github.io/ggmulti/</a></p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -113,7 +106,7 @@
 <h3 class="hasAnchor">
 <a href="#serialaxes-coordinate" class="anchor"></a>Serialaxes Coordinate</h3>
 <p>Parallel coordinate</p>
-<pre><code><a href="https://rdrr.io/pkg/ggmulti/man">library(ggmulti)
+<pre><code><a href="https://rdrr.io/r/base/library.html">library(ggmulti)
 p &lt;- ggplot(iris, 
             mapping = aes(Sepal.Length = Sepal.Length,
                           Sepal.Width = Sepal.Width,
@@ -226,7 +219,7 @@ ggplot(data = data.frame(x = c(1,2,1.5,2,1), y = c(1,1,1.5,2,2)),
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

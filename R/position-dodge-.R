@@ -1,9 +1,9 @@
 #' @name position_dodge_
 #' @description Dodging preserves the vertical position of an geom while adjusting the horizontal position.
-#' \code{position_dodge_} dodges bars side by side but conditional on locations.
+#' \code{position_dodge_()} dodges bars side by side but conditional on locations.
 #' @inherit ggplot2::position_dodge
 #' @details It is built based on \code{\link{position_dodge}}, but used for multiple locations, such as
-#' \code{\link{geom_hist_}} or \code{\link{geom_density_}}. Check examples to see the difference.
+#' \code{geom_hist_()} or \code{geom_density_()}. Check examples to see the difference.
 #' @seealso
 #' See \code{\link{geom_hist_}} and \code{\link{geom_serialaxes_hist}} for more examples.
 #'
@@ -15,6 +15,7 @@
 #'
 #' @export
 #' @examples
+#' if(require(dplyr)) {
 #' p <- iris %>%
 #'   tidyr::pivot_longer(cols = -Species,
 #'                       names_to = "Outer sterile whorls",
@@ -25,6 +26,7 @@
 #'                        fill = Species))
 #'
 #' p + geom_hist_(position = position_dodge_())
+#' }
 #'
 #' \donttest{
 #' # all bins are shifted on the left
@@ -40,7 +42,17 @@ position_dodge_ <- function(width = NULL, preserve = c("total", "single")) {
   )
 }
 
-#' @inherit ggplot2::PositionDodge
+#' @title Base Position ggproto classes for ggplot2
+#' @name Position-ggproto
+#' @description All \code{position_} functions (like \code{position_dodge})
+#' return a \code{Position} object (like \code{PositionDodge}).
+#' The \code{Position} object is responsible for adjusting the position of overlapping geoms.
+#' The way that the \code{position_} functions work is slightly different from the
+#' \code{geom_} and \code{stat_} functions, because a \code{position_} function
+#' actually "instantiates" the \code{Position} object by creating a descendant,
+#' and returns that.
+#' Each of the \code{Position} objects is a \code{ggproto} object,
+#' descended from the top-level \code{Position}.
 #' @export
 PositionDodge_ <- ggplot2::ggproto("PositionDodge_", ggplot2::PositionDodge,
 
@@ -74,7 +86,7 @@ position_dodge2_ <- function(width = NULL, preserve = c("total", "single"),
   )
 }
 
-#' @inherit ggplot2::PositionDodge2
+#' @rdname Position-ggproto
 #' @export
 PositionDodge2_ <- ggproto("PositionDodge2_", ggplot2::PositionDodge2,
 

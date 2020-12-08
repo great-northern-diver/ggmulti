@@ -1,6 +1,5 @@
 #' @rdname geom_hist_
 #' @inheritParams ggplot2::stat_bin
-#' @importFrom glue glue
 #' @export
 stat_hist_ <- function(mapping = NULL, data = NULL, geom = "bar_",
                        position = "stack_",
@@ -99,7 +98,7 @@ stat_count_ <- function(mapping = NULL, data = NULL, geom = "bar_",
   )
 }
 
-#' @inherit ggplot2::StatBin
+#' @rdname Stat-ggproto
 #' @export
 StatHist_ <- ggplot2::ggproto("StatHist_",
                               ggplot2::StatBin,
@@ -110,7 +109,8 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                 has_y <- !(is.null(data$y) && is.null(params$y))
 
                                 if (!has_x && !has_y) {
-                                  rlang::abort("stat_bin() requires an x or y aesthetic.")
+                                  stop("stat_bin() requires an x or y aesthetic.",
+                                       call. = FALSE)
                                 }
 
                                 params$flipped_aes <- ggplot2::has_flipped_aes(data, params, main_is_continuous = TRUE)
@@ -147,16 +147,19 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                 if(is.integer(data[[x]])) return(params)
 
                                 if (!is.null(params$drop)) {
-                                  rlang::warn("`drop` is deprecated. Please use `pad` instead.")
+                                  warning("`drop` is deprecated. Please use `pad` instead.",
+                                          call. = FALSE)
                                   params$drop <- NULL
                                 }
                                 if (!is.null(params$origin)) {
-                                  rlang::warn("`origin` is deprecated. Please use `boundary` instead.")
+                                  warning("`origin` is deprecated. Please use `boundary` instead.",
+                                          call. = FALSE)
                                   params$boundary <- params$origin
                                   params$origin <- NULL
                                 }
                                 if (!is.null(params$boundary) && !is.null(params$center)) {
-                                  rlang::abort("Only one of `boundary` and `center` may be specified.")
+                                  stop("Only one of `boundary` and `center` may be specified.",
+                                       call. = FALSE)
                                 }
 
                                 if (is.null(params$breaks) && is.null(params$binwidth) && is.null(params$bins)) {
@@ -223,7 +226,7 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                               }
 )
 
-#' @inherit ggplot2::StatBin
+#' @rdname Stat-ggproto
 #' @export
 StatBin_ <- ggplot2::ggproto("StatBin_",
                              StatHist_,
@@ -239,14 +242,19 @@ StatBin_ <- ggplot2::ggproto("StatBin_",
                                flipped_aes <- ggplot2::has_flipped_aes(data, params, main_is_continuous = TRUE)
                                x <- ggplot2::flipped_names(flipped_aes)$x
                                if (is.integer(data[[x]])) {
-                                 rlang::abort(glue::glue("StatBin_ requires a continuous {x} variable: the {x} variable is discrete.",
-                                                         "Perhaps you want stat=\"count_\"?"))
+                                 stop("StatBin_ requires a continuous ",
+                                      x,
+                                      " variable: the ",
+                                      x,
+                                      " variable is discrete. ",
+                                      "Perhaps you want stat=\"count_\"?",
+                                      call. = FALSE)
                                }
                                ggplot2::ggproto_parent(StatHist_, self)$setup_params(data, params)
                              }
 )
 
-#' @inherit ggplot2::StatBin
+#' @rdname Stat-ggproto
 #' @export
 StatCount_ <- ggplot2::ggproto("StatCount_",
                                StatHist_,

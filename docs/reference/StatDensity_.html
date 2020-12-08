@@ -117,12 +117,7 @@ ggplot2::Position, or ggplot2::Scale." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -147,7 +142,7 @@ you'll need to extend from <code><a href='https://ggplot2.tidyverse.org/referenc
 <code><a href='https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html'>ggplot2::Position</a></code>, or <code><a href='https://ggplot2.tidyverse.org/reference/ggplot2-ggproto.html'>ggplot2::Scale</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='no'>StatDensity_</span></pre>
+    <pre class="usage"><span class='va'>StatDensity_</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -168,7 +163,7 @@ fields.</p>
 <p>Compared to <code>Stat</code> and <code>Position</code>, <code>Geom</code> is a little
 different because the execution of the setup and compute functions is
 split up. <code>setup_data</code> runs before position adjustments, and
-<code>draw_layer</code> is not run until render time, much later. This
+<code>draw_layer()</code> is not run until render time, much later. This
 means there is no <code>setup_params</code> because it's hard to communicate
 the changes.</p>
 <p>To create a new type of Geom object, you typically will want to
@@ -435,7 +430,7 @@ a vector of (possibly) new values.</p></li>
 <li><p><code>reset()</code> Reset the <code>self$range</code> of observed data values. For discrete
 position scales, only the continuous range is reset.</p></li>
 <li><p><code>map()</code> Map transformed data values to some output value as
-determined by <code>self$rescale()</code> and <code>self$pallete</code> (except for position scales,
+determined by <code>self$rescale()</code> and <code>self$palette</code> (except for position scales,
 which do not use the default implementation of this method). The output corresponds
 to the transformed data value in aesthetic space (e.g., a color, line width, or size).</p></li>
 <li><p><code>rescale()</code> Rescale transformed data to the the range 0, 1. This is most useful for
@@ -504,7 +499,7 @@ when the <code>Layout</code> calculates the x and y labels.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

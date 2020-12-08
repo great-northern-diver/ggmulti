@@ -5,16 +5,10 @@
 
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
 
-`ggmulti` can be achieved directly from github repo
+The developped version of `ggmulti` can be achieved directly from github repo
 
 ```
 remotes::install_github("https://github.com/z267xu/ggmulti")
-```
-
-Launch R, then install the required package dependencies
-
-```
-install.packages("ggplot2")
 ```
 
 Documents: https://z267xu.github.io/ggmulti/

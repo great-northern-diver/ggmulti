@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Andrews plot — dot_product • ggmulti</title>
+<title>Transformation Coefficients — dot_product • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="Andrews plot — dot_product" />
-<meta property="og:description" content="An Andrews plot or Andrews curve is a way to visualize structure in high-dimensional data
-by defining a finite Fourier series.
-Legendre polynomials are a system of complete and orthogonal polynomials." />
+<meta property="og:title" content="Transformation Coefficients — dot_product" />
+<meta property="og:description" content="The dimension of the original data set is n\*p. It can be projected
+onto a n\*k space. The functions below are to provide such transformations, e.g.
+the Andrews coefficient (a Fourier transformation) and the Legendre polynomials." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -117,12 +117,7 @@ Legendre polynomials are a system of complete and orthogonal polynomials." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -136,31 +131,31 @@ Legendre polynomials are a system of complete and orthogonal polynomials." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Andrews plot</h1>
+    <h1>Transformation Coefficients</h1>
     
     <div class="hidden name"><code>dot_product.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>An Andrews plot or Andrews curve is a way to visualize structure in high-dimensional data
-by defining a finite Fourier series.</p>
-<p>Legendre polynomials are a system of complete and orthogonal polynomials.</p>
+    <p>The dimension of the original data set is <code>n\*p</code>. It can be projected
+onto a <code>n\*k</code> space. The functions below are to provide such transformations, e.g.
+the <code>Andrews coefficient</code> (a Fourier transformation) and the <code>Legendre</code> polynomials.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>andrews</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>50</span> * (<span class='no'>k</span> - <span class='fl'>1</span>), <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>andrews</span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>4</span>, k <span class='op'>=</span> <span class='fl'>50</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>p</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>legendre</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>length.out</span> <span class='kw'>=</span> <span class='fl'>50</span> * (<span class='no'>k</span> - <span class='fl'>1</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>legendre</span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>4</span>, k <span class='op'>=</span> <span class='fl'>50</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>p</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>k</th>
+      <th>p</th>
       <td><p>The number of dimensions</p></td>
     </tr>
     <tr>
-      <th>length.out</th>
-      <td><p>The series length</p></td>
+      <th>k</th>
+      <td><p>The sequence length</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -170,18 +165,11 @@ by defining a finite Fourier series.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list contains two contents</p><ol>
-<li><p>A series</p></li>
-<li><p>Transformed matrix</p></li>
+    <p>A list contains two named components</p><ol>
+<li><p>vector: A length <code>k</code> vector (define the domain)</p></li>
+<li><p>matrix: A <code>p\*k</code> transformed coefficient matrix</p></li>
 </ol>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>In Andrews transformation, we project the data point onto the following k dimensional Fourier series,
-(<b>1/sqrt(2)</b>^T, sin(<b>t</b>^T), cos(<b>t</b>^T), sin(<b>2t</b>^T), cos(<b>2t</b>^T), ...)^T</p>
-<p>P_n(<b>x</b>) is polynomial of degreen n. Legendre polynomials are a list of polynomials match that</p>
-<p>integral_-1^1 P_n(<b>x</b>)P_m(<b>x</b>) dx = 0</p>
-<p>where n is not equal to m</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Andrews, David F. "Plots of high-dimensional data." <em>Biometrics</em> (1972): 125-136.</p>
@@ -189,6 +177,17 @@ by defining a finite Fourier series.</p>
 <em>Handbook of mathematical functions with formulas, graphs, and mathematical tables</em>.
 Vol. 55. US Government printing office, 1948.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>andrews</span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span>
+<span class='va'>proj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>matrix</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/matplot.html'>matplot</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>vector</span>, <span class='va'>proj</span>,
+        type <span class='op'>=</span> <span class='st'>"l"</span>, lty <span class='op'>=</span> <span class='fl'>1</span>,
+        col <span class='op'>=</span> <span class='st'>"black"</span>,
+        xlab <span class='op'>=</span> <span class='st'>"x"</span>,
+        ylab <span class='op'>=</span> <span class='st'>"Andrews coefficients"</span>,
+        main <span class='op'>=</span> <span class='st'>"Iris"</span><span class='op'>)</span>
+</div><div class='img'><img src='dot_product-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -204,7 +203,7 @@ Vol. 55. US Government printing office, 1948.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
