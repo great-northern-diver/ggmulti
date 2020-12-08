@@ -1,5 +1,4 @@
 context("test geoms")
-library(magrittr)
 library(tidyverse)
 library(ggmulti)
 library(ggplot2movies)
