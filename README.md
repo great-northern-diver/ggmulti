@@ -1,6 +1,6 @@
 # ggmulti  <img src="man/figures/logo.png" align="right" width="120" />
 
-[![Build Status](https://travis-ci.com/z267xu/ggmulti.svg?branch=master)](https://travis-ci.com/z267xu/ggmulti)
+[![Build Status](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)
 [![Codecov test coverage](https://codecov.io/gh/z267xu/ggmulti/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/ggmulti?branch=master)
 
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
