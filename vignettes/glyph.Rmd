@@ -83,7 +83,6 @@ path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
 
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
-library(magrittr, quietly = TRUE)
 ```
 
 Package `ggmulti` also provides some "glyph" layers to help visualize high dimensional dataset [@loon].
@@ -141,14 +140,11 @@ We can also load image files (png, jpeg, etc) and set each image as a point glyp
 
 ```{r download images, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
 library(png)
-# Download images from github
-WarriorsURL <- "https://raw.githubusercontent.com/z267xu/ggmulti/master/vignettes/glyph/warriors.png"
-download.file(WarriorsURL, destfile = "Warriors.png", mode = 'wb')
-Warriors <- png::readPNG("Warriors.png")
-
-RaptorsURL <- "https://raw.githubusercontent.com/z267xu/ggmulti/master/vignettes/glyph/raptors.png"
-download.file(RaptorsURL, destfile = "Raptors.png", mode = 'wb')
-Raptors <- png::readPNG("Raptors.png")
+img_path <- list.files(file.path(find.package(package = 'ggmulti'),
+                                 "images"),
+                       full.names = TRUE)
+Raptors <- png::readPNG(img_path[1L])
+Warriors <- png::readPNG(img_path[2L])
 ```
 
 ```{r image glyph NBA 2020, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
@@ -187,11 +183,13 @@ US +
                    images = Warriors,
                    imagewidth = 1, 
                    imageheight = 1, 
+                   colour = NA,
                    size = 3) + 
   geom_image_glyph(data = Toronto,
                    mapping = aes(x = lon, y = lat), 
                    imagewidth = 1, 
                    imageheight = 1, 
+                   colour = NA,
                    size = 3,
                    images = Raptors) + 
   ggtitle("2019 NBA Finals")

@@ -83,7 +83,6 @@ path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
 
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
-library(magrittr, quietly = TRUE)
 ```
 
 ## Serialaxes coordinate
@@ -109,7 +108,12 @@ Suppose we are interested in the data set `iris`. A parallel coordinate chart ca
 library(ggmulti)
 # parallel axes plot
 ggplot(iris, 
-       mapping = aes(colour = factor(Species))) +
+       mapping = aes(
+         Sepal.Length = Sepal.Length,
+         Sepal.Width = Sepal.Width,
+         Petal.Length = Petal.Length,
+         Petal.Width = Petal.Width,
+         colour = factor(Species))) +
   geom_path(alpha = 0.2)  + 
   coord_serialaxes() -> p
 p
@@ -207,7 +211,7 @@ include_graphics(path_concat(imageDirectory, "andrews_quantile.png"))
 
 A couple of things should be noticed:
 
-- mapping aesthetics is used to define the $k$ dimensional space, if not provided, all columns in the dataset 'iris' will be transformed. An alternative way to determine the $k$ dimensional space to set parameter `axes.sequence` in each layer or in `coord_serialaxes`.
+- mapping aesthetics is used to define the $p$ dimensional space, if not provided, all columns in the dataset 'iris' will be transformed. An alternative way to determine the $p$ dimensional space to set parameter `axes.sequence` in each layer or in `coord_serialaxes`.
 
 - To construct a dot product serial axes plot, say Fourier transformation, "Andrew's plot", we need to set the parameter `stat` in `geom_path` to "dotProduct". The default transformation function is the Andrew's (function `andrews`). Users can customize their own, for example, Tukey suggests the following projected space 
 
@@ -216,9 +220,9 @@ A couple of things should be noticed:
   where $t \in [0, k\pi]$ [@gnanadesikan2011methods]. 
   
     ```{r tukey, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
-    tukey <- function(k = 4, length.out = 50 * (k - 1), ...) {
-      t <- seq(0, k* base::pi, length.out = length.out)
-      seq_k <- seq(k)
+    tukey <- function(p = 4, k = 50 * (p - 1), ...) {
+      t <- seq(0, p* base::pi, length.out = k)
+      seq_k <- seq(p)
       values <- sapply(seq_k,
                        function(i) {
                          if(i == 1) return(cos(t))
@@ -227,8 +231,8 @@ A couple of things should be noticed:
                          cos(sqrt(Fibonacci) * t)
                        })
       list(
-        series = t,
-        matrix = matrix(values, nrow = k, byrow = TRUE)
+        vector = t,
+        matrix = matrix(values, nrow = p, byrow = TRUE)
       )
     }
     ggplot(iris, 
@@ -261,14 +265,21 @@ g <- ggplot(iris,
                           Sepal.Width = Sepal.Width,
                           Petal.Length = Petal.Length,
                           Petal.Width = Petal.Width,
-                          Species = Species,
                           colour = Species))
 g + geom_serialaxes(alpha = 0.2)
-g + geom_serialaxes_hist(mapping = aes(fill = Species), alpha = 0.2)
-g + geom_serialaxes_density(mapping = aes(fill = Species), alpha = 0.2)
+g + 
+  geom_serialaxes(alpha = 0.2) + 
+  geom_serialaxes_hist(mapping = aes(fill = Species), alpha = 0.2)
+g + 
+  geom_serialaxes(alpha = 0.2) + 
+  geom_serialaxes_density(mapping = aes(fill = Species), alpha = 0.2)
 # radial axes can be created by 
 # calling `coord_radar()` or `coord_polar(is_linear = TRUE)`
-g + geom_serialaxes(alpha = 0.2) + coord_radar()
+# this is slightly different, check it out! 
+g + 
+  geom_serialaxes(alpha = 0.2) + 
+  geom_serialaxes(alpha = 0.2) + 
+  coord_radar()
 ```
 
 Figure 5 and 7 can be created by setting "stat" and "transform" in `geom_serialaxes`; to Figure 6, `geom_serialaxes_quantile` can be added to create a serial axes quantile layer.
