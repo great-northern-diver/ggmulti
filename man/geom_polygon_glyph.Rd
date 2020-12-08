@@ -77,7 +77,8 @@ a \code{geom} layer
 }
 \description{
 Each point glyph can be a polygon object.
-Available polygons coords can be achieved in \code{\link{polygon_glyph}}
+We provide some common polygon coords in \code{\link{polygon_glyph}}. Also, users can
+customize their own polygons.
 }
 \section{Aesthetics}{
 

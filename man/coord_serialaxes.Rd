@@ -26,13 +26,19 @@ up (`positive`) or down (`negative`) as horizontal layout?}
 \item{...}{other arguments used to modify layers}
 }
 \description{
-It is used to visualize high dimensional data set.
+It is mainly used to visualize the high dimensional data set
+either on the parallel coordinate or the radial coordinate.
 }
 \details{
-Serial axes coordinate system is different from other conventional coordinate system (Cartesian, Polar, ...).
-It does not have a formal transformation (i.e. in polar coordinate system, "x = rcos(theta)",
-"y = rsin(theta)"). In serial axes coordinate system, mapping aesthetics does not really require "x" or "y".
-To project a \code{geom} layer, users can customize function \code{\link{add_serialaxes_layers}}.
+Serial axes coordinate system (parallel or radial) is different from the
+Cartesian coordinate system or its transformed system (say \code{polar} in \code{ggplot2})
+since it does not have a formal transformation
+(i.e. in polar coordinate system, "x = rcos(theta)", "y = rsin(theta)").
+In serial axes coordinate system, mapping aesthetics does not really require "x" or "y". Any "non-aesthetics"
+components passed in the `mapping` system will be treated as an individual axis.
+
+To project a common \code{geom} layer on such serialaxes,
+users can customize function \code{\link{add_serialaxes_layers}}.
 }
 \examples{
 # set sequence by `axes.sequence`

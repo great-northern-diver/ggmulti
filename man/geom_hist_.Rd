@@ -7,7 +7,7 @@
 \alias{stat_hist_}
 \alias{stat_bin_}
 \alias{stat_count_}
-\title{A more general histogram}
+\title{More general histogram}
 \usage{
 geom_hist_(
   mapping = NULL,
@@ -205,20 +205,20 @@ stat_hist_()/stat_bin_()/stat_count_().}
 \code{boundary}, may be specified for a single plot. \code{center} specifies the
 center of one of the bins. \code{boundary} specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of \code{width}.
-For example, to center on integers use \code{width = 1} and \code{center = 0}, even
+will be shifted by the appropriate integer multiple of \code{binwidth}.
+For example, to center on integers use \code{binwidth = 1} and \code{center = 0}, even
 if \code{0} is outside the range of the data. Alternatively, this same alignment
-can be specified with \code{width = 1} and \code{boundary = 0.5}, even if \code{0.5} is
+can be specified with \code{binwidth = 1} and \code{boundary = 0.5}, even if \code{0.5} is
 outside the range of the data.}
 
 \item{boundary}{bin position specifiers. Only one, \code{center} or
 \code{boundary}, may be specified for a single plot. \code{center} specifies the
 center of one of the bins. \code{boundary} specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of \code{width}.
-For example, to center on integers use \code{width = 1} and \code{center = 0}, even
+will be shifted by the appropriate integer multiple of \code{binwidth}.
+For example, to center on integers use \code{binwidth = 1} and \code{center = 0}, even
 if \code{0} is outside the range of the data. Alternatively, this same alignment
-can be specified with \code{width = 1} and \code{boundary = 0.5}, even if \code{0.5} is
+can be specified with \code{binwidth = 1} and \code{boundary = 0.5}, even if \code{0.5} is
 outside the range of the data.}
 
 \item{breaks}{Alternatively, you can supply a numeric vector giving
@@ -234,14 +234,17 @@ frequency polygons touch 0. Defaults to \code{FALSE}.}
 \item{width}{Bar width. By default, set to 90\% of the resolution of the data.}
 }
 \description{
-A more general histogram (\code{geom_histogram}) or bar plot (\code{geom_bar}).
-It can accept both `x` and `y` simultaneously. If only one is provided,
-\code{geom_histogram} or \code{geom_bar} will be executed.
+More general histogram (\code{geom_histogram()}) or bar plot (\code{geom_bar()}).
+Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
+`y` (or `x`) the target variable to be plotted.
+The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
+If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+the standard \code{geom_histogram()} will be executed.
 }
 \details{
 1. `geom_hist_` is a wrapper of `geom_histogram_` and `geom_count_`. In other words, suppose the 'y' is our interest,
-\code{geom_hist_} can accommodate both continuous or discrete "y" but \code{geom_histogram_} is only for the continuous "y" and
-\code{geom_bar_} is only for the discrete "y".
+\code{geom_hist_()} can accommodate both continuous or discrete "y" but \code{geom_histogram_()} is only for the continuous "y" and
+\code{geom_bar_()} is only for the discrete "y".
 
 2. There are four combinations of \code{scale.y} and \code{as.mix}
 \describe{
@@ -264,7 +267,7 @@ This geom treats each axis differently and, thus, can thus have two orientations
 }
 
 \examples{
-if(require(dplyr) && require(magrittr) && require(tidyr)) {
+if(require(dplyr) && require(tidyr)) {
 
   # histogram
   p0 <- mpg \%>\%

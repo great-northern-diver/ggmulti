@@ -4,7 +4,7 @@
 \name{geom_serialaxes_density}
 \alias{geom_serialaxes_density}
 \alias{stat_serialaxes_density}
-\title{Smoothed density estimates for "widens" data under serial axes}
+\title{Smoothed density estimates for "widens" data under serial axes coordinate}
 \usage{
 geom_serialaxes_density(
   mapping = NULL,
@@ -78,7 +78,7 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 
 \item{axes.sequence}{A vector to define the axes sequence. In serial axes coordinate, the sequence can be either
-determined in \code{mapping} (function \code{aes}) or by \code{axes.sequence}. The only difference is that
+determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
 the \code{mapping} aesthetics will omit the duplicated axes (check examples in \code{\link{geom_serialaxes}}).}
 
 \item{merge}{Should \code{axes.sequence} be merged with mapping aesthetics
@@ -138,16 +138,16 @@ If character, a rule to choose the bandwidth, as listed in
 estimated, should be a power of two, see \code{\link[=density]{density()}} for
 details}
 
-\item{trim}{This parameter only matters if you are displaying multiple
-densities in one plot. If \code{FALSE}, the default, each density is
-computed on the full range of the data. If \code{TRUE}, each density
-is computed over the range of that group: this typically means the
-estimated x values will not line-up, and hence you won't be able to
-stack density values.}
+\item{trim}{If \code{FALSE}, the default, each density is computed on the
+full range of the data. If \code{TRUE}, each density is computed over the
+range of that group: this typically means the estimated x values will
+not line-up, and hence you won't be able to stack density values.
+This parameter only matters if you are displaying multiple densities in
+one plot or if you are manually adjusting the scale limits.}
 }
 \description{
-Computes and draws kernel density estimate. It does not require `x` or `y` mapping aesthetics.
-It automatically draws density for each variable defined by \code{axes.sequence}
+Computes and draws kernel density estimates on serial axes coordinate
+for each non-aesthetics component defined in the mapping \code{aes()}.
 }
 \examples{
 p <- ggplot(iris, mapping = aes(Sepal.Length = Sepal.Length,

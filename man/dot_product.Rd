@@ -4,41 +4,41 @@
 \alias{dot_product}
 \alias{andrews}
 \alias{legendre}
-\title{Andrews plot}
+\title{Transformation Coefficients}
 \usage{
-andrews(k = 4, length.out = 50 * (k - 1), ...)
+andrews(p = 4, k = 50 * (p - 1), ...)
 
-legendre(k = 4, length.out = 50 * (k - 1), ...)
+legendre(p = 4, k = 50 * (p - 1), ...)
 }
 \arguments{
-\item{k}{The number of dimensions}
+\item{p}{The number of dimensions}
 
-\item{length.out}{The series length}
+\item{k}{The sequence length}
 
 \item{...}{Other arguments passed on to methods. Mainly used for customized transformation function}
 }
 \value{
-A list contains two contents
+A list contains two named components
 \enumerate{
-  \item A series
-  \item Transformed matrix
+  \item vector: A length \code{k} vector (define the domain)
+  \item matrix: A \code{p\*k} transformed coefficient matrix
 }
 }
 \description{
-An Andrews plot or Andrews curve is a way to visualize structure in high-dimensional data
-by defining a finite Fourier series.
-
-Legendre polynomials are a system of complete and orthogonal polynomials.
+The dimension of the original data set is \code{n\*p}. It can be projected
+onto a \code{n\*k} space. The functions below are to provide such transformations, e.g.
+the \code{Andrews coefficient} (a Fourier transformation) and the \code{Legendre} polynomials.
 }
-\details{
-In Andrews transformation, we project the data point onto the following k dimensional Fourier series,
-(\bold{1/sqrt(2)}^T, sin(\bold{t}^T), cos(\bold{t}^T), sin(\bold{2t}^T), cos(\bold{2t}^T), ...)^T
-
-P_n(\bold{x}) is polynomial of degreen n. Legendre polynomials are a list of polynomials match that
-
-integral_{-1}^1 P_n(\bold{x})P_m(\bold{x}) dx = 0
-
-where n is not equal to m
+\examples{
+x <- andrews(p = 4)
+dat <- iris[, -5]
+proj <- t(as.matrix(dat) \%*\% x$matrix)
+matplot(x$vector, proj,
+        type = "l", lty = 1,
+        col = "black",
+        xlab = "x",
+        ylab = "Andrews coefficients",
+        main = "Iris")
 }
 \references{
 Andrews, David F. "Plots of high-dimensional data." \emph{Biometrics} (1972): 125-136.
