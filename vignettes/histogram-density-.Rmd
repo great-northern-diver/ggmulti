@@ -80,7 +80,6 @@ path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
 
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
-library(magrittr, quietly = TRUE)
 ```
 
 Histograms (and bar plots) are common tools to visualize a single variable. The x axis is often used to locate the bins and the y axis is for the counts. Density plots can be considered as the smoothed version of the histogram. 

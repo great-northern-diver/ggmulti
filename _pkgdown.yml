@@ -1,121 +1,94 @@
-home:
-  strip_header: true
-
-navbar:
-  type: default
-  right:
-  - icon: fa-github fa-lg
-    href: https://github.com/great-northern-diver/ggmulti
-
-development:
-  mode: release
-
-destination: ./docs/
-
 reference:
+- title: Basics
+  desc: >
+    It provides materials (i.e. serialaxes objects) to visualize high dimensional data
+    in `ggplot`.
 
-    
-  - title: New functionality
-    desc:  New geom functionality
-    contents:
-    - geom_density_ 
-    - geom_hist_ 
-    - geom_histogram_ 
-    - geom_bar_ 
-    - geom_image_glyph
-    - geom_polygon_glyph
-    - geom_quantiles
-    - geom_serialaxes 
-    - geom_serialaxes_density 
-    - geom_serialaxes_glyph
-    - geom_serialaxes_hist 
-    - geom_serialaxes_quantile 
-  
-  - title: Prototype ggproto classes
-    desc:  New ggproto classes 
-    
-  - subtitle: Prototype Geom classes
-    contents:
-    - GeomBar_
-    - GeomDensity_
-    - GeomQuantiles
-    - GeomSerialaxes
-    - GeomSerialaxesDensity
-    - GeomSerialaxesHist
-    - GeomSerialaxesQuantile
-    
-  - subtitle: Prototype Position classes
-    contents:
-    - PositionDodge2_
-    - PositionDodge_
-    - PositionFill_
-    - PositionIdentity_
-    - PositionStack_
- 
- 
-  - subtitle: Prototype Statistics classes
-    contents:
-    - StatBin_
-    - StatCount_
-    - StatDensity_
-    - StatDotProduct
-    - StatHist_
-    - StatSerialaxes
-    - StatSerialaxesDensity
-    - StatSerialaxesHist   
-  
-  
-  
-  - title: stats
-    desc:  New stat functionality 
-    contents:
-    - stat_hist_ 
-    - stat_bin_ 
-    - stat_count_
-    - stat_serialaxes 
-    - stat_dotProduct
-    - stat_serialaxes_density
-    - stat_serialaxes_hist
-    - stat_serialaxes_quantile
-    
-    
-  - title: Zehao the documentation needs fixing!!
-    desc:  rest   
-    
-    contents:
-    - add_serialaxes_layers
-    - coord_polar
-    - coord_radar
-    - coord_serialaxes
-    - andrews 
-    - legendre
-    - geom_density_ 
-    - stat_density_
-    - geom_hist_ 
-    - geom_histogram_ 
-    - geom_bar_ 
-    - stat_hist_ 
-    - stat_bin_ 
-    - stat_count_
-    - geom_image_glyph
-    - geom_polygon_glyph
-    - geom_quantiles
-    - geom_serialaxes 
-    - GeomSerialaxes 
-    - stat_serialaxes 
-    - stat_dotProduct
-    - geom_serialaxes_density 
-    - stat_serialaxes_density
-    - geom_serialaxes_glyph
-    - geom_serialaxes_hist 
-    - stat_serialaxes_hist
-    - geom_serialaxes_quantile 
-    - GeomSerialaxesQuantile 
-    - stat_serialaxes_quantile
-    - get_scaledData
-    - polygon_glyph
-    - position_dodge_ 
-    - position_dodge2_
-    - position_identity_
-    - position_stack_ 
-    - position_fill_
+- title: Geoms and Stats
+  desc: >
+    **Geoms**: a layer combines data, aesthetic mapping, a `geom` (geometric object),
+    a `stat` (statistical transformation), and a `position` adjustment.
+
+    **Stats**: layers are more easily specified with a `stat_` function,
+    drawing attention to the statistical transformation rather than the visual appearance.
+    The computed variables can be mapped using an `after_stat()`.
+
+- subtitle: Serial Axes Geoms
+  desc: >
+    Each non-aesthetics component defined in the mapping `aes()` will be treated as an axis.
+  contents:
+  - geom_serialaxes
+  - geom_serialaxes_density
+  - geom_serialaxes_hist
+  - geom_serialaxes_quantile
+  - geom_quantiles
+  - stat_serialaxes
+  - stat_dotProduct
+  - stat_serialaxes_density
+  - stat_serialaxes_hist
+  - stat_serialaxes_quantile
+
+- subtitle: Glyph Geoms
+  desc: >
+    Provide a variety of glyphs for scatter plot
+  contents:
+  - geom_image_glyph
+  - geom_polygon_glyph
+  - geom_serialaxes_glyph
+
+- subtitle: More general histogram and density plot
+  desc: >
+    Provide more general histograms and density plots. Both `x` and `y` can be accommodated:
+    `x` (or `y`) is a group variable,  and  `y` (or `x`) the target variable to be plotted.
+    The result is a different histogram or density of `y` (`x`) for each value of `x` (`y`).
+    If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+    the standard `geom_histogram()` or `geom_density()` will be executed.
+  contents:
+  - geom_histogram_
+  - geom_bar_
+  - geom_hist_
+  - geom_density_
+  - stat_hist_
+  - stat_bin_
+  - stat_count_
+  - stat_density_
+
+- title: Position adjustment
+  desc: >
+    All layers have a position adjustment that resolves overlapping geoms.
+    Override the default by using the `position` argument to the `geom_` or
+    `stat_` function.
+  contents:
+  - position_identity_
+  - position_dodge_
+  - position_dodge2_
+  - position_stack_
+  - position_fill_
+
+- title: Coord
+  desc: >
+    The coordinate system determines how the data is displayed on the plane.
+    Note that, in serial axes coordinate system, neither `x` or `y` is required.
+    Each non-aesthetics element defined in the mapping `aes()` will be treaed as the target of interest.
+  contents:
+  - coord_serialaxes
+  - coord_polar
+  - coord_radar
+
+- title: Accessories
+  desc: >
+    Some handy accessories used for visualization.
+  contents:
+  - add_serialaxes_layers
+  - andrews
+  - legendre
+  - x_airplane
+  - y_airplane
+  - x_cross
+  - y_cross
+  - x_hexagon
+  - y_hexagon
+  - x_maple
+  - y_maple
+  - x_star
+  - y_star

@@ -4,7 +4,7 @@
 \name{geom_serialaxes_hist}
 \alias{geom_serialaxes_hist}
 \alias{stat_serialaxes_hist}
-\title{Histogram for "widens" data under serial axes}
+\title{Histogram for "widens" data under serial axes coordinate}
 \usage{
 geom_serialaxes_hist(
   mapping = NULL,
@@ -81,7 +81,7 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 
 \item{axes.sequence}{A vector to define the axes sequence. In serial axes coordinate, the sequence can be either
-determined in \code{mapping} (function \code{aes}) or by \code{axes.sequence}. The only difference is that
+determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
 the \code{mapping} aesthetics will omit the duplicated axes (check examples in \code{\link{geom_serialaxes}}).}
 
 \item{axes.position}{A numerical vector to determine the axes sequence position;
@@ -149,20 +149,20 @@ bin width of a time variable is the number of seconds.}
 \code{boundary}, may be specified for a single plot. \code{center} specifies the
 center of one of the bins. \code{boundary} specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of \code{width}.
-For example, to center on integers use \code{width = 1} and \code{center = 0}, even
+will be shifted by the appropriate integer multiple of \code{binwidth}.
+For example, to center on integers use \code{binwidth = 1} and \code{center = 0}, even
 if \code{0} is outside the range of the data. Alternatively, this same alignment
-can be specified with \code{width = 1} and \code{boundary = 0.5}, even if \code{0.5} is
+can be specified with \code{binwidth = 1} and \code{boundary = 0.5}, even if \code{0.5} is
 outside the range of the data.}
 
 \item{boundary}{bin position specifiers. Only one, \code{center} or
 \code{boundary}, may be specified for a single plot. \code{center} specifies the
 center of one of the bins. \code{boundary} specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of \code{width}.
-For example, to center on integers use \code{width = 1} and \code{center = 0}, even
+will be shifted by the appropriate integer multiple of \code{binwidth}.
+For example, to center on integers use \code{binwidth = 1} and \code{center = 0}, even
 if \code{0} is outside the range of the data. Alternatively, this same alignment
-can be specified with \code{width = 1} and \code{boundary = 0.5}, even if \code{0.5} is
+can be specified with \code{binwidth = 1} and \code{boundary = 0.5}, even if \code{0.5} is
 outside the range of the data.}
 
 \item{breaks}{Alternatively, you can supply a numeric vector giving
@@ -178,8 +178,8 @@ frequency polygons touch 0. Defaults to \code{FALSE}.}
 \item{width}{Bar width. By default, set to 90\% of the resolution of the data.}
 }
 \description{
-Computes and draws histogram. It does not require `x` or `y` mapping aesthetics.
-It automatically draws histogram (or bar chart) for each variable defined by \code{axes.sequence}
+Computes and draws histogram on serial axes coordinate for each non-aesthetics component
+defined in the mapping \code{aes()}.
 }
 \examples{
 p <- ggplot(iris, mapping = aes(Sepal.Length = Sepal.Length,

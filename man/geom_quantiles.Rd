@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom-quantiles.R
 \name{geom_quantiles}
 \alias{geom_quantiles}
-\title{Quantile layer for serial axes}
+\title{Add quantile layers on serial axes coordinate}
 \usage{
 geom_quantiles(
   mapping = NULL,
@@ -71,9 +71,9 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 }
 \description{
-In \code{ggplot2}, \code{geom_quantile} is used to fit a quantile regression to the data and draws
-the fitted quantiles with lines. However, \code{geom_quantiles} is mainly used to draw quantile lines
-for serial axes.
+In \code{ggplot2}, \code{geom_quantile()} is used to fit a quantile regression to the data and draws
+the fitted quantiles with lines. However, \code{geom_quantiles()} is mainly used to draw quantile lines
+on serial axes. See examples
 }
 \examples{
 p <- ggplot(iris,

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Quantile layer for serial axes — geom_quantiles • ggmulti</title>
+<title>Add quantile layers on serial axes coordinate — geom_quantiles • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,10 @@
 
 
 
-<meta property="og:title" content="Quantile layer for serial axes — geom_quantiles" />
-<meta property="og:description" content="In ggplot2, geom_quantile is used to fit a quantile regression to the data and draws
-the fitted quantiles with lines. However, geom_quantiles is mainly used to draw quantile lines
-for serial axes." />
+<meta property="og:title" content="Add quantile layers on serial axes coordinate — geom_quantiles" />
+<meta property="og:description" content="In ggplot2, geom_quantile() is used to fit a quantile regression to the data and draws
+the fitted quantiles with lines. However, geom_quantiles() is mainly used to draw quantile lines
+on serial axes. See examples" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -117,12 +117,7 @@ for serial axes." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -136,30 +131,30 @@ for serial axes." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Quantile layer for serial axes</h1>
+    <h1>Add quantile layers on serial axes coordinate</h1>
     
     <div class="hidden name"><code>geom_quantiles.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>In <code>ggplot2</code>, <code>geom_quantile</code> is used to fit a quantile regression to the data and draws
-the fitted quantiles with lines. However, <code>geom_quantiles</code> is mainly used to draw quantile lines
-for serial axes.</p>
+    <p>In <code>ggplot2</code>, <code>geom_quantile()</code> is used to fit a quantile regression to the data and draws
+the fitted quantiles with lines. However, <code>geom_quantiles()</code> is mainly used to draw quantile lines
+on serial axes. See examples</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_quantiles</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"quantile"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>lineend</span> <span class='kw'>=</span> <span class='st'>"butt"</span>,
-  <span class='kw'>linejoin</span> <span class='kw'>=</span> <span class='st'>"round"</span>,
-  <span class='kw'>linemitre</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>geom_quantiles</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"quantile"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  lineend <span class='op'>=</span> <span class='st'>"butt"</span>,
+  linejoin <span class='op'>=</span> <span class='st'>"round"</span>,
+  linemitre <span class='op'>=</span> <span class='fl'>10</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -241,19 +236,20 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     <div class='dont-index'><p><code><a href='geom_serialaxes_quantile.html'>geom_serialaxes_quantile</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>,
-            <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(
-              <span class='kw'>Sepal.Length</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>,
-              <span class='kw'>Sepal.Width</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>,
-              <span class='kw'>Petal.Length</span> <span class='kw'>=</span> <span class='no'>Petal.Length</span>,
-              <span class='kw'>Petal.Width</span> <span class='kw'>=</span> <span class='no'>Petal.Width</span>
-            )
-  ) +
-  <span class='fu'>geom_path</span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)  +
-  <span class='fu'><a href='coord_serialaxes.html'>coord_serialaxes</a></span>(<span class='kw'>scaling</span> <span class='kw'>=</span> <span class='st'>"none"</span>)
-<span class='no'>p</span> + <span class='fu'>geom_quantiles</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"red"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span>),
-                   <span class='kw'>quantiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.5</span>, <span class='fl'>0.75</span>),
-                   <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='img'><img src='geom_quantiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>,
+            mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+              Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
+              Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
+              Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,
+              Petal.Width <span class='op'>=</span> <span class='va'>Petal.Width</span>
+            <span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_path</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>  <span class='op'>+</span>
+  <span class='fu'><a href='coord_serialaxes.html'>coord_serialaxes</a></span><span class='op'>(</span>scaling <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_quantiles</span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"green"</span>, <span class='st'>"blue"</span><span class='op'>)</span>,
+                   quantiles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>0.5</span>, <span class='fl'>0.75</span><span class='op'>)</span>,
+                   size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_quantiles-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -270,7 +266,7 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

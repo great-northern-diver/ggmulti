@@ -62,7 +62,7 @@ stat_serialaxes_density <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @inherit StatDensity_
+#' @rdname Stat-ggproto
 #' @export
 StatSerialaxesDensity <- ggplot2::ggproto(
   "StatSerialaxesDensity",

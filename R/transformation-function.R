@@ -1,42 +1,51 @@
-#' @title Andrews plot
+#' @title Transformation Coefficients
 #' @name dot_product
-#' @description An Andrews plot or Andrews curve is a way to visualize structure in high-dimensional data
-#' by defining a finite Fourier series.
-#' @param k The number of dimensions
-#' @param length.out The series length
+#' @description The dimension of the original data set is \code{n\*p}. It can be projected
+#' onto a \code{n\*k} space. The functions below are to provide such transformations, e.g.
+#' the \code{Andrews coefficient} (a Fourier transformation) and the \code{Legendre} polynomials.
+#' @param p The number of dimensions
+#' @param k The sequence length
 #' @param ... Other arguments passed on to methods. Mainly used for customized transformation function
-#' @details
-#' In Andrews transformation, we project the data point onto the following k dimensional Fourier series,
-#' (\bold{1/sqrt(2)}^T, sin(\bold{t}^T), cos(\bold{t}^T), sin(\bold{2t}^T), cos(\bold{2t}^T), ...)^T
 #' @return
-#' A list contains two contents
+#' A list contains two named components
 #' \enumerate{
-#'   \item A series
-#'   \item Transformed matrix
+#'   \item vector: A length \code{k} vector (define the domain)
+#'   \item matrix: A \code{p\*k} transformed coefficient matrix
 #' }
 #' @references
 #' Andrews, David F. "Plots of high-dimensional data." \emph{Biometrics} (1972): 125-136.
+#'
 #' @export
+#' @examples
+#' x <- andrews(p = 4)
+#' dat <- iris[, -5]
+#' proj <- t(as.matrix(dat) %*% x$matrix)
+#' matplot(x$vector, proj,
+#'         type = "l", lty = 1,
+#'         col = "black",
+#'         xlab = "x",
+#'         ylab = "Andrews coefficients",
+#'         main = "Iris")
 
-andrews <- function(k = 4,
-                    length.out = 50 * (k - 1),
+andrews <- function(p = 4,
+                    k = 50 * (p - 1),
                     ...) {
 
   stopifnot(
     {
-      is.numeric(length.out)
       is.numeric(k)
+      is.numeric(p)
     }
   )
 
+  p <- as.integer(p)
   k <- as.integer(k)
-  length.out <- as.integer(length.out)
 
-  t <- seq(-base::pi, base::pi, length.out = length.out)
+  t <- seq(-base::pi, base::pi, length.out = k)
 
-  values <- sapply(seq(k),
+  values <- sapply(seq(p),
                    function(i) {
-                     if(i == 1) return(rep(1/sqrt(2), length.out))
+                     if(i == 1) return(rep(1/sqrt(2), k))
                      fun <- if((i %% 2) == 0) {
                        # even
                        base::sin
@@ -50,48 +59,41 @@ andrews <- function(k = 4,
   # return a list
   # with defined period and matrix
   list(
-    series = t,
-    matrix = matrix(values, nrow = k, byrow = TRUE)
+    vector = t,
+    matrix = matrix(values, nrow = p, byrow = TRUE)
   )
 }
 
 
-#' @title Legendre polynomials
+
 #' @rdname dot_product
-#' @description Legendre polynomials are a system of complete and orthogonal polynomials.
-#' @details
-#' P_n(\bold{x}) is polynomial of degreen n. Legendre polynomials are a list of polynomials match that
-#'
-#' integral_{-1}^1 P_n(\bold{x})P_m(\bold{x}) dx = 0
-#'
-#' where n is not equal to m
 #' @references
 #' Abramowitz, Milton, and Irene A. Stegun, eds. "Chapter 8"
 #' \emph{Handbook of mathematical functions with formulas, graphs, and mathematical tables}.
 #' Vol. 55. US Government printing office, 1948.
 #' @export
-
-legendre <- function(k = 4,
-                     length.out = 50 * (k - 1),
+legendre <- function(p = 4,
+                     k = 50 * (p - 1),
                      ...) {
 
   stopifnot(
     {
-      is.numeric(length.out)
       is.numeric(k)
+      is.numeric(p)
     }
   )
 
+  p <- as.integer(p)
   k <- as.integer(k)
-  length.out <- as.integer(length.out)
 
-  t <- seq(-1, 1, length.out = length.out)
-  if(k > 10) {
-    rlang::warn("So far, `legendre` can only accommodate maximum 10 dimensions.")
-    k <- 10
+  t <- seq(-1, 1, length.out = k)
+  if(p > 10) {
+    warning("So far, `legendre` can only accommodate maximum 10 dimensions.",
+            call. = FALSE)
+    p <- 10
   }
 
-  values <- sapply(seq(k),
+  values <- sapply(seq(p),
                    function(i) {
                      switch(as.character(i),
                             "1" = t,
@@ -108,7 +110,7 @@ legendre <- function(k = 4,
   # return a list
   # with defined series and matrix
   list(
-    series = t,
-    matrix = matrix(values, nrow = k, byrow = TRUE)
+    vector = t,
+    matrix = matrix(values, nrow = p, byrow = TRUE)
   )
 }

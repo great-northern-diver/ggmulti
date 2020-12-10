@@ -1,7 +1,7 @@
-#' @title Smoothed density estimates for "widens" data under serial axes
+#' @title Smoothed density estimates for "widens" data under serial axes coordinate
 #' @name geom_serialaxes_density
-#' @description Computes and draws kernel density estimate. It does not require `x` or `y` mapping aesthetics.
-#' It automatically draws density for each variable defined by \code{axes.sequence}
+#' @description Computes and draws kernel density estimates on serial axes coordinate
+#' for each non-aesthetics component defined in the mapping \code{aes()}.
 #' @inheritParams geom_serialaxes
 #' @inheritParams geom_density_
 #' @export
@@ -71,7 +71,7 @@ geom_serialaxes_density <- function(mapping = NULL, data = NULL, stat = "seriala
   )
 }
 
-#' @inherit GeomDensity_
+#' @rdname Geom-ggproto
 #' @export
 GeomSerialaxesDensity <- ggplot2::ggproto(
   "GeomSerialaxesDensity",

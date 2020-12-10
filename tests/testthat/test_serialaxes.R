@@ -1,5 +1,4 @@
 context("test serialaxes")
-library(magrittr)
 library(tidyverse)
 library(ggmulti)
 
@@ -120,8 +119,8 @@ test_that("test coord_serialaxes", {
 })
 
 test_that("fourier transformation dot product", {
-  coords <- andrews(k = 4)
-  expect_equal(round(range(coords$series), 2), c(-3.14, 3.14))
+  coords <- andrews(p = 4)
+  expect_equal(round(range(coords$vector), 2), c(-3.14, 3.14))
   expect_equal(dim(coords$matrix), c(4, 150))
 })
 

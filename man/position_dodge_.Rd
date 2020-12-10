@@ -30,13 +30,14 @@ This is useful if you're rotating both the plot and legend.}
 }
 \description{
 Dodging preserves the vertical position of an geom while adjusting the horizontal position.
-\code{position_dodge_} dodges bars side by side but conditional on locations.
+\code{position_dodge_()} dodges bars side by side but conditional on locations.
 }
 \details{
 It is built based on \code{\link{position_dodge}}, but used for multiple locations, such as
-\code{\link{geom_hist_}} or \code{\link{geom_density_}}. Check examples to see the difference.
+\code{geom_hist_()} or \code{geom_density_()}. Check examples to see the difference.
 }
 \examples{
+if(require(dplyr)) {
 p <- iris \%>\%
   tidyr::pivot_longer(cols = -Species,
                       names_to = "Outer sterile whorls",
@@ -47,6 +48,7 @@ p <- iris \%>\%
                        fill = Species))
 
 p + geom_hist_(position = position_dodge_())
+}
 
 \donttest{
 # all bins are shifted on the left

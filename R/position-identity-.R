@@ -1,4 +1,4 @@
-#' @inherit ggplot2::position_identity
+#' @title Don't adjust position
 #' @seealso Other position adjustments for multiple locations:
 #' \code{\link{position_stack_}}, \code{\link{position_fill_}},
 #' \code{\link{position_dodge_}}, \code{\link{position_dodge2_}}
@@ -8,7 +8,7 @@ position_identity_ <- function() {
 }
 
 #' @export
-#' @inherit ggplot2::PositionIdentity
+#' @rdname Position-ggproto
 PositionIdentity_ <- ggproto("PositionIdentity_", ggplot2::PositionIdentity,
                              setup_params = function(self, data) {
 

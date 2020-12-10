@@ -3,7 +3,7 @@
 \name{geom_density_}
 \alias{geom_density_}
 \alias{stat_density_}
-\title{A more general smoothed density estimates}
+\title{More general smoothed density estimates}
 \usage{
 geom_density_(
   mapping = NULL,
@@ -123,17 +123,20 @@ If character, a rule to choose the bandwidth, as listed in
 estimated, should be a power of two, see \code{\link[=density]{density()}} for
 details}
 
-\item{trim}{This parameter only matters if you are displaying multiple
-densities in one plot. If \code{FALSE}, the default, each density is
-computed on the full range of the data. If \code{TRUE}, each density
-is computed over the range of that group: this typically means the
-estimated x values will not line-up, and hence you won't be able to
-stack density values.}
+\item{trim}{If \code{FALSE}, the default, each density is computed on the
+full range of the data. If \code{TRUE}, each density is computed over the
+range of that group: this typically means the estimated x values will
+not line-up, and hence you won't be able to stack density values.
+This parameter only matters if you are displaying multiple densities in
+one plot or if you are manually adjusting the scale limits.}
 }
 \description{
-Computes and draws kernel density estimate. Compared with \code{geom_density}, it is more general case,
-accepting `x` and `y` simultaneously. Similar to box plot or violin plot, it could set one variable as category,
-the other as density. If only one is provided, \code{geom_density} will be executed.
+Computes and draws kernel density estimate.
+Compared with \code{geom_density()}, it provides more general cases that
+accepting `x` and `y`. The `x` (or `y`) is a group variable and  `y` (or `x`) is the target variable to be plotted.
+The result is a different density of `y` (`x`) for each value of `x` (`y`).
+If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+the standard \code{geom_density()} will be executed.
 }
 \details{
 There are four combinations of \code{scale.y} and \code{as.mix}
@@ -155,11 +158,18 @@ This geom treats each axis differently and, thus, can thus have two orientations
 }
 
 \examples{
-if(require(dplyr) && require(magrittr)) {
+if(require(dplyr)) {
   mpg \%>\%
     dplyr::filter(drv != "f") \%>\%
     ggplot(mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
     geom_density_(alpha = 0.1)
+
+  # only `x` or `y` is provided
+  # that would be equivalent to call function `geom_density()`
+  diamonds \%>\%
+    dplyr::sample_n(500) \%>\%
+    ggplot(mapping = aes(x = price)) +
+    geom_density_()
 
   # density and boxplot
   # set the density estimate on the left
@@ -179,17 +189,10 @@ if(require(dplyr) && require(magrittr)) {
                     position = "stack_",
                     scale.y = "variable")
   )
-
-  # only `x` or `y` is provided
-  # that would be equivalent to call function `geom_density()`
-  diamonds \%>\%
-    dplyr::sample_n(500) \%>\%
-    ggplot(mapping = aes(x = price)) +
-    geom_density_()
-
-  # settings of `scale.y` and `as.mix`
-  \donttest{
-  ggplots <- lapply(list(
+}
+# settings of `scale.y` and `as.mix`
+\donttest{
+ggplots <- lapply(list(
                       list(scale.y = "data", as.mix = TRUE),
                       list(scale.y = "data", as.mix = FALSE),
                       list(scale.y = "variable", as.mix = TRUE),
@@ -204,9 +207,9 @@ if(require(dplyr) && require(magrittr)) {
                        labs(title = paste("scale.y =", scale.y),
                             subtitle = paste("as.mix =", as.mix))
                    })
+suppressWarnings(
   gridExtra::grid.arrange(grobs = ggplots)
-  }
-}
+)}
 
 }
 \seealso{

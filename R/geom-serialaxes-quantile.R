@@ -1,6 +1,7 @@
-#' @title Quantile layer for serial axes
+#' @title Quantile layer for serial axes coordinate
 #' @name geom_serialaxes_quantile
-#' @description Draw a quantile layer for serial axes. Don't be confused with \code{geom_quantile} (quantile regression).
+#' @description Draw a quantile layer for serial axes coordinate.
+#' Don't be confused with \code{geom_quantile()} which is a quantile regression. See examples.
 #' @inheritParams geom_serialaxes
 #' @param quantiles numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that
 #' range are accepted and moved to the nearby endpoint.)
@@ -61,7 +62,7 @@ geom_serialaxes_quantile <- function(mapping = NULL, data = NULL, stat = "serial
   )
 }
 
-#' @rdname geom_serialaxes_quantile
+#' @rdname Geom-ggproto
 #' @export
 GeomSerialaxesQuantile <- ggplot2::ggproto(
   "GeomSerialaxesQuantile",

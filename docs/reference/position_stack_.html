@@ -115,12 +115,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -143,9 +138,9 @@
     <p><code>position_stack_</code> stacks bars on top of each other, conditional on locations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>position_stack_</span>(<span class='kw'>vjust</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>position_stack_</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>1</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>position_fill_</span>(<span class='kw'>vjust</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>position_fill_</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>1</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,17 +175,19 @@ Check examples to see the difference.</p>
 <p>Parent: <code>position_stack</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>,
-       <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>Sepal.Length</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>,
-                     <span class='kw'>Sepal.Width</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>,
-                     <span class='kw'>Petal.Length</span> <span class='kw'>=</span> <span class='no'>Petal.Length</span>,
-                     <span class='kw'>Petal.Width</span> <span class='kw'>=</span> <span class='no'>Petal.Width</span>,
-                     <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>))
-<span class='no'>p</span> +
- <span class='fu'><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='fu'>position_stack_</span>())</div><div class='img'><img src='position_stack_-1.png' alt='' width='700' height='433' /></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>,
+       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
+                     Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
+                     Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,
+                     Petal.Width <span class='op'>=</span> <span class='va'>Petal.Width</span>,
+                     colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span>
+ <span class='fu'><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='fu'>position_stack_</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='position_stack_-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
-<span class='no'>p</span> +
-  <span class='fu'><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='fu'>position_stack</span>())</div><div class='img'><img src='position_stack_-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='va'>p</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='fu'>position_stack</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='position_stack_-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>
@@ -208,7 +205,7 @@ Check examples to see the difference.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

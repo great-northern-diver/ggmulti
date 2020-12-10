@@ -1,5 +1,6 @@
 #' @title Serial axes coordinates
-#' @description It is used to visualize high dimensional data set.
+#' @description It is mainly used to visualize the high dimensional data set
+#' either on the parallel coordinate or the radial coordinate.
 #' @param axes.layout Serial axes layout, either "parallel" or "radial".
 #' @param scaling One of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.
 #' @param axes.sequence A vector with variable names that defines the axes sequence.
@@ -7,10 +8,15 @@
 #' right (`positive`) or left (`negative`) as vertical layout;
 #' up (`positive`) or down (`negative`) as horizontal layout?
 #' @param ... other arguments used to modify layers
-#' @details Serial axes coordinate system is different from other conventional coordinate system (Cartesian, Polar, ...).
-#' It does not have a formal transformation (i.e. in polar coordinate system, "x = rcos(theta)",
-#' "y = rsin(theta)"). In serial axes coordinate system, mapping aesthetics does not really require "x" or "y".
-#' To project a \code{geom} layer, users can customize function \code{\link{add_serialaxes_layers}}.
+#' @details Serial axes coordinate system (parallel or radial) is different from the
+#' Cartesian coordinate system or its transformed system (say \code{polar} in \code{ggplot2})
+#' since it does not have a formal transformation
+#' (i.e. in polar coordinate system, "x = rcos(theta)", "y = rsin(theta)").
+#' In serial axes coordinate system, mapping aesthetics does not really require "x" or "y". Any "non-aesthetics"
+#' components passed in the `mapping` system will be treated as an individual axis.
+#'
+#' To project a common \code{geom} layer on such serialaxes,
+#' users can customize function \code{\link{add_serialaxes_layers}}.
 #' @importFrom utils getFromNamespace globalVariables getS3method
 #' @examples
 #' # set sequence by `axes.sequence`
@@ -88,7 +94,8 @@ update_CoordSerialaxes <- function(p, object) {
   if(length(p$layers) > 0) {
     p <- serialaxes_layers(p, object, axes)
   } else {
-    rlang::warn("No layers are detected. Did you forget to add the `geom_path()` object?")
+    warning("No layers are detected. Did you forget to add the `geom_path()` object?",
+            call. = FALSE)
   }
 
   flipped_aes <- has_flipped_aes_(object$orientation)

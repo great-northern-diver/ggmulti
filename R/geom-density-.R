@@ -1,8 +1,11 @@
-#' @title A more general smoothed density estimates
+#' @title More general smoothed density estimates
 #' @name geom_density_
-#' @description Computes and draws kernel density estimate. Compared with \code{geom_density}, it is more general case,
-#' accepting `x` and `y` simultaneously. Similar to box plot or violin plot, it could set one variable as category,
-#' the other as density. If only one is provided, \code{geom_density} will be executed.
+#' @description Computes and draws kernel density estimate.
+#' Compared with \code{geom_density()}, it provides more general cases that
+#' accepting `x` and `y`. The `x` (or `y`) is a group variable and  `y` (or `x`) is the target variable to be plotted.
+#' The result is a different density of `y` (`x`) for each value of `x` (`y`).
+#' If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+#' the standard \code{geom_density()} will be executed.
 #' @inheritParams ggplot2::geom_density
 #' @param scale.x A length 2 numerical vector. Scale the n coordinates of the points where the density is estimated.
 #' @param scale.y one of 'data', 'variable' to specify.
@@ -35,11 +38,18 @@
 #' @eval rd_orientation()
 #' @seealso \code{\link{geom_density}}, \code{\link{geom_hist_}}
 #' @examples
-#' if(require(dplyr) && require(magrittr)) {
+#' if(require(dplyr)) {
 #'   mpg %>%
 #'     dplyr::filter(drv != "f") %>%
 #'     ggplot(mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
 #'     geom_density_(alpha = 0.1)
+#'
+#'   # only `x` or `y` is provided
+#'   # that would be equivalent to call function `geom_density()`
+#'   diamonds %>%
+#'     dplyr::sample_n(500) %>%
+#'     ggplot(mapping = aes(x = price)) +
+#'     geom_density_()
 #'
 #'   # density and boxplot
 #'   # set the density estimate on the left
@@ -59,17 +69,10 @@
 #'                     position = "stack_",
 #'                     scale.y = "variable")
 #'   )
-#'
-#'   # only `x` or `y` is provided
-#'   # that would be equivalent to call function `geom_density()`
-#'   diamonds %>%
-#'     dplyr::sample_n(500) %>%
-#'     ggplot(mapping = aes(x = price)) +
-#'     geom_density_()
-#'
-#'   # settings of `scale.y` and `as.mix`
-#'   \donttest{
-#'   ggplots <- lapply(list(
+#' }
+#' # settings of `scale.y` and `as.mix`
+#' \donttest{
+#' ggplots <- lapply(list(
 #'                       list(scale.y = "data", as.mix = TRUE),
 #'                       list(scale.y = "data", as.mix = FALSE),
 #'                       list(scale.y = "variable", as.mix = TRUE),
@@ -84,9 +87,9 @@
 #'                        labs(title = paste("scale.y =", scale.y),
 #'                             subtitle = paste("as.mix =", as.mix))
 #'                    })
+#' suppressWarnings(
 #'   gridExtra::grid.arrange(grobs = ggplots)
-#'   }
-#' }
+#' )}
 #'
 geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
                           position = "identity_", ...,
@@ -114,7 +117,17 @@ geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
   )
 }
 
-#' @inherit ggplot2::GeomDensity
+#' @title Base Geom ggproto classes for ggplot2
+#' @name Geom-ggproto
+#' @description All \code{geom_} functions (like \code{geom_point}) return a layer that contains a \code{Geom}
+#' object (like \code{GeomPoint}). The \code{Geom} object is responsible for rendering the data in the plot.
+#' Each of the \code{Geom} objects is a \code{ggproto} object,
+#' descended from the top-level Geom, and each implements various methods and fields.
+#' Compared to \code{Stat} and \code{Position}, \code{Geom} is a little different
+#' because the execution of the setup and compute functions is split up.
+#' setup_data runs before position adjustments, and \code{draw_layer}
+#' is not run until render time, much later. This means there is no \code{setup_params}
+#' because it's hard to communicate the changes.
 #' @export
 GeomDensity_ <- ggplot2::ggproto(
   "GeomDensity_",
@@ -129,11 +142,11 @@ GeomDensity_ <- ggplot2::ggproto(
 
     if(!is.null(params$scale.x)) {
       if(!all(is.numeric(params$scale.x)))
-        rlang::abort(glue::glue("`scale.x` must be numerical, but it is {class(params$scale.x)}"))
+        stop("`scale.x` must be numerical, but it is ", class(params$scale.x),
+             call. = FALSE)
       if(length(params$scale.x) != 2)
-        rlang::abort(
-          glue::glue("`scale.x` should be a length 2 vector, but it has length {length(params$scale.x)}")
-        )
+        stop("`scale.x` should be a length 2 vector, but it has length ", length(params$scale.x),
+             call. = FALSE)
     }
 
     params
@@ -165,7 +178,7 @@ GeomDensity_ <- ggplot2::ggproto(
 
       data <- data %>%
         dplyr::group_by(location) %>%
-        dplyr::mutate(x = scales::rescale(x, params$scale.x)) %>%
+        dplyr::mutate(x = rescale(x, params$scale.x)) %>%
         dplyr::ungroup()
     }
 

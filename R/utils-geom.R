@@ -58,10 +58,10 @@ valid_aes <- function(aes, data, k) {
   } else if(length(aes) == n) {
     rep(aes, each = k)
   } else {
-    rlang::abort(
-      glue::glue("{deparse(substitute(aes))} must be either length 1 or the same as the data
-                 ({lengh.out})")
-    )
+    stop(deparse(substitute(aes)),
+         " must be either length 1 or the same as the data ",
+         lengh.out,
+         call. = FALSE)
   }
 }
 
@@ -88,7 +88,8 @@ default_aes <- function(...) {
   defaultAes <- sapply(args,
                        function(x) {
                          if(!inherits(x, "Geom"))
-                           rlang::abort("It is not a Geom object")
+                           stop("It is not a Geom object",
+                                call. = FALSE)
 
                          names(x$default_aes)
                        })
@@ -99,7 +100,8 @@ mbind <- function(new_mapping = aes(), mapping) {
 
   if (!missing(mapping) && !inherits(mapping, "uneval") &&
       !missing(new_mapping) && !inherits(new_mapping, "uneval")) {
-    rlang::abort("Mapping should be created with `aes()`.")
+    stop("Mapping should be created with `aes()`.",
+         call. = FALSE)
   }
 
   new_aes(new_mapping %<-% mapping)
@@ -240,7 +242,8 @@ get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos, scale.x, scale.y
     enclosingId <- rep(1:N, each = len_radial)
     serialCoordId <- rep(1:N, each = (dimension + 1))
 
-  } else rlang::abort('unknown axes layout')
+  } else stop('unknown axes layout',
+              call. = FALSE)
 
   list(
     enclosingX = do.call(grid::unit.c, enclosingX),
@@ -344,7 +347,8 @@ set_axes_position <- function(layer, object, axes, axes.sequence) {
   all_positions <- object$axes.position %||% seq(axes)
   position <- all_positions[axes %in% axes.sequence]
   if(length(position) < length(axes.sequence)) {
-    rlang::abort("Improper `axes.sequence` setting in `coord_serialaxes`.")
+    stop("Improper `axes.sequence` setting in `coord_serialaxes`.",
+         call. = FALSE)
   }
   position
 }

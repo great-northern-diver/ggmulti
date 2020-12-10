@@ -44,7 +44,7 @@ position_fill_ <- function(vjust = 1, reverse = FALSE) {
 }
 
 #' @export
-#' @inherit ggplot2::PositionStack
+#' @rdname Position-ggproto
 PositionStack_ <- ggplot2::ggproto("PositionStack_",
                                    ggplot2::PositionStack,
                                    setup_params = function(self, data) {
@@ -94,5 +94,5 @@ PositionStack_ <- ggplot2::ggproto("PositionStack_",
 )
 
 #' @export
-#' @inherit PositionStack_
+#' @rdname Position-ggproto
 PositionFill_ <- ggproto("PositionFill_", PositionStack_, fill = TRUE)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/geom-serialaxes-glyph.R
 \name{geom_serialaxes_glyph}
 \alias{geom_serialaxes_glyph}
-\title{Add serialaxes glyphs on scatter plot}
+\title{Add serial axes glyphs on scatter plot}
 \usage{
 geom_serialaxes_glyph(
   mapping = NULL,
@@ -60,7 +60,7 @@ to the paired geom/stat.}
 \item{serialaxes.data}{a serial axes numerical data set. If not provided, \code{geom_point()} will be called.}
 
 \item{axes.sequence}{A vector to define the axes sequence. In serial axes coordinate, the sequence can be either
-determined in \code{mapping} (function \code{aes}) or by \code{axes.sequence}. The only difference is that
+determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
 the \code{mapping} aesthetics will omit the duplicated axes (check examples in \code{\link{geom_serialaxes}}).}
 
 \item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
@@ -98,7 +98,7 @@ a \code{geom} layer
 }
 \description{
 To visualize high dimensional data on scatterplot.
-Each point glyph is surrounded by a serialaxes object.
+Each point glyph is surrounded by a serial axes (parallel axes or radial axes) object.
 }
 \section{Aesthetics}{
 

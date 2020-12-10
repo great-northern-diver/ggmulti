@@ -114,12 +114,7 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -147,11 +142,29 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-new-functionality" class="hasAnchor"><a href="#section-new-functionality" class="anchor"></a>New functionality</h2>
-          <p class="section-desc"><p>New geom functionality</p></p>
+          <h2 id="section-basics" class="hasAnchor"><a href="#section-basics" class="anchor"></a>Basics</h2>
+          <p class="section-desc"><p>It provides materials (i.e. serialaxes objects) to visualize high dimensional data in <code>ggplot</code>.</p></p>
         </th>
       </tr>
       
+      
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-geoms-and-stats" class="hasAnchor"><a href="#section-geoms-and-stats" class="anchor"></a>Geoms and Stats</h2>
+          <p class="section-desc"><p><strong>Geoms</strong>: a layer combines data, aesthetic mapping, a <code>geom</code> (geometric object), a <code>stat</code> (statistical transformation), and a <code>position</code> adjustment. <strong>Stats</strong>: layers are more easily specified with a <code>stat_</code> function, drawing attention to the statistical transformation rather than the visual appearance. The computed variables can be mapped using an <code>after_stat()</code>.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-serial-axes-geoms" class="hasAnchor"><a href="#section-serial-axes-geoms" class="anchor"></a>Serial Axes Geoms</h3>
+          <p class="section-desc"><p>Each non-aesthetics component defined in the mapping <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> will be treated as an axis.</p></p>
+        </th>
+      </tr>
       
     </tbody><tbody>
       
@@ -159,16 +172,47 @@
       <tr>
         
         <td>
-          <p><code><a href="geom_density_.html">geom_density_()</a></code> <code><a href="geom_density_.html">stat_density_()</a></code> </p>
+          <p><code><a href="geom_serialaxes.html">geom_serialaxes()</a></code> <code><a href="geom_serialaxes.html">stat_serialaxes()</a></code> <code><a href="geom_serialaxes.html">stat_dotProduct()</a></code> </p>
         </td>
-        <td><p>A more general smoothed density estimates</p></td>
+        <td><p>Serial axes layer</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="geom_hist_.html">geom_hist_()</a></code> <code><a href="geom_hist_.html">geom_histogram_()</a></code> <code><a href="geom_hist_.html">geom_bar_()</a></code> <code><a href="geom_hist_.html">stat_hist_()</a></code> <code><a href="geom_hist_.html">stat_bin_()</a></code> <code><a href="geom_hist_.html">stat_count_()</a></code> </p>
+          <p><code><a href="geom_serialaxes_density.html">geom_serialaxes_density()</a></code> <code><a href="geom_serialaxes_density.html">stat_serialaxes_density()</a></code> </p>
         </td>
-        <td><p>A more general histogram</p></td>
+        <td><p>Smoothed density estimates for "widens" data under serial axes coordinate</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="geom_serialaxes_hist.html">geom_serialaxes_hist()</a></code> <code><a href="geom_serialaxes_hist.html">stat_serialaxes_hist()</a></code> </p>
+        </td>
+        <td><p>Histogram for "widens" data under serial axes coordinate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="geom_serialaxes_quantile.html">geom_serialaxes_quantile()</a></code> <code><a href="geom_serialaxes_quantile.html">stat_serialaxes_quantile()</a></code> </p>
+        </td>
+        <td><p>Quantile layer for serial axes coordinate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="geom_quantiles.html">geom_quantiles()</a></code> </p>
+        </td>
+        <td><p>Add quantile layers on serial axes coordinate</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-glyph-geoms" class="hasAnchor"><a href="#section-glyph-geoms" class="anchor"></a>Glyph Geoms</h3>
+          <p class="section-desc"><p>Provide a variety of glyphs for scatter plot</p></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="geom_image_glyph.html">geom_image_glyph()</a></code> </p>
@@ -183,216 +227,18 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="geom_quantiles.html">geom_quantiles()</a></code> </p>
-        </td>
-        <td><p>Quantile layer for serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes.html">geom_serialaxes()</a></code> <code><a href="geom_serialaxes.html">GeomSerialaxes</a></code> <code><a href="geom_serialaxes.html">stat_serialaxes()</a></code> <code><a href="geom_serialaxes.html">stat_dotProduct()</a></code> </p>
-        </td>
-        <td><p>Serialaxes layer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_density.html">geom_serialaxes_density()</a></code> <code><a href="geom_serialaxes_density.html">stat_serialaxes_density()</a></code> </p>
-        </td>
-        <td><p>Smoothed density estimates for "widens" data under serial axes</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="geom_serialaxes_glyph.html">geom_serialaxes_glyph()</a></code> </p>
         </td>
-        <td><p>Add serialaxes glyphs on scatter plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_hist.html">geom_serialaxes_hist()</a></code> <code><a href="geom_serialaxes_hist.html">stat_serialaxes_hist()</a></code> </p>
-        </td>
-        <td><p>Histogram for "widens" data under serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_quantile.html">geom_serialaxes_quantile()</a></code> <code><a href="geom_serialaxes_quantile.html">GeomSerialaxesQuantile</a></code> <code><a href="geom_serialaxes_quantile.html">stat_serialaxes_quantile()</a></code> </p>
-        </td>
-        <td><p>Quantile layer for serial axes</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-prototype-ggproto-classes" class="hasAnchor"><a href="#section-prototype-ggproto-classes" class="anchor"></a>Prototype ggproto classes</h2>
-          <p class="section-desc"><p>New ggproto classes</p></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      <tr>
-        <th colspan="2">
-          <h3 id="section-prototype-geom-classes" class="hasAnchor"><a href="#section-prototype-geom-classes" class="anchor"></a>Prototype Geom classes</h3>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="GeomBar_.html">GeomBar_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="GeomDensity_.html">GeomDensity_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="GeomQuantiles.html">GeomQuantiles</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes.html">geom_serialaxes()</a></code> <code><a href="geom_serialaxes.html">GeomSerialaxes</a></code> <code><a href="geom_serialaxes.html">stat_serialaxes()</a></code> <code><a href="geom_serialaxes.html">stat_dotProduct()</a></code> </p>
-        </td>
-        <td><p>Serialaxes layer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="GeomSerialaxesDensity.html">GeomSerialaxesDensity</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="GeomSerialaxesHist.html">GeomSerialaxesHist</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_quantile.html">geom_serialaxes_quantile()</a></code> <code><a href="geom_serialaxes_quantile.html">GeomSerialaxesQuantile</a></code> <code><a href="geom_serialaxes_quantile.html">stat_serialaxes_quantile()</a></code> </p>
-        </td>
-        <td><p>Quantile layer for serial axes</p></td>
+        <td><p>Add serial axes glyphs on scatter plot</p></td>
       </tr>
     </tbody><tbody>
       
       <tr>
         <th colspan="2">
-          <h3 id="section-prototype-position-classes" class="hasAnchor"><a href="#section-prototype-position-classes" class="anchor"></a>Prototype Position classes</h3>
-          <p class="section-desc"></p>
+          <h3 id="section-more-general-histogram-and-density-plot" class="hasAnchor"><a href="#section-more-general-histogram-and-density-plot" class="anchor"></a>More general histogram and density plot</h3>
+          <p class="section-desc"><p>Provide more general histograms and density plots. Both <code>x</code> and <code>y</code> can be accommodated: <code>x</code> (or <code>y</code>) is a group variable, and <code>y</code> (or <code>x</code>) the target variable to be plotted. The result is a different histogram or density of <code>y</code> (<code>x</code>) for each value of <code>x</code> (<code>y</code>). If only one of <code>x</code> or <code>y</code> is provided, it will be the target variable (no grouping) and the standard <code>geom_histogram()</code> or <code>geom_density()</code> will be executed.</p></p>
         </th>
       </tr>
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="PositionDodge2_.html">PositionDodge2_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PositionDodge_.html">PositionDodge_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PositionFill_.html">PositionFill_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PositionIdentity_.html">PositionIdentity_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="PositionStack_.html">PositionStack_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr>
-    </tbody><tbody>
-      
-      <tr>
-        <th colspan="2">
-          <h3 id="section-prototype-statistics-classes" class="hasAnchor"><a href="#section-prototype-statistics-classes" class="anchor"></a>Prototype Statistics classes</h3>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="StatBin_.html">StatBin_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatCount_.html">StatCount_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatDensity_.html">StatDensity_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatDotProduct.html">StatDotProduct</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatHist_.html">StatHist_</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatSerialaxes.html">StatSerialaxes</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatSerialaxesDensity.html">StatSerialaxesDensity</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="StatSerialaxesHist.html">StatSerialaxesHist</a></code> </p>
-        </td>
-        <td><p>Base ggproto classes for ggplot2</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-stats" class="hasAnchor"><a href="#section-stats" class="anchor"></a>stats</h2>
-          <p class="section-desc"><p>New stat functionality</p></p>
-        </th>
-      </tr>
-      
       
     </tbody><tbody>
       
@@ -402,37 +248,81 @@
         <td>
           <p><code><a href="geom_hist_.html">geom_hist_()</a></code> <code><a href="geom_hist_.html">geom_histogram_()</a></code> <code><a href="geom_hist_.html">geom_bar_()</a></code> <code><a href="geom_hist_.html">stat_hist_()</a></code> <code><a href="geom_hist_.html">stat_bin_()</a></code> <code><a href="geom_hist_.html">stat_count_()</a></code> </p>
         </td>
-        <td><p>A more general histogram</p></td>
+        <td><p>More general histogram</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="geom_serialaxes.html">geom_serialaxes()</a></code> <code><a href="geom_serialaxes.html">GeomSerialaxes</a></code> <code><a href="geom_serialaxes.html">stat_serialaxes()</a></code> <code><a href="geom_serialaxes.html">stat_dotProduct()</a></code> </p>
+          <p><code><a href="geom_density_.html">geom_density_()</a></code> <code><a href="geom_density_.html">stat_density_()</a></code> </p>
         </td>
-        <td><p>Serialaxes layer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_density.html">geom_serialaxes_density()</a></code> <code><a href="geom_serialaxes_density.html">stat_serialaxes_density()</a></code> </p>
-        </td>
-        <td><p>Smoothed density estimates for "widens" data under serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_hist.html">geom_serialaxes_hist()</a></code> <code><a href="geom_serialaxes_hist.html">stat_serialaxes_hist()</a></code> </p>
-        </td>
-        <td><p>Histogram for "widens" data under serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_quantile.html">geom_serialaxes_quantile()</a></code> <code><a href="geom_serialaxes_quantile.html">GeomSerialaxesQuantile</a></code> <code><a href="geom_serialaxes_quantile.html">stat_serialaxes_quantile()</a></code> </p>
-        </td>
-        <td><p>Quantile layer for serial axes</p></td>
+        <td><p>More general smoothed density estimates</p></td>
       </tr>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-zehao-the-documentation-needs-fixing-" class="hasAnchor"><a href="#section-zehao-the-documentation-needs-fixing-" class="anchor"></a>Zehao the documentation needs fixing!!</h2>
-          <p class="section-desc"><p>rest</p></p>
+          <h2 id="section-position-adjustment" class="hasAnchor"><a href="#section-position-adjustment" class="anchor"></a>Position adjustment</h2>
+          <p class="section-desc"><p>All layers have a position adjustment that resolves overlapping geoms. Override the default by using the <code>position</code> argument to the <code>geom_</code> or <code>stat_</code> function.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="position_identity_.html">position_identity_()</a></code> </p>
+        </td>
+        <td><p>Don't adjust position</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="position_dodge_.html">position_dodge_()</a></code> <code><a href="position_dodge_.html">position_dodge2_()</a></code> </p>
+        </td>
+        <td><p>Dodge overlapping objects side-to-side</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="position_stack_.html">position_stack_()</a></code> <code><a href="position_stack_.html">position_fill_()</a></code> </p>
+        </td>
+        <td><p>Stack overlapping objects on top of each another</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-coord" class="hasAnchor"><a href="#section-coord" class="anchor"></a>Coord</h2>
+          <p class="section-desc"><p>The coordinate system determines how the data is displayed on the plane. Note that, in serial axes coordinate system, neither <code>x</code> or <code>y</code> is required. Each non-aesthetics element defined in the mapping <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> will be treaed as the target of interest.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="coord_serialaxes.html">coord_serialaxes()</a></code> </p>
+        </td>
+        <td><p>Serial axes coordinates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coord_polar.html">coord_polar()</a></code> <code><a href="coord_polar.html">coord_polar()</a></code> </p>
+        </td>
+        <td><p>Polar coordinates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coord_radar.html">coord_radar()</a></code> <code><a href="coord_radar.html">coord_radar()</a></code> </p>
+        </td>
+        <td><p>Radar axes</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-accessories" class="hasAnchor"><a href="#section-accessories" class="anchor"></a>Accessories</h2>
+          <p class="section-desc"><p>Some handy accessories used for visualization.</p></p>
         </th>
       </tr>
       
@@ -445,121 +335,19 @@
         <td>
           <p><code><a href="add_serialaxes_layers.html">add_serialaxes_layers()</a></code> </p>
         </td>
-        <td><p>Layers on serial axes coordinate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coord_polar.html">coord_polar()</a></code> </p>
-        </td>
-        <td><p>Polar coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coord_radar.html">coord_radar()</a></code> </p>
-        </td>
-        <td><p>Radar axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="coord_serialaxes.html">coord_serialaxes()</a></code> </p>
-        </td>
-        <td><p>Serial axes coordinates</p></td>
+        <td><p>Layers for serial axes coordinate</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="dot_product.html">andrews()</a></code> <code><a href="dot_product.html">legendre()</a></code> </p>
         </td>
-        <td><p>Andrews plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_density_.html">geom_density_()</a></code> <code><a href="geom_density_.html">stat_density_()</a></code> </p>
-        </td>
-        <td><p>A more general smoothed density estimates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_hist_.html">geom_hist_()</a></code> <code><a href="geom_hist_.html">geom_histogram_()</a></code> <code><a href="geom_hist_.html">geom_bar_()</a></code> <code><a href="geom_hist_.html">stat_hist_()</a></code> <code><a href="geom_hist_.html">stat_bin_()</a></code> <code><a href="geom_hist_.html">stat_count_()</a></code> </p>
-        </td>
-        <td><p>A more general histogram</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_image_glyph.html">geom_image_glyph()</a></code> </p>
-        </td>
-        <td><p>Add image glyphs on scatter plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_polygon_glyph.html">geom_polygon_glyph()</a></code> </p>
-        </td>
-        <td><p>Add polygon glyphs on scatter plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_quantiles.html">geom_quantiles()</a></code> </p>
-        </td>
-        <td><p>Quantile layer for serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes.html">geom_serialaxes()</a></code> <code><a href="geom_serialaxes.html">GeomSerialaxes</a></code> <code><a href="geom_serialaxes.html">stat_serialaxes()</a></code> <code><a href="geom_serialaxes.html">stat_dotProduct()</a></code> </p>
-        </td>
-        <td><p>Serialaxes layer</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_density.html">geom_serialaxes_density()</a></code> <code><a href="geom_serialaxes_density.html">stat_serialaxes_density()</a></code> </p>
-        </td>
-        <td><p>Smoothed density estimates for "widens" data under serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_glyph.html">geom_serialaxes_glyph()</a></code> </p>
-        </td>
-        <td><p>Add serialaxes glyphs on scatter plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_hist.html">geom_serialaxes_hist()</a></code> <code><a href="geom_serialaxes_hist.html">stat_serialaxes_hist()</a></code> </p>
-        </td>
-        <td><p>Histogram for "widens" data under serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="geom_serialaxes_quantile.html">geom_serialaxes_quantile()</a></code> <code><a href="geom_serialaxes_quantile.html">GeomSerialaxesQuantile</a></code> <code><a href="geom_serialaxes_quantile.html">stat_serialaxes_quantile()</a></code> </p>
-        </td>
-        <td><p>Quantile layer for serial axes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_scaledData.html">get_scaledData()</a></code> </p>
-        </td>
-        <td><p>scale data</p></td>
+        <td><p>Transformation Coefficients</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="polygon_glyph.html">x_star</a></code> <code><a href="polygon_glyph.html">y_star</a></code> <code><a href="polygon_glyph.html">x_cross</a></code> <code><a href="polygon_glyph.html">y_cross</a></code> <code><a href="polygon_glyph.html">x_hexagon</a></code> <code><a href="polygon_glyph.html">y_hexagon</a></code> <code><a href="polygon_glyph.html">x_airplane</a></code> <code><a href="polygon_glyph.html">y_airplane</a></code> <code><a href="polygon_glyph.html">x_maple</a></code> <code><a href="polygon_glyph.html">y_maple</a></code> </p>
         </td>
         <td><p>Polygon glyph coordinates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="position_dodge_.html">position_dodge_()</a></code> <code><a href="position_dodge_.html">position_dodge2_()</a></code> </p>
-        </td>
-        <td><p>Dodge overlapping objects side-to-side</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="position_identity_.html">position_identity_()</a></code> </p>
-        </td>
-        <td><p>Don't adjust position</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="position_stack_.html">position_stack_()</a></code> <code><a href="position_stack_.html">position_fill_()</a></code> </p>
-        </td>
-        <td><p>Stack overlapping objects on top of each another</p></td>
       </tr>
     </tbody>
     </table>
@@ -579,7 +367,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

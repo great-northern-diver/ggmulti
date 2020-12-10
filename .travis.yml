@@ -1,0 +1,37 @@
+addons:
+  apt:
+    packages:
+     - libtk-img
+     - mesa-common-dev
+     - libglu1-mesa-dev
+     - freeglut3-dev
+     - libssl-dev
+     - libcurl4-gnutls-dev
+     - libxml2-dev
+     - xvfb
+
+env:
+  global:
+  - CODECOV_TOKEN="33aa6d1a-d8f3-4df3-9480-979561aaacd4"
+
+sudo: false
+
+language: r
+before_install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1  &
+  - R -q -e 'install.packages(c("ggplot2","stringr", "gridExtra", "magrittr",
+    "tidyr", "gtable", "png", "tibble", "maps", "ggplot2movies", "dplyr",
+    "testthat","knitr","rmarkdown", "maps", "nycflights13"))'
+
+cache: packages
+
+r:
+ - release
+ - devel
+
+r_packages:
+  - covr
+
+after_success:
+ - Rscript -e 'covr::codecov()'

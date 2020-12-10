@@ -1,18 +1,25 @@
-#' @title Layers on serial axes coordinate
+#' @title Layers for serial axes coordinate
 #' @description Project the regular \code{geom} layers onto the serial axes coordinate.
 #' @param layer a layer object
 #' @param plot a \code{ggplot} object
 #' @param object some parameters used to modify this serial axes \code{ggplot} object (i.e. \code{axes.sequence}, ...)
 #' @param axes canvas sequence axes
+#' @details The class is determined by layers you add. For example, you want to add a boxplot layer
+#' on serial axes coordinate.
+#' By the ggplot syntax, it should be \code{ggplot(data, mapping) + geom_boxplot() + coord_serialaxes()}
+#' To make it work, object \code{add_serialaxes_layers.GeomBoxplot} must be created. In this function,
+#' some computations will be applied.
+#'
 #' @export
-#' @import rlang ggplot2 methods
+#' @import ggplot2 methods
 #' @importFrom stats setNames quantile
 add_serialaxes_layers <- function(layer, plot, object, axes) {
 
   data <- {if(is.waive(layer$data)) NULL else layer$data} %||% plot$data
 
   if(is.null(data)) {
-    rlang::warn("Data is not found, neither in the function `ggplot()` nor in the layer.")
+    warning("Data is not found, neither in the function `ggplot()` nor in the layer.",
+            call. = FALSE)
     return(plot)
   }
 
@@ -21,8 +28,9 @@ add_serialaxes_layers <- function(layer, plot, object, axes) {
 
 #' @export
 add_serialaxes_layers.default <- function(layer, plot, object, axes) {
-  rlang::warn(paste("The layer", class(layer$geom)[1], "is not implemented in serialaxes coordinate yet.",
-                    "It will be omitted."))
+  warning("The layer ", class(layer$geom)[1], " is not implemented in serialaxes coordinate yet. ",
+          "It will be omitted.",
+          call. = FALSE)
   plot + ggplot2::geom_blank()
 }
 
@@ -39,7 +47,8 @@ add_serialaxes_layers.GeomPath <- function(layer, plot, object, axes) {
 
 #' @export
 add_serialaxes_layers.GeomRibbon <- function(layer, plot, object, axes) {
-  rlang::warn("Not implenmented yet")
+  warning("Not implenmented yet",
+          call. = FALSE)
   plot + ggplot2::geom_blank()
 }
 
@@ -61,7 +70,8 @@ add_serialaxes_layers.GeomDensity <- function(layer, plot, object, axes) {
 
 #' @export
 add_serialaxes_layers.GeomFreqpoly <- function(layer, plot, object, axes) {
-  rlang::warn("Not implenmented yet")
+  warning("Not implenmented yet",
+          call. = FALSE)
   plot
 }
 
@@ -95,8 +105,9 @@ add_serialaxes_layers.GeomQuantiles <- function(layer, plot, object, axes) {
 
 #' @export
 add_serialaxes_layers.GeomQuantile <- function(layer, plot, object, axes) {
-  rlang::warn(
-    "Layer `geom_quantile` is deprecated. Please call `geom_quantiles`."
+  warning(
+    "Layer `geom_quantile` is deprecated. Please call `geom_quantiles`.",
+    call. = FALSE
   )
   add_serialaxes_layers.GeomQuantiles(layer, plot, object, axes)
 }

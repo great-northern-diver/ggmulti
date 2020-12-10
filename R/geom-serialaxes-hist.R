@@ -1,7 +1,7 @@
-#' @title Histogram for "widens" data under serial axes
+#' @title Histogram for "widens" data under serial axes coordinate
 #' @name geom_serialaxes_hist
-#' @description Computes and draws histogram. It does not require `x` or `y` mapping aesthetics.
-#' It automatically draws histogram (or bar chart) for each variable defined by \code{axes.sequence}
+#' @description Computes and draws histogram on serial axes coordinate for each non-aesthetics component
+#' defined in the mapping \code{aes()}.
 #' @inheritParams geom_serialaxes
 #' @inheritParams geom_hist_
 #' @export
@@ -73,7 +73,7 @@ geom_serialaxes_hist <- function(mapping = NULL, data = NULL, stat = "serialaxes
   )
 }
 
-#' @inherit ggplot2::GeomBar
+#' @rdname Geom-ggproto
 #' @export
 GeomSerialaxesHist <- ggplot2::ggproto(
   "GeomSerialaxesHist",

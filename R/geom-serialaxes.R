@@ -1,11 +1,12 @@
-#' @title Serialaxes layer
+#' @title Serial axes layer
 #' @name geom_serialaxes
-#' @description Draw a serialaxes layer, parallel axes under Cartesian system and radial axes under Polar system.
-#' It only takes the "widens" data, but we can use \code{geom_path} to handle the "lengthens" data (see examples)
+#' @description Draw a serial axes layer, parallel axes under Cartesian system and radial axes under Polar system.
+#' It only takes the "widens" data. Each non-aesthetics component defined in the mapping \code{aes()} will
+#' be treated as an axis.
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_path
 #' @param axes.sequence A vector to define the axes sequence. In serial axes coordinate, the sequence can be either
-#' determined in \code{mapping} (function \code{aes}) or by \code{axes.sequence}. The only difference is that
+#' determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
 #' the \code{mapping} aesthetics will omit the duplicated axes (check examples in \code{\link{geom_serialaxes}}).
 #' @param merge Should \code{axes.sequence} be merged with mapping aesthetics
 #' as a single mapping \code{uneval} object?
@@ -104,7 +105,7 @@ geom_serialaxes <- function(mapping = NULL, data = NULL, stat = "serialaxes",
   )
 }
 
-#' @rdname geom_serialaxes
+#' @rdname Geom-ggproto
 #' @export
 GeomSerialaxes <- ggplot2::ggproto(
   "GeomSerialaxes",

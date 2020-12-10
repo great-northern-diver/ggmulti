@@ -1,20 +1,14 @@
 # ggmulti  <img src="man/figures/logo.png" align="right" width="120" />
 
-[![Build Status](https://travis-ci.com/z267xu/ggmulti.svg?branch=master)](https://travis-ci.com/z267xu/ggmulti)
+[![Build Status](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)
 [![Codecov test coverage](https://codecov.io/gh/z267xu/ggmulti/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/ggmulti?branch=master)
 
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
 
-`ggmulti` can be achieved directly from github repo
+The developped version of `ggmulti` can be achieved directly from github repo
 
 ```
 remotes::install_github("https://github.com/z267xu/ggmulti")
-```
-
-Launch R, then install the required package dependencies
-
-```
-install.packages("ggplot2")
 ```
 
 Documents: https://z267xu.github.io/ggmulti/

@@ -33,7 +33,8 @@ collide_ <- function(data, width = NULL, name, strategy, collide.fun,
 unify_columns <- function(x) {
 
   if(is.data.frame(x)) return(x)
-  if(!is.list(x)) rlang::abort(glue::glue("{deparse(substitute(x))} is not a list"))
+  if(!is.list(x)) stop(paste(deparse(substitute(x)), "is not a list"),
+                       call. = FALSE)
 
   cols <- lapply(seq(length(x)),
                  function(i) {
@@ -41,8 +42,9 @@ unify_columns <- function(x) {
                    data <- x[[i]]
 
                    if(!is.data.frame(data))
-                     rlang::abort(glue::glue("The {i}th object in {deparse(substitute(x))} is
-                                                not a data frame"))
+                     stop("The ", i, "th object in ", deparse(substitute(x)),
+                          " is not a data frame",
+                          call. = FALSE)
                    colnames(data)
                  })
   # To each dataset,

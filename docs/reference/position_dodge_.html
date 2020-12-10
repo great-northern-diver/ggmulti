@@ -48,7 +48,7 @@
 
 <meta property="og:title" content="Dodge overlapping objects side-to-side — position_dodge_" />
 <meta property="og:description" content="Dodging preserves the vertical position of an geom while adjusting the horizontal position.
-position_dodge_ dodges bars side by side but conditional on locations." />
+position_dodge_() dodges bars side by side but conditional on locations." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -116,12 +116,7 @@ position_dodge_ dodges bars side by side but conditional on locations." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -142,17 +137,17 @@ position_dodge_ dodges bars side by side but conditional on locations." />
 
     <div class="ref-description">
     <p>Dodging preserves the vertical position of an geom while adjusting the horizontal position.
-<code>position_dodge_</code> dodges bars side by side but conditional on locations.</p>
+<code>position_dodge_()</code> dodges bars side by side but conditional on locations.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>position_dodge_</span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>preserve</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"total"</span>, <span class='st'>"single"</span>))
+    <pre class="usage"><span class='fu'>position_dodge_</span><span class='op'>(</span>width <span class='op'>=</span> <span class='cn'>NULL</span>, preserve <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"total"</span>, <span class='st'>"single"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>position_dodge2_</span>(
-  <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>preserve</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"total"</span>, <span class='st'>"single"</span>),
-  <span class='kw'>padding</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+<span class='fu'>position_dodge2_</span><span class='op'>(</span>
+  width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  preserve <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"total"</span>, <span class='st'>"single"</span><span class='op'>)</span>,
+  padding <span class='op'>=</span> <span class='fl'>0.1</span>,
+  reverse <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +178,7 @@ This is useful if you're rotating both the plot and legend.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>It is built based on <code>position_dodge</code>, but used for multiple locations, such as
-<code><a href='geom_hist_.html'>geom_hist_</a></code> or <code><a href='geom_density_.html'>geom_density_</a></code>. Check examples to see the difference.</p>
+<code><a href='geom_hist_.html'>geom_hist_()</a></code> or <code><a href='geom_density_.html'>geom_density_()</a></code>. Check examples to see the difference.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>See <code><a href='geom_hist_.html'>geom_hist_</a></code> and <code><a href='geom_serialaxes_hist.html'>geom_serialaxes_hist</a></code> for more examples.</p>
@@ -193,20 +188,24 @@ This is useful if you're rotating both the plot and legend.</p></td>
 <p>Parent: <code>position_dodge</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span>(<span class='kw'>cols</span> <span class='kw'>=</span> -<span class='no'>Species</span>,
-                      <span class='kw'>names_to</span> <span class='kw'>=</span> <span class='st'>"Outer sterile whorls"</span>,
-                      <span class='kw'>values_to</span> <span class='kw'>=</span> <span class='st'>"values"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>ggplot</span>(<span class='no'>data</span>,
-         <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>`Outer sterile whorls`</span>,
-                       <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>values</span>,
-                       <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>Species</span>))
+    <pre class="examples"><div class='input'><span class='kw'>if</span><span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>iris</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='op'>-</span><span class='va'>Species</span>,
+                      names_to <span class='op'>=</span> <span class='st'>"Outer sterile whorls"</span>,
+                      values_to <span class='op'>=</span> <span class='st'>"values"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>data</span>,
+         mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Outer sterile whorls`</span>,
+                       y <span class='op'>=</span> <span class='va'>values</span>,
+                       fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>p</span> + <span class='fu'><a href='geom_hist_.html'>geom_hist_</a></span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='fu'>position_dodge_</span>())</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='position_dodge_-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'><a href='geom_hist_.html'>geom_hist_</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='fu'>position_dodge_</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='position_dodge_-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'># all bins are shifted on the left</span>
-<span class='no'>p</span> +
-  <span class='fu'><a href='geom_hist_.html'>geom_hist_</a></span>(<span class='kw'>position</span> <span class='kw'>=</span> <span class='fu'>position_dodge</span>())</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='position_dodge_-2.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='va'>p</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_hist_.html'>geom_hist_</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='fu'>position_dodge</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='position_dodge_-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 
 </div></pre>
@@ -225,7 +224,7 @@ This is useful if you're rotating both the plot and legend.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

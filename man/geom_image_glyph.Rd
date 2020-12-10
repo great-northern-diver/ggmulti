@@ -78,7 +78,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 a \code{geom} layer
 }
 \description{
-Each point glyph can be a image (png, jpeg, etc) object.
+Each point glyph can be an image (png, jpeg, etc) object.
 }
 \section{Aesthetics}{
 
@@ -103,9 +103,10 @@ geom_..._glyph() understands the following aesthetics (required aesthetics are i
 if(requireNamespace("png")) {
 
 # Download images from github
-RaptorsURL <- "https://raw.githubusercontent.com/great-northern-diver/ggmulti/master/vignettes/glyph/raptors.png"
-download.file(RaptorsURL, destfile = "Raptors.png", mode = 'wb')
-Raptors <- png::readPNG("Raptors.png")
+img_path <- list.files(file.path(find.package(package = 'ggmulti'),
+                                 "images"),
+                       full.names = TRUE)
+Raptors <- png::readPNG(img_path[1L])
 
 p <- ggplot(data = data.frame(x = 0, y = 0),
             mapping = aes(x = x, y = y)) +

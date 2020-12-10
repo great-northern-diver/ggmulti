@@ -2,7 +2,7 @@
 % Please edit documentation in R/add-serialaxes-layers.R
 \name{add_serialaxes_layers}
 \alias{add_serialaxes_layers}
-\title{Layers on serial axes coordinate}
+\title{Layers for serial axes coordinate}
 \usage{
 add_serialaxes_layers(layer, plot, object, axes)
 }
@@ -17,4 +17,11 @@ add_serialaxes_layers(layer, plot, object, axes)
 }
 \description{
 Project the regular \code{geom} layers onto the serial axes coordinate.
+}
+\details{
+The class is determined by layers you add. For example, you want to add a boxplot layer
+on serial axes coordinate.
+By the ggplot syntax, it should be \code{ggplot(data, mapping) + geom_boxplot() + coord_serialaxes()}
+To make it work, object \code{add_serialaxes_layers.GeomBoxplot} must be created. In this function,
+some computations will be applied.
 }

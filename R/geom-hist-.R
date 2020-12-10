@@ -1,8 +1,12 @@
-#' @title A more general histogram
+#' @title More general histogram
 #' @name geom_hist_
-#' @description A more general histogram (\code{geom_histogram}) or bar plot (\code{geom_bar}).
-#' It can accept both `x` and `y` simultaneously. If only one is provided,
-#' \code{geom_histogram} or \code{geom_bar} will be executed.
+#' @description More general histogram (\code{geom_histogram()}) or bar plot (\code{geom_bar()}).
+#' Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
+#' `y` (or `x`) the target variable to be plotted.
+#' The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
+#' If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
+#' the standard \code{geom_histogram()} will be executed.
+#'
 #' @inheritParams geom_density_
 #' @inheritParams ggplot2::geom_histogram
 #' @inheritParams ggplot2::geom_bar
@@ -15,11 +19,10 @@
 #' @seealso \code{\link{geom_histogram}}, \code{\link{geom_density_}}
 #' @export
 #' @importFrom tidyr pivot_longer
-#' @importFrom magrittr `%>%`
 #' @details
 #' 1. `geom_hist_` is a wrapper of `geom_histogram_` and `geom_count_`. In other words, suppose the 'y' is our interest,
-#' \code{geom_hist_} can accommodate both continuous or discrete "y" but \code{geom_histogram_} is only for the continuous "y" and
-#' \code{geom_bar_} is only for the discrete "y".
+#' \code{geom_hist_()} can accommodate both continuous or discrete "y" but \code{geom_histogram_()} is only for the continuous "y" and
+#' \code{geom_bar_()} is only for the discrete "y".
 #'
 #' 2. There are four combinations of \code{scale.y} and \code{as.mix}
 #' \describe{
@@ -38,7 +41,7 @@
 #'
 #'
 #' @examples
-#' if(require(dplyr) && require(magrittr) && require(tidyr)) {
+#' if(require(dplyr) && require(tidyr)) {
 #'
 #'   # histogram
 #'   p0 <- mpg %>%
@@ -95,7 +98,8 @@
 geom_hist_ <- function(mapping = NULL, data = NULL, stat = "hist_",
                        position = "stack_", ...,
                        scale.x = NULL, scale.y = c("data", "variable"), as.mix = FALSE,
-                       binwidth = NULL, bins = NULL, positive = TRUE, adjust = 0.9, na.rm = FALSE, orientation = NA,
+                       binwidth = NULL, bins = NULL, positive = TRUE,
+                       adjust = 0.9, na.rm = FALSE, orientation = NA,
                        show.legend = NA, inherit.aes = TRUE) {
 
   ggplot2::layer(
@@ -187,7 +191,7 @@ geom_bar_ <- function(mapping = NULL, data = NULL, stat = "count_",
   )
 }
 
-#' @inherit ggplot2::GeomBar
+#' @rdname Geom-ggproto
 #' @export
 GeomBar_ <- ggplot2::ggproto(
   "GeomBar_",
@@ -203,11 +207,11 @@ GeomBar_ <- ggplot2::ggproto(
     params$as.mix <- params$as.mix %||% FALSE
     if(!is.null(params$scale.x)) {
       if(!all(is.numeric(params$scale.x)))
-        rlang::abort(glue::glue("`scale.x` must be numerical, but it is {class(params$scale.x)}"))
+        stop("`scale.x` must be numerical, but it is ", class(params$scale.x),
+             call. = FALSE)
       if(length(params$scale.x) != 2)
-        rlang::abort(
-          glue::glue("`scale.x` should be a length 2 vector, but it has length {length(params$scale.x)}")
-        )
+        stop("`scale.x` should be a length 2 vector, but it has length ", length(params$scale.x),
+             call. = FALSE)
     }
 
     params
@@ -244,7 +248,7 @@ GeomBar_ <- ggplot2::ggproto(
       data <- data %>%
         dplyr::group_by(location) %>%
         dplyr::mutate(width = width/(max_range),
-                      x = scales::rescale(x, to = params$scale.x)) %>%
+                      x = rescale(x, params$scale.x)) %>%
         dplyr::ungroup()
     }
 

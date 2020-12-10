@@ -41,7 +41,7 @@ stat_serialaxes_hist <- function(mapping = NULL, data = NULL, geom = "serialaxes
   )
 }
 
-#' @inherit ggplot2::StatBin
+#' @rdname Stat-ggproto
 #' @export
 StatSerialaxesHist <- ggplot2::ggproto(
   "StatSerialaxesHist",

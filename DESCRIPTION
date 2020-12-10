@@ -16,17 +16,13 @@ Imports:
     stats,
     utils,
     grid,
-    magrittr,
     dplyr,
-    tidyr,
-    scales,
-    gtable,
-    rlang,
-    glue
+    tidyr
 Suggests:
     png,
     tools,
     stringr,
+    magrittr,
     gridExtra,
     tibble,
     testthat,
@@ -34,6 +30,7 @@ Suggests:
     knitr,
     rmarkdown,
     tidyverse,
+    gtable,
     covr,
     maps,
     nycflights13,

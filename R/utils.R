@@ -5,9 +5,8 @@
 char2null <- function(x, warn = FALSE, message = "") {
   if(length(x) == 0) {
     if(warn) {
-      rlang::abort(
-        glue::glue(message)
-      )
+      warning(message,
+              call. = FALSE)
     }
     return(NULL)
   }
@@ -52,4 +51,23 @@ not_in_column_names <- function(colnames, name = "", pattern = "") {
            }
            x
          }, character(1L))
+}
+
+rescale <- function(x, range) {
+
+  stopifnot(
+    exprs = {
+      is.numeric(x)
+      is.numeric(range)
+    }
+  )
+
+  len <- length(x)
+  minx <- min(x, na.rm = TRUE)
+  maxx <- max(x, na.rm = TRUE)
+  range <- sort(range)
+  if(minx == maxx)
+    return(rep(range[1L], len))
+
+  (x - minx)/(maxx - minx) * diff(range) + range[1L]
 }

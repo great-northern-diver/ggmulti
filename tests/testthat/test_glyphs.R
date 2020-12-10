@@ -1,5 +1,4 @@
 context("test glyphs")
-library(magrittr)
 library(tidyverse)
 library(ggmulti)
 

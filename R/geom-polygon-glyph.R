@@ -1,6 +1,7 @@
 #' @title Add polygon glyphs on scatter plot
 #' @description Each point glyph can be a polygon object.
-#' Available polygons coords can be achieved in \code{\link{polygon_glyph}}
+#' We provide some common polygon coords in \code{\link{polygon_glyph}}. Also, users can
+#' customize their own polygons.
 #' @inheritParams geom_serialaxes_glyph
 #' @param polygon_x nested list of x-coordinates of polygons, one list element for each scatterplot point.
 #' If not provided, \code{geom_point()} will be executed.
@@ -170,10 +171,8 @@ glyph_input_setup <- function(x, n = integer(1L)) {
     } else if(length(x) == n) {
       NULL
     } else {
-      rlang::abort(
-        paste("The length of", deparse(substitute(x)),
-              "must be either length 1 or the same as the data", "n")
-      )
+      stop("The length of ", deparse(substitute(x)),
+           " must be either length 1 or the same as the data ", n)
     }
   }
 

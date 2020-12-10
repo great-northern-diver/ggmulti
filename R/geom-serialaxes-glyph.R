@@ -1,6 +1,6 @@
-#' @title Add serialaxes glyphs on scatter plot
+#' @title Add serial axes glyphs on scatter plot
 #' @description To visualize high dimensional data on scatterplot.
-#' Each point glyph is surrounded by a serialaxes object.
+#' Each point glyph is surrounded by a serial axes (parallel axes or radial axes) object.
 #' @inheritParams geom_serialaxes
 #' @param serialaxes.data a serial axes numerical data set. If not provided, \code{geom_point()} will be called.
 #' @param axes.layout either "radial" or "parallel"
@@ -103,21 +103,19 @@ GeomSerialAxesGlyph <- ggplot2::ggproto('GeomSerialAxesGlyph', Geom,
                                           col.names <- colnames(params$serialaxes.data)
                                           axes.sequence <- char2null(params$axes.sequence) %||% col.names
                                           if(!is.atomic(axes.sequence)) {
-                                            rlang::abort(
-                                              glue::glue(
-                                                "`axes.sequence` should be atomic, instead of {class(axes.sequence)}"
-                                              )
-                                            )
+                                            stop("`axes.sequence` should be atomic, instead of ",
+                                                 class(axes.sequence),
+                                                 call. = FALSE)
                                           }
 
                                           if(!all(axes.sequence %in% col.names)) {
                                             matched_names <- axes.sequence %in% col.names
 
-                                            rlang::warn(
-                                              glue::glue(
-                                                "Cannot find {paste(axes.sequence[!matched_names])} in `serialaxes.data`"
-                                              )
-                                            )
+                                            warning("Cannot find ",
+                                                    paste(axes.sequence[!matched_names]),
+                                                    " in `serialaxes.data`",
+                                                    call. = FALSE)
+
 
                                             axes.sequence <- char2null(axes.sequence[matched_names], warn = TRUE,
                                                                        message = "The `axes.sequence` is illegal;
@@ -140,12 +138,9 @@ GeomSerialAxesGlyph <- ggplot2::ggproto('GeomSerialAxesGlyph', Geom,
                                           serialaxes.data <- params$serialaxes.data
 
                                           if(n != dim(serialaxes.data)[1]) {
-                                            rlang::abort(
-                                              glue::glue(
-                                                "`serialaxes.data` has {dim(serialaxes.data)[1]},
-                                              observations that is not equal to {n}"
-                                              )
-                                            )
+                                            stop("`serialaxes.data` has ", dim(serialaxes.data)[1],
+                                                 " observations that is not equal to ", n,
+                                                 call. = FALSE)
                                           }
                                           # avoid duplicated names in merged dataset
                                           newnames <- not_in_column_names(colnames(data), colnames(serialaxes.data), ".1")
@@ -183,7 +178,7 @@ GeomSerialAxesGlyph <- ggplot2::ggproto('GeomSerialAxesGlyph', Geom,
                                           p <- ncol(scaledData)
 
                                           if(andrews) {
-                                            fourierTrans <- andrews(k = p, length.out = 200)
+                                            fourierTrans <- andrews(p = p, k = 200)
                                             scaledData <- as.matrix(scaledData) %*% fourierTrans$matrix
 
                                             dataRange <- range(scaledData)
