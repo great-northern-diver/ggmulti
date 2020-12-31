@@ -77,19 +77,26 @@ knitr::opts_chunk$set(echo = TRUE,
                       tidy = FALSE)
 library(knitr)
 set.seed(12314159)
-imageDirectory <- "./glyph"
-dataDirectory <- "./glyph"
-path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
-
+imageDirectory <- "./images/glyph"
+dataDirectory <- "./data/glyph"
+path_concat <- function(path1, ..., sep="/") {
+  # The "/" is standard unix directory separator and so will
+  # work on Macs and Linux.
+  # In windows the separator might have to be sep = "\" or 
+  # even sep = "\\" or possibly something else. 
+  paste(path1, ..., sep = sep)
+}
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 ```
 
-Package `ggmulti` also provides some "glyph" layers to help visualize high dimensional dataset [@loon].
+Glyphs can be used as point symbols in a scatterplot to convey more information on each point.  This information could range from providing a more evocative picture for each point (e.g., an airplane for flight data  or a team's logo for sports data) to incorporating quantitative information (e.g., the values of other variables in a serial axes or star glyph or as a Chernoff face).
+
+In `ggmulti` we provide "glyph" layers to help add this information as point symbols on a plot [@loon].
 
 ## Polygon glyphs
 
-Following example illustrates the USA destinations (not including Alaska and Hawaii) of "nyc" flights in 2013. All destinations are marked as a "airplane" polygon symbol and LA is highlighted by a red star.
+Consider, for example, the lower 48 USA destinations  of "nyc" flights in 2013. Each destination could be marked as a "airplane" polygon symbol and New York city is highlighted by a blue star.
 
 ```{r glyph_ggplot, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
 library(ggmulti)
@@ -103,29 +110,31 @@ destinations <- nycflights13::airports %>%
   dplyr::mutate(tzone = gsub("America/", "", tzone)) %>% 
   dplyr::filter(lon > -151, 
                 lat < 55)
-# LA coordinate
-LA <- data.frame(
-  lon = -118.243683,
-  lat = 34.052235
-)
 
+# New York City coordinates
+NY <- data.frame(
+  lon = -73.935242,
+  lat = 40.730610
+)
 US <- map_data("state")  %>% 
   ggplot(aes(long, lat)) +
   geom_polygon(mapping = aes(group = group), 
                color="black", fill="cornsilk") 
-US + 
+NYflightDestinationMap <- US + 
   geom_polygon_glyph(data = destinations,
                      mapping = aes(x = lon, y = lat),
                      fill = "pink",
-                     polygon_x = x_airplane,
+                     # negate x to have each plane face west
+                     polygon_x = -x_airplane, 
                      polygon_y = y_airplane,
                      alpha = 0.75) + 
-  geom_polygon_glyph(data = LA,
+  geom_polygon_glyph(data = NY,
                      mapping = aes(x = lon, y = lat),
                      polygon_x = x_star,
                      polygon_y = y_star, 
                      alpha = 0.75, 
-                     fill = "red")
+                     fill = "blue")
+NYflightDestinationMap
 ```
 
 ```{r glyph_ggplot_graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 7, fig.height = 4, fig.align = "center", out.width = "70%"}
