@@ -8,10 +8,10 @@ It provides materials (i.e. serialaxes objects) to visualize high dimensional da
 The developped version of `ggmulti` can be achieved directly from github repo
 
 ```
-remotes::install_github("https://github.com/z267xu/ggmulti")
+remotes::install_github("https://github.com/great-northern-diver/ggmulti")
 ```
 
-Documents: https://z267xu.github.io/ggmulti/
+Documents: https://great-northern-diver.github.io/ggmulti/
 
 ## Introduction
 
