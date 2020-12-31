@@ -77,9 +77,15 @@ knitr::opts_chunk$set(echo = TRUE,
                       tidy = FALSE)
 library(knitr)
 set.seed(12314159)
-imageDirectory <- "./highDim"
-dataDirectory <- "./highDim"
-path_concat <- function(path1, path2, sep="/") {paste(path1, path2, sep = sep)}
+imageDirectory <- "./images/highDim"
+dataDirectory <- "./images/highDim"
+path_concat <- function(path1, ..., sep="/") {
+  # The "/" is standard unix directory separator and so will
+  # work on Macs and Linux.
+  # In windows the separator might have to be sep = "\" or 
+  # even sep = "\\" or possibly something else. 
+  paste(path1, ..., sep = sep)
+}
 
 library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
