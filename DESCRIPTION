@@ -10,9 +10,9 @@ Description: It provides materials (i.e. 'serial axes' objects, Andrew's plot, v
 License: GPL-2
 Depends:
     R (>= 3.4.0),
-    methods,
-    ggplot2
+    methods
 Imports:
+    ggplot2,
     stats,
     utils,
     grid,
