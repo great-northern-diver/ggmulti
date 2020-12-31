@@ -1,17 +1,17 @@
 # ggmulti  <img src="man/figures/logo.png" align="right" width="120" />
 
 [![Build Status](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)
-[![Codecov test coverage](https://codecov.io/gh/z267xu/ggmulti/branch/master/graph/badge.svg)](https://codecov.io/gh/z267xu/ggmulti?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/great-northern-diver/ggmulti/branch/master/graph/badge.svg)](https://codecov.io/gh/great-northern-diver/ggmulti?branch=master)
 
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
 
 The developped version of `ggmulti` can be achieved directly from github repo
 
 ```
-remotes::install_github("https://github.com/z267xu/ggmulti")
+remotes::install_github("https://github.com/great-northern-diver/ggmulti")
 ```
 
-Documents: https://z267xu.github.io/ggmulti/
+Documents: https://great-northern-diver.github.io/ggmulti/
 
 ## Introduction
 
