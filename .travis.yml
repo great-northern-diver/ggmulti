@@ -12,7 +12,7 @@ addons:
 
 env:
   global:
-  - CODECOV_TOKEN="33aa6d1a-d8f3-4df3-9480-979561aaacd4"
+  - CODECOV_TOKEN="a03923d0-eeb7-4762-8706-7f093a62bd37"
 
 sudo: false
 
