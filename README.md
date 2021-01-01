@@ -5,27 +5,27 @@
 
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
 
-The developped version of `ggmulti` can be achieved directly from github repo
+The development version of `ggmulti` can be accessed directly from github repo
 
 ```
 remotes::install_github("https://github.com/great-northern-diver/ggmulti")
 ```
 
-Documents: https://great-northern-diver.github.io/ggmulti/
+Documentation: https://great-northern-diver.github.io/ggmulti/
 
 ## Introduction
 
-Package `ggmulti` is an extension of package `ggplot2` by providing high dimensional visualization materials, such as
+Package `ggmulti` extends the `ggplot2`  package to provide some high dimensional visualization functionality, such as
 
-* Serialaxes coordinate (i.e. parallel, radial)
+* Serialaxes coordinates (i.e., parallel or  radial axis systems)
 
-* Variety glyphs on scatterplot. 
+* General glyphs (e.g., polygons, images) to appear a scatterplot. 
 
-* "More general" `geom_histogram` and `geom_density`
+* "More general" `geom_histogram` and `geom_density` to allow them to appear on serial axes.
 
-### Serialaxes Coordinate
+### Serialaxes Coordinates
 
-Parallel coordinate
+Parallel coordinates
 
 ```
 library(ggmulti)
