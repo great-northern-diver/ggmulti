@@ -147,51 +147,51 @@ It only takes the "widens" data. Each non-aesthetics component defined in the ma
 be treated as an axis.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>geom_serialaxes</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"serialaxes"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>axes.sequence</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>merge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>geom_serialaxes</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stat <span class='op'>=</span> <span class='st'>"serialaxes"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0L</span><span class='op'>)</span>,
+  merge <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>stat_serialaxes</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"serialaxes"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>axes.sequence</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>merge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>axes.position</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scaling</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"variable"</span>, <span class='st'>"observation"</span>, <span class='st'>"data"</span>, <span class='st'>"none"</span>),
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+<span class='fu'>stat_serialaxes</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='st'>"serialaxes"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0L</span><span class='op'>)</span>,
+  merge <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  axes.position <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scaling <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"variable"</span>, <span class='st'>"observation"</span>, <span class='st'>"data"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>stat_dotProduct</span>(
-  <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>geom</span> <span class='kw'>=</span> <span class='st'>"path"</span>,
-  <span class='kw'>position</span> <span class='kw'>=</span> <span class='st'>"identity"</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>axes.sequence</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>),
-  <span class='kw'>merge</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>scaling</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"variable"</span>, <span class='st'>"observation"</span>, <span class='st'>"data"</span>, <span class='st'>"none"</span>),
-  <span class='kw'>transform</span> <span class='kw'>=</span> <span class='no'>andrews</span>,
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>orientation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>show.legend</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>inherit.aes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>stat_dotProduct</span><span class='op'>(</span>
+  mapping <span class='op'>=</span> <span class='cn'>NULL</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  geom <span class='op'>=</span> <span class='st'>"path"</span>,
+  position <span class='op'>=</span> <span class='st'>"identity"</span>,
+  <span class='va'>...</span>,
+  axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0L</span><span class='op'>)</span>,
+  merge <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  scaling <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"variable"</span>, <span class='st'>"observation"</span>, <span class='st'>"data"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
+  transform <span class='op'>=</span> <span class='va'>andrews</span>,
+  na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  orientation <span class='op'>=</span> <span class='cn'>NA</span>,
+  show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
+  inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -305,43 +305,50 @@ How to transform one to the other is explained in <a href='https://tidyr.tidyver
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># parallel coordinate</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>Sepal.Length</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>,
-                                <span class='kw'>Sepal.Width</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>,
-                                <span class='kw'>Petal.Length</span> <span class='kw'>=</span> <span class='no'>Petal.Length</span>,
-                                <span class='kw'>Petal.Width</span> <span class='kw'>=</span> <span class='no'>Petal.Width</span>,
-                                <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>))
-<span class='no'>p</span> + <span class='fu'>geom_serialaxes</span>()</div><div class='img'><img src='geom_serialaxes-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
+                                Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
+                                Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,
+                                Petal.Width <span class='op'>=</span> <span class='va'>Petal.Width</span>,
+                                colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_serialaxes-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># radial coordinate</span>
-<span class='no'>p</span> +
-  <span class='fu'>geom_serialaxes</span>() +
-  <span class='fu'><a href='coord_polar.html'>coord_polar</a></span>(<span class='kw'>is_linear</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='co'># or just call `coord_radar()`!</span></div><div class='img'><img src='geom_serialaxes-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>p</span> <span class='op'>+</span>
+  <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='coord_polar.html'>coord_polar</a></span><span class='op'>(</span>is_linear <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># or just call `coord_radar()`!</span>
+</div><div class='img'><img src='geom_serialaxes-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># andrews plot</span>
-<span class='no'>p</span> + <span class='fu'>geom_serialaxes</span>(<span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"dotProduct"</span>,
-                    <span class='kw'>transform</span> <span class='kw'>=</span> <span class='no'>andrews</span>, <span class='co'># default</span>
-                    <span class='kw'>scaling</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</div><div class='img'><img src='geom_serialaxes-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"dotProduct"</span>,
+                    transform <span class='op'>=</span> <span class='va'>andrews</span>, <span class='co'># default</span>
+                    scaling <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_serialaxes-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Legendre polynomials</span>
-<span class='no'>p</span> + <span class='fu'>geom_serialaxes</span>(<span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"dotProduct"</span>,
-                    <span class='kw'>transform</span> <span class='kw'>=</span> <span class='no'>legendre</span>,
-                    <span class='kw'>scaling</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</div><div class='img'><img src='geom_serialaxes-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"dotProduct"</span>,
+                    transform <span class='op'>=</span> <span class='va'>legendre</span>,
+                    scaling <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_serialaxes-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># or set the `axes.sequence` rather tahn the mapping `aes`</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>) +
-       <span class='fu'>geom_serialaxes</span>(<span class='kw'>axes.sequence</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>iris</span>))
-<span class='no'>p</span></div><div class='img'><img src='geom_serialaxes-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span> <span class='op'>+</span>
+       <span class='fu'>geom_serialaxes</span><span class='op'>(</span>axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span>
+</div><div class='img'><img src='geom_serialaxes-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>############# Determine axes sequence</span>
 <span class='co'># 1. set the duplicated axes by mapping aesthetics</span>
-<span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>Sepal.Length</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>,
-                           <span class='kw'>Sepal.Width</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>,
-                           <span class='kw'>Sepal.Length</span> <span class='kw'>=</span> <span class='no'>Sepal.Length</span>,
-                           <span class='kw'>Sepal.Width</span> <span class='kw'>=</span> <span class='no'>Sepal.Width</span>,
-                           <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
+<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
+                           Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
+                           Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
+                           Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
+                           colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='co'># only two axes, duplicated axes are removed</span>
-  <span class='fu'>geom_serialaxes</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Duplicated aesthetics after name standardisation: Sepal.Length, Sepal.Width</span></div><div class='img'><img src='geom_serialaxes-6.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Duplicated aesthetics after name standardisation: Sepal.Length, Sepal.Width</span></div><div class='img'><img src='geom_serialaxes-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># 2. set the duplicated axes by axes.sequence</span>
-<span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='kw'>mapping</span> <span class='kw'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
-  <span class='fu'>geom_serialaxes</span>(
-    <span class='kw'>axes.sequence</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span>,
-                      <span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span>))</div><div class='img'><img src='geom_serialaxes-7.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_serialaxes</span><span class='op'>(</span>
+    axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span>,
+                      <span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_serialaxes-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -358,7 +365,7 @@ How to transform one to the other is explained in <a href='https://tidyr.tidyver
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
