@@ -78,7 +78,7 @@ knitr::opts_chunk$set(echo = TRUE,
 library(knitr)
 set.seed(12314159)
 imageDirectory <- "./images/highDim"
-dataDirectory <- "./images/highDim"
+dataDirectory <- "./data/highDim"
 path_concat <- function(path1, ..., sep="/") {
   # The "/" is standard unix directory separator and so will
   # work on Macs and Linux.
