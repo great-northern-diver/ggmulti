@@ -109,3 +109,11 @@ reference:
   - y_maple
   - x_star
   - y_star
+
+- title: Ggproto objects
+  desc: >
+    The object oriented system that `ggmulti` uses to extend the `ggplot` package
+  contents:
+  - Stat-ggproto
+  - Position-ggproto
+  - Geom-ggproto
