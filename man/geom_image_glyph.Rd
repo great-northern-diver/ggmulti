@@ -102,7 +102,6 @@ geom_..._glyph() understands the following aesthetics (required aesthetics are i
 # image glyph
 if(requireNamespace("png")) {
 
-# Download images from github
 img_path <- list.files(file.path(find.package(package = 'ggmulti'),
                                  "images"),
                        full.names = TRUE)

@@ -151,6 +151,7 @@ GeomSerialAxesGlyph <- ggplot2::ggproto('GeomSerialAxesGlyph', Geom,
                                           d$linewidth <- params$linewidth
                                           d$scaling <- params$scaling
                                           d$axes.layout <- params$axes.layout
+                                          d$andrews <- params$andrews
                                           d$show.axes <- params$show.axes
                                           d$show.enclosing <- params$show.enclosing
                                           d$axescolour <- params$axescolour

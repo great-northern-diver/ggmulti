@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Base Position ggproto classes for ggplot2 — Position-ggproto • ggmulti</title>
+<title>Changelog • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,16 +46,7 @@
 
 
 
-<meta property="og:title" content="Base Position ggproto classes for ggplot2 — Position-ggproto" />
-<meta property="og:description" content="All position_ functions (like position_dodge)
-return a Position object (like PositionDodge).
-The Position object is responsible for adjusting the position of overlapping geoms.
-The way that the position_ functions work is slightly different from the
-geom_ and stat_ functions, because a position_ function
-actually &quot;instantiates&quot; the Position object by creating a descendant,
-and returns that.
-Each of the Position objects is a ggproto object,
-descended from the top-level Position." />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -75,7 +66,7 @@ descended from the top-level Position." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -145,48 +136,26 @@ descended from the top-level Position." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Base Position ggproto classes for ggplot2</h1>
-    
-    <div class="hidden name"><code>Position-ggproto.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="ref-description">
-    <p>All <code>position_</code> functions (like <code>position_dodge</code>)
-return a <code>Position</code> object (like <code>PositionDodge</code>).
-The <code>Position</code> object is responsible for adjusting the position of overlapping geoms.
-The way that the <code>position_</code> functions work is slightly different from the
-<code>geom_</code> and <code>stat_</code> functions, because a <code>position_</code> function
-actually "instantiates" the <code>Position</code> object by creating a descendant,
-and returns that.
-Each of the <code>Position</code> objects is a <code>ggproto</code> object,
-descended from the top-level <code>Position</code>.</p>
-    </div>
-
-    <pre class="usage"><span class='va'>PositionDodge_</span>
-
-<span class='va'>PositionDodge2_</span>
-
-<span class='va'>PositionIdentity_</span>
-
-<span class='va'>PositionStack_</span>
-
-<span class='va'>PositionFill_</span></pre>
-
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>PositionDodge_</code> (inherits from <code>PositionDodge</code>, <code>Position</code>, <code>ggproto</code>, <code>gg</code>) of length 2.</p>
-<p>An object of class <code>PositionDodge2_</code> (inherits from <code>PositionDodge2</code>, <code>PositionDodge</code>, <code>Position</code>, <code>ggproto</code>, <code>gg</code>) of length 2.</p>
-<p>An object of class <code>PositionIdentity_</code> (inherits from <code>PositionIdentity</code>, <code>Position</code>, <code>ggproto</code>, <code>gg</code>) of length 3.</p>
-<p>An object of class <code>PositionStack_</code> (inherits from <code>PositionStack</code>, <code>Position</code>, <code>ggproto</code>, <code>gg</code>) of length 3.</p>
-<p>An object of class <code>PositionFill_</code> (inherits from <code>PositionStack_</code>, <code>PositionStack</code>, <code>Position</code>, <code>ggproto</code>, <code>gg</code>) of length 2.</p>
-
+    <div id="ggmulti-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#ggmulti-101" class="anchor"></a>ggmulti 1.0.1<small> Unreleased </small>
+</h1>
+<ol>
+<li>For polygon glyph, if the fill is NA (the fill color is none), it is a poly-line glyph; if the fill is not NA (some real color), it is a polygon glyph. In the old version <code>0.1.0</code>, the output can only be one type. For example, if <code>fill = c(NA, "red")</code>, then, NA dominates that both glyphs are polylines. In this version, it is more flexible that both polygon and polyline can appear on the same plot with one <code>geom_polygon_glyph</code> call.</li>
+</ol>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

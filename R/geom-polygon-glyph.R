@@ -116,29 +116,62 @@ GeomPolygonGlyph <- ggplot2::ggproto('GeomPolygonGlyph',
                                        fill <- data$fill
 
                                        show.area <- !any(is.na(fill))
-                                       poly_x <- poly_coord(polygon_x, data,
-                                                            orientation = "x",
-                                                            show.area = show.area)
-                                       poly_y <- poly_coord(polygon_y, data,
-                                                            orientation = "y",
-                                                            show.area = show.area)
 
-                                       fun <- if(show.area) {
-                                         grid::polygonGrob
-                                       } else {
-                                         grid::polylineGrob
-                                       }
+                                       # fill is NA --> polyline
+                                       # fill is not NA --> polygon
+                                       polyline <- is.na(fill)
+                                       polygon <- !is.na(fill)
+
+                                       if(sum(polyline) > 0) {
+
+                                         poly_x <- poly_coord(polygon_x[polyline], data[polyline, ],
+                                                              orientation = "x",
+                                                              show.area = FALSE)
+                                         poly_y <- poly_coord(polygon_y[polyline], data[polyline, ],
+                                                              orientation = "y",
+                                                              show.area = FALSE)
+
+                                         linegrob <- grid::polylineGrob(
+                                           x = do.call(grid::unit.c, poly_x),
+                                           y = do.call(grid::unit.c, poly_y),
+                                           id = rep(seq(length(poly_x)), lengths(poly_x)),
+                                           gp = grid::gpar(
+                                             col =  data$colour[polyline],
+                                             lwd = data$linewidth[polyline],
+                                             alpha = data$alpha[polyline]
+                                           )
+                                         )
+                                       } else {linegrob <- grid::grob()}
+
+
+                                       if(sum(polygon) > 0) {
+
+                                         poly_x <- poly_coord(polygon_x[polygon], data[polygon, ],
+                                                              orientation = "x",
+                                                              show.area = TRUE)
+                                         poly_y <- poly_coord(polygon_y[polygon], data[polygon, ],
+                                                              orientation = "y",
+                                                              show.area = TRUE)
+
+                                         gongrob <- grid::polygonGrob(
+                                           x = do.call(grid::unit.c, poly_x),
+                                           y = do.call(grid::unit.c, poly_y),
+                                           id = rep(seq(length(poly_x)), lengths(poly_x)),
+                                           gp = grid::gpar(
+                                             fill = fill[polygon],
+                                             col =  data$colour[polygon],
+                                             lwd = data$linewidth[polygon],
+                                             alpha = data$alpha[polygon]
+                                           )
+                                         )
+                                       } else {gongrob <- grid::grob()}
+
 
                                        ggname("geom_polygon_glyph",
-                                              fun(
-                                                x = do.call(grid::unit.c, poly_x),
-                                                y = do.call(grid::unit.c, poly_y),
-                                                id = rep(seq(length(poly_x)), lengths(poly_x)),
-                                                gp = grid::gpar(
-                                                  fill = fill,
-                                                  col =  data$colour,
-                                                  lwd = data$linewidth,
-                                                  alpha = data$alpha
+                                              grid::gTree(
+                                                children = grid::gList(
+                                                  linegrob,
+                                                  gongrob
                                                 )
                                               )
                                        )

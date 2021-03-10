@@ -78,7 +78,7 @@ knitr::opts_chunk$set(echo = TRUE,
 library(knitr)
 set.seed(12314159)
 imageDirectory <- "./images/highDim"
-dataDirectory <- "./images/highDim"
+dataDirectory <- "./data/highDim"
 path_concat <- function(path1, ..., sep="/") {
   # The "/" is standard unix directory separator and so will
   # work on Macs and Linux.
@@ -181,7 +181,7 @@ where $\ve{y}_i$ is the $i$th responses and $\ve{a}_t$ is the orthonormal functi
 
 which are orthonormal on interval $(-\pi, \pi)$. In other word, we can project a $p$ dimensional space to an infinite $(-\pi, \pi)$ space. The following figure illustrates how to construct an "Andrew's plot".
 
-```{r andrews, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r andrews, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 6, fig.height = 4, fig.align = "center", out.width = "70%"}
 p <- ggplot(iris, 
             mapping = aes(Sepal.Length = Sepal.Length,
                           Sepal.Width = Sepal.Width,

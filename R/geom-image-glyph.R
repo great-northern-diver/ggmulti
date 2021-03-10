@@ -32,7 +32,6 @@
 #' # image glyph
 #' if(requireNamespace("png")) {
 #'
-#' # Download images from github
 #' img_path <- list.files(file.path(find.package(package = 'ggmulti'),
 #'                                  "images"),
 #'                        full.names = TRUE)
@@ -93,7 +92,7 @@ geom_image_glyph <- function(mapping = NULL, data = NULL, stat = 'identity',
 
 GeomImageGlyph <- ggplot2::ggproto('GeomImageGlyph', Geom,
                                    required_aes = c('x', 'y'),
-                                   default_aes = aes(colour = "black",
+                                   default_aes = aes(colour = NA,
                                                      fill = NA, size = 1,
                                                      linetype = 1, alpha = 1,
                                                      shape = 19, stroke = 0.5),
