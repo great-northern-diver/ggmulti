@@ -22,6 +22,7 @@ Suggests:
     png,
     tools,
     stringr,
+    markdown,
     magrittr,
     gridExtra,
     tibble,
