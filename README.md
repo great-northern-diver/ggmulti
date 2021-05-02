@@ -7,12 +7,6 @@
 
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
 
-The development version of `ggmulti` can be accessed directly from github repo
-
-```
-remotes::install_github("https://github.com/great-northern-diver/ggmulti")
-```
-
 Documentation: https://great-northern-diver.github.io/ggmulti/
 
 ## Introduction
