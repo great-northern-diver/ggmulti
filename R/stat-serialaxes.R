@@ -1,5 +1,7 @@
 #' @rdname geom_serialaxes
-#' @param scaling one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.
+#' @param scaling one of \code{data}, \code{variable}, \code{observation} or
+#' \code{none} (not suggested the layout is the same with \code{data})
+#' to specify how the data is scaled.
 #' @param axes.position A numerical vector to determine the axes sequence position;
 #' the length should be the same with the length of \code{axes.sequence} (or mapping \code{aesthetics}, see examples).
 #' @export
@@ -8,7 +10,7 @@ stat_serialaxes <- function(mapping = NULL, data = NULL,
                             ...,
                             axes.sequence = character(0L), merge = TRUE,
                             axes.position = NULL,
-                            scaling = c("variable", "observation", "data", "none"),
+                            scaling = c("data", "variable", "observation", "none"),
                             na.rm = FALSE,
                             orientation = NA,
                             show.legend = NA,
@@ -53,8 +55,10 @@ stat_serialaxes <- function(mapping = NULL, data = NULL,
 }
 
 #' @rdname geom_serialaxes
-#' @param scaling one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.
-#' @param transform A transformation function, can be either `andrews`, `legendre` or
+#' @param scaling one of \code{data}, \code{variable}, \code{observation} or
+#' \code{none} (not suggested the layout is the same with \code{data})
+#' to specify how the data is scaled.
+#' @param transform A transformation function, can be either \code{andrews}, \code{legendre} or
 #' some other customized transformation functions.
 #' @seealso Andrews plot \code{\link{andrews}}, Legendre polynomials \code{\link{legendre}}
 #' @export
@@ -62,7 +66,7 @@ stat_dotProduct <- function(mapping = NULL, data = NULL,
                             geom = "path", position = "identity",
                             ...,
                             axes.sequence = character(0L), merge = TRUE,
-                            scaling = c("variable", "observation", "data", "none"),
+                            scaling = c("data", "variable", "observation", "none"),
                             transform = andrews,
                             na.rm = FALSE,
                             orientation = NA,
@@ -124,14 +128,23 @@ StatSerialaxes <- ggplot2::ggproto(
   setup_data = function(data, params) {
 
     n <- nrow(data)
+    newData <- na.omit(data)
+    nNew <- nrow(newData)
+
+    if(nNew != n) {
+      warning("Removed ", n - nNew,
+      " rows containing missing values (stat_serialaxes)", ".",
+      call. = FALSE)
+    }
+
     len <- length(params$axes.position)
 
-    data %>%
+    newData %>%
       serialaxes_setup_data(params, setGroup = FALSE) %>%
-      dplyr::mutate(group = rep(seq(n), each = len)) %>%
+      dplyr::mutate(group = rep(seq(nNew), each = len)) %>%
       as.data.frame()
   },
-  compute_group = function(data, scales, axes.sequence, scaling = "variable", axes.position = NULL,
+  compute_group = function(data, scales, axes.sequence, scaling = "data", axes.position = NULL,
                            quantiles = seq(0, 1, 0.25),
                            na.rm = FALSE, flipped_aes = TRUE) {
     # Hack to ensure that axes.sequence, scaling and axes.position are detected as parameter
@@ -154,6 +167,15 @@ StatDotProduct <- ggplot2::ggproto(
   setup_data = function(data, params) {
 
     n <- nrow(data)
+    newData <- na.omit(data)
+    nNew <- nrow(newData)
+
+    if(nNew != n) {
+      warning("Removed ", n - nNew,
+              " rows containing missing values (stat_serialaxes)", ".",
+              call. = FALSE)
+    }
+
     axes.sequence <- params$axes.sequence
     transform <- params$transform %||% andrews
     len_s <- length(axes.sequence)
@@ -165,7 +187,7 @@ StatDotProduct <- ggplot2::ggproto(
 
     len_t <- length(t)
 
-    scaledData <- data %>%
+    scaledData <- newData %>%
       get_scaledData(sequence = axes.sequence,
                      scaling = params$scaling,
                      reserve = TRUE,
@@ -178,7 +200,7 @@ StatDotProduct <- ggplot2::ggproto(
       as.data.frame() %>%
       stats::setNames(nm = newSeqName)
 
-    cbind(data, computeTrans) %>%
+    cbind(newData, computeTrans) %>%
       dplyr::select(-axes.sequence) %>%
       tidyr::pivot_longer(cols = dplyr::all_of(newSeqName),
                           names_to = "names",
@@ -193,7 +215,7 @@ StatDotProduct <- ggplot2::ggproto(
       ggplot2::flip_data(params$flipped_aes) %>%
       as.data.frame()
   },
-  compute_group = function(data, scales, axes.sequence, scaling = "variable",
+  compute_group = function(data, scales, axes.sequence, scaling = "data",
                            transform = andrews, axes.position = NULL, quantiles = seq(0, 1, 0.25),
                            na.rm = FALSE, flipped_aes = TRUE) {
     # Hack to ensure that transform is detected as parameter

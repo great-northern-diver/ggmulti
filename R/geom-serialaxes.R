@@ -11,7 +11,7 @@
 #' @param merge Should \code{axes.sequence} be merged with mapping aesthetics
 #' as a single mapping \code{uneval} object?
 #' @importFrom tidyr pivot_longer
-#' @seealso \code{\link{coord_radar}}, \code{\link{geom_serialaxes_density}},
+#' @seealso \code{\link{coord_serialaxes}}, \code{\link{geom_serialaxes_density}},
 #' \code{\link{geom_serialaxes_quantile}}, \code{\link{geom_serialaxes_hist}}
 #' @details The difference between the "lengthens" data and "widens" data can be found in
 #' \href{http://vita.had.co.nz/papers/tidy-data.pdf}{Tidy Data}.
@@ -33,13 +33,11 @@
 #'
 #' # andrews plot
 #' p + geom_serialaxes(stat = "dotProduct",
-#'                     transform = andrews, # default
-#'                     scaling = "none")
+#'                     transform = andrews) # default
 #'
 #' # Legendre polynomials
 #' p + geom_serialaxes(stat = "dotProduct",
-#'                     transform = legendre,
-#'                     scaling = "none")
+#'                     transform = legendre)
 #'
 #' # or set the `axes.sequence` rather tahn the mapping `aes`
 #' p <- ggplot(iris) +
@@ -110,6 +108,7 @@ geom_serialaxes <- function(mapping = NULL, data = NULL, stat = "serialaxes",
 GeomSerialaxes <- ggplot2::ggproto(
   "GeomSerialaxes",
   ggplot2::GeomPath,
+  required_aes = NULL,
   use_defaults = function(self, data, params = list(), modifiers = aes()) {
 
     n <- dim(data)[1]

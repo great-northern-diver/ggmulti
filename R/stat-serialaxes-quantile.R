@@ -5,7 +5,7 @@ stat_serialaxes_quantile <- function(mapping = NULL, data = NULL,
                                      position = "identity", ...,
                                      axes.sequence = character(0L), merge = TRUE,
                                      quantiles = seq(0, 1, 0.25),
-                                     scaling = c("variable", "observation", "data", "none"),
+                                     scaling = c("data", "variable", "observation", "none"),
                                      axes.position = NULL,
                                      na.rm = FALSE, orientation = NA,
                                      show.legend = NA, inherit.aes = TRUE) {

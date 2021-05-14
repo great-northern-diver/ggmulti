@@ -5,14 +5,15 @@
 #' @param data A data frame
 #' @param sequence vector with variable names that defines the axes sequence.
 #' If \code{NULL}, it will be set as the column names automatically.
-#' @param scaling one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.
+#' @param scaling one of \code{data}, \code{variable}, \code{observation} or
+#' \code{none} (not suggested the layout is the same with \code{data}) to specify how the data is scaled.
 #' @param displayOrder the order of the display
 #' @param reserve If \code{TRUE}, return the variables not shown in \code{sequence} as well;
 #' else only return the variables defined in \code{sequence}.
 #' @param as.data.frame Return a matrix or a data.frame
 get_scaledData <- function(data,
                            sequence = NULL,
-                           scaling = c('variable', 'data', 'observation', 'none'),
+                           scaling = c("data", "variable", "observation", "none"),
                            displayOrder = NULL,
                            reserve = FALSE,
                            as.data.frame = FALSE) {
@@ -58,11 +59,10 @@ get_scaledData <- function(data,
 # no dependency to loon any more
 loon_get_scaledData <-  function(data,
                                  sequence = NULL,
-                                 scaling = c("variable", "observation", "data", "none"),
+                                 scaling = c("data", "variable", "observation", "none"),
                                  displayOrder = NULL) {
 
   # data is the original data set
-  # since "variable" scaling is based on the original data
   if(missing(data) || is.null(data)) return(NULL)
 
   if(is.null(displayOrder)) displayOrder <- seq(nrow(data))
