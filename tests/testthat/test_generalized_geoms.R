@@ -1,8 +1,8 @@
 context("test geoms")
-library(tidyverse)
 library(ggmulti)
+library(tidyverse)
 library(ggplot2movies)
-
+pdf(NULL)
 
 ############## geom_hist_ and geom_density_ ##############
 test_that("test built geoms in ggplot", {

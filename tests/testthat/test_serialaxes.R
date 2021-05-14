@@ -1,6 +1,7 @@
 context("test serialaxes")
 library(tidyverse)
 library(ggmulti)
+pdf(NULL)
 
 test_that("test serialaxes", {
 
@@ -196,4 +197,17 @@ test_that("test duplicated axes", {
 
   b <- ggplot_build(p)
   expect_equal(unique(b$data[[1]]$x), 1:4)
+
+  # test NAs
+  withNA <- ggplot(airquality,
+                   mapping = aes(Ozone = Ozone,
+                                 Solar.R = Solar.R,
+                                 Wind = Wind,
+                                 Temp = Temp)) +
+    geom_path() +
+    geom_histogram() +
+    geom_density(color = "red") +
+    geom_quantiles(color = "blue") +
+    coord_serialaxes()
+  expect_warning(plot(withNA))
 })
