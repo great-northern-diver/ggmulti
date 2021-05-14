@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -140,13 +140,26 @@
       
     </div>
 
+    <div id="ggmulti-102" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.2">
+<a href="#ggmulti-102" class="anchor"></a>ggmulti 1.0.2<small> Unreleased </small>
+</h1>
+<ol>
+<li><p>Fix a bug: in this version, all functions can handle data with <code>NA</code>s</p></li>
+<li><p>For functions <code>geom_hist_</code> and <code>geom_density2d</code>, if the input <code>x</code> and <code>y</code> are both numerical (neighter could be considered as the group variable), a warning will be given.</p></li>
+</ol>
+</div>
     <div id="ggmulti-101" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.1">
 <a href="#ggmulti-101" class="anchor"></a>ggmulti 1.0.1<small> 2021-03-11 </small>
 </h1>
-<ol>
-<li>For polygon glyph, if the fill is NA (the fill color is none), it is a poly-line glyph; if the fill is not NA (some real color), it is a polygon glyph. In the old version <code>0.1.0</code>, the output can only be one type. For example, if <code>fill = c(NA, "red")</code>, then, NA dominates that both glyphs are polylines. In this version, it is more flexible that both polygon and polyline can appear on the same plot with one <code>geom_polygon_glyph</code> call.</li>
-</ol>
+<p>For polygon glyph, if the fill is NA (the fill color is none), it is a poly-line glyph; if the fill is not NA (some real color), it is a polygon glyph. In the old version <code>0.1.0</code>, the output can only be one type. For example, if <code>fill = c(NA, "red")</code>, then, NA dominates that both glyphs are polylines. In this version, it is more flexible that both polygon and polyline can appear on the same plot with one <code>geom_polygon_glyph</code> call.</p>
+</div>
+    <div id="ggmulti-100" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0">
+<a href="#ggmulti-100" class="anchor"></a>ggmulti 1.0.0<small> Unreleased </small>
+</h1>
+<p>Date of Birth: 2021-01-05</p>
 </div>
   </div>
 
