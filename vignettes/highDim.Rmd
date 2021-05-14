@@ -189,9 +189,7 @@ p <- ggplot(iris,
                           Petal.Width = Petal.Width,
                           colour = Species)) +
   geom_path(alpha = 0.2, 
-            stat = "dotProduct",
-            # no scaling is applied
-            scaling = "none")  + 
+            stat = "dotProduct")  + 
   coord_serialaxes()
 p
 ```
@@ -205,7 +203,6 @@ A quantile layer can be displayed on top
 ```{r andrews with quantile, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
 p + 
  geom_quantiles(stat = "dotProduct",
-                scaling = "none",
                 quantiles = c(0.25, 0.5, 0.75),
                 size = 2,
                 linetype = 2) 
