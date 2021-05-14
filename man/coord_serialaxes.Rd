@@ -6,7 +6,7 @@
 \usage{
 coord_serialaxes(
   axes.layout = c("parallel", "radial"),
-  scaling = c("variable", "observation", "data", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   axes.sequence = character(0L),
   positive = TRUE,
   ...
@@ -15,15 +15,20 @@ coord_serialaxes(
 \arguments{
 \item{axes.layout}{Serial axes layout, either "parallel" or "radial".}
 
-\item{scaling}{One of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{One of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data})
+to specify how the data is scaled.}
 
 \item{axes.sequence}{A vector with variable names that defines the axes sequence.}
 
-\item{positive}{If `y` is set as the density estimate, where the smoothed curved is faced to,
-right (`positive`) or left (`negative`) as vertical layout;
-up (`positive`) or down (`negative`) as horizontal layout?}
+\item{positive}{If \code{y} is set as the density estimate, where the smoothed curved is faced to,
+right (\code{positive}) or left (\code{negative}) as vertical layout;
+up (\code{positive}) or down (\code{negative}) as horizontal layout?}
 
 \item{...}{other arguments used to modify layers}
+}
+\value{
+a \code{ggproto} object
 }
 \description{
 It is mainly used to visualize the high dimensional data set
@@ -35,7 +40,7 @@ Cartesian coordinate system or its transformed system (say \code{polar} in \code
 since it does not have a formal transformation
 (i.e. in polar coordinate system, "x = rcos(theta)", "y = rsin(theta)").
 In serial axes coordinate system, mapping aesthetics does not really require "x" or "y". Any "non-aesthetics"
-components passed in the `mapping` system will be treated as an individual axis.
+components passed in the \code{mapping} system will be treated as an individual axis.
 
 To project a common \code{geom} layer on such serialaxes,
 users can customize function \code{\link{add_serialaxes_layers}}.

@@ -29,7 +29,7 @@ stat_serialaxes(
   axes.sequence = character(0L),
   merge = TRUE,
   axes.position = NULL,
-  scaling = c("variable", "observation", "data", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   na.rm = FALSE,
   orientation = NA,
   show.legend = NA,
@@ -44,7 +44,7 @@ stat_dotProduct(
   ...,
   axes.sequence = character(0L),
   merge = TRUE,
-  scaling = c("variable", "observation", "data", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   transform = andrews,
   na.rm = FALSE,
   orientation = NA,
@@ -115,9 +115,11 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{axes.position}{A numerical vector to determine the axes sequence position;
 the length should be the same with the length of \code{axes.sequence} (or mapping \code{aesthetics}, see examples).}
 
-\item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data})
+to specify how the data is scaled.}
 
-\item{transform}{A transformation function, can be either `andrews`, `legendre` or
+\item{transform}{A transformation function, can be either \code{andrews}, \code{legendre} or
 some other customized transformation functions.}
 }
 \description{
@@ -146,13 +148,11 @@ p +
 
 # andrews plot
 p + geom_serialaxes(stat = "dotProduct",
-                    transform = andrews, # default
-                    scaling = "none")
+                    transform = andrews) # default
 
 # Legendre polynomials
 p + geom_serialaxes(stat = "dotProduct",
-                    transform = legendre,
-                    scaling = "none")
+                    transform = legendre)
 
 # or set the `axes.sequence` rather tahn the mapping `aes`
 p <- ggplot(iris) +
@@ -178,7 +178,7 @@ ggplot(iris, mapping = aes(colour = Species)) +
 }
 }
 \seealso{
-\code{\link{coord_radar}}, \code{\link{geom_serialaxes_density}},
+\code{\link{coord_serialaxes}}, \code{\link{geom_serialaxes_density}},
 \code{\link{geom_serialaxes_quantile}}, \code{\link{geom_serialaxes_hist}}
 
 Andrews plot \code{\link{andrews}}, Legendre polynomials \code{\link{legendre}}
