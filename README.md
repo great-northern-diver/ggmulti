@@ -1,4 +1,4 @@
-# ggmulti  <img src="man/figures/logo.png" align="right" width="120" />
+# ggmulti <img src="man/figures/logo.png" align="right" width="120" />
 
 [![Build Status](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)
 [![Codecov test coverage](https://codecov.io/gh/great-northern-diver/ggmulti/branch/main/graph/badge.svg)](https://codecov.io/gh/great-northern-diver/ggmulti?branch=main)
