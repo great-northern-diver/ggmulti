@@ -79,8 +79,7 @@ StatSerialaxesDensity <- ggplot2::ggproto(
 
     if(nNew != n) {
       warning("Removed ", n - nNew,
-              " rows containing missing values (stat_serialaxes_density)",
-              ".",
+              " rows containing missing values (stat_serialaxes_density).",
               call. = FALSE)
     }
 

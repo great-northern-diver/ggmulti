@@ -133,7 +133,7 @@ StatSerialaxes <- ggplot2::ggproto(
 
     if(nNew != n) {
       warning("Removed ", n - nNew,
-      " rows containing missing values (stat_serialaxes)", ".",
+      " rows containing missing values (stat_serialaxes).",
       call. = FALSE)
     }
 
@@ -172,7 +172,7 @@ StatDotProduct <- ggplot2::ggproto(
 
     if(nNew != n) {
       warning("Removed ", n - nNew,
-              " rows containing missing values (stat_serialaxes)", ".",
+              " rows containing missing values (stat_serialaxes).",
               call. = FALSE)
     }
 
@@ -193,7 +193,8 @@ StatDotProduct <- ggplot2::ggproto(
                      reserve = TRUE,
                      as.data.frame = TRUE)
 
-    newSeqName <- paste0(not_in_column_names(colnames = colnames(data), name = "V"),
+    newSeqName <- paste0(not_in_column_names(colnames = colnames(data),
+                                             name = "V"),
                          seq(len_t))
 
     computeTrans <- (as.matrix(scaledData[, axes.sequence]) %*% m) %>%
@@ -207,9 +208,9 @@ StatDotProduct <- ggplot2::ggproto(
                           values_to = ggplot2::flipped_names(params$flipped_aes)$x) %>%
       ggplot2::flip_data(params$flipped_aes) %>%
       dplyr::mutate(x = x,
-                    y = rep(t, n),
+                    y = rep(t, nNew),
                     acceptBoth = TRUE,
-                    group = rep(seq(n), each = len_t),
+                    group = rep(seq(nNew), each = len_t),
                     flipped_aes = params$flipped_aes) %>%
       dplyr::select(-names) %>%
       ggplot2::flip_data(params$flipped_aes) %>%
