@@ -60,6 +60,13 @@ test_that("test built geoms in ggplot", {
   b <- ggplot_build(p)
   expect_true("PositionDodge_" %in% class(b$plot$layers[[1]]$position))
   expect_true("PositionStack_" %in% class(b$plot$layers[[2]]$position))
+
+  # with NAs
+  p <- airquality %>%
+    ggplot(mapping = aes(x = factor(Month), y = Solar.R)) +
+    geom_hist_() +
+    geom_density_()
+  expect_warning(plot <- ggplot_build(p))
 })
 
 
