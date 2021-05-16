@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1 data-toc-skip>High Dimensional Data Visualization</h1>
                         <h4 class="author">Wayne Oldford and Zehao Xu</h4>
             
-            <h4 class="date">2021-05-02</h4>
+            <h4 class="date">2021-05-16</h4>
       
       
       <div class="hidden name"><code>highDim.Rmd</code></div>
@@ -126,7 +126,7 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggmulti</span><span class="op">)</span>
 <span class="co"># parallel axes plot</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
-       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
+       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
          Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
          Sepal.Width <span class="op">=</span> <span class="va">Sepal.Width</span>,
          Petal.Length <span class="op">=</span> <span class="va">Petal.Length</span>,
@@ -140,14 +140,14 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">+</span> 
   <span class="fu">geom_histogram</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span>, 
-                 mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+                 mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">30</span>, hjust <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="images/highDim/parallel_histogram.png" width="70%" style="display: block; margin: auto;"></p>
 <p>A density layer can be drawn by adding layer <code>geom_density</code></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">+</span> 
   <span class="fu">geom_density</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span>, 
-               mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+               mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="images/highDim/parallel_density.png" width="70%" style="display: block; margin: auto;"></p>
 <p>A parallel coordinate can be converted to radial coordinate by setting <code>axes.layout = "radial"</code> in function <code>coord_serialaxes</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -166,15 +166,13 @@
 <p>which are orthonormal on interval <span class="math inline">\((-\pi, \pi)\)</span>. In other word, we can project a <span class="math inline">\(p\)</span> dimensional space to an infinite <span class="math inline">\((-\pi, \pi)\)</span> space. The following figure illustrates how to construct an “Andrew’s plot”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
-            mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
+            mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
                           Sepal.Width <span class="op">=</span> <span class="va">Sepal.Width</span>,
                           Petal.Length <span class="op">=</span> <span class="va">Petal.Length</span>,
                           Petal.Width <span class="op">=</span> <span class="va">Petal.Width</span>,
                           colour <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_path</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span>, 
-            stat <span class="op">=</span> <span class="st">"dotProduct"</span>,
-            <span class="co"># no scaling is applied</span>
-            scaling <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>  <span class="op">+</span> 
+            stat <span class="op">=</span> <span class="st">"dotProduct"</span><span class="op">)</span>  <span class="op">+</span> 
   <span class="fu"><a href="../reference/coord_serialaxes.html">coord_serialaxes</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">p</span></code></pre></div>
 <p><img src="images/highDim/andrews.png" width="70%" style="display: block; margin: auto;"></p>
@@ -182,7 +180,6 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">+</span> 
  <span class="fu"><a href="../reference/geom_quantiles.html">geom_quantiles</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"dotProduct"</span>,
-                scaling <span class="op">=</span> <span class="st">"none"</span>,
                 quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span><span class="op">)</span>,
                 size <span class="op">=</span> <span class="fl">2</span>,
                 linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </code></pre></div>
@@ -211,7 +208,7 @@
   <span class="op">)</span>
 <span class="op">}</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
-       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
+       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
                      Sepal.Width <span class="op">=</span> <span class="va">Sepal.Width</span>,
                      Petal.Length <span class="op">=</span> <span class="va">Petal.Length</span>,
                      Petal.Width <span class="op">=</span> <span class="va">Petal.Width</span>,
@@ -230,7 +227,7 @@
 <p>For example, Figure 1 to 4 can be created by calling</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
-            mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
+            mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
                           Sepal.Width <span class="op">=</span> <span class="va">Sepal.Width</span>,
                           Petal.Length <span class="op">=</span> <span class="va">Petal.Length</span>,
                           Petal.Width <span class="op">=</span> <span class="va">Petal.Width</span>,
@@ -238,10 +235,10 @@
 <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_serialaxes_hist.html">geom_serialaxes_hist</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/geom_serialaxes_hist.html">geom_serialaxes_hist</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
 <span class="va">g</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_serialaxes_density.html">geom_serialaxes_density</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/geom_serialaxes_density.html">geom_serialaxes_density</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
 <span class="co"># radial axes can be created by </span>
 <span class="co"># calling `coord_radar()` or `coord_polar(is_linear = TRUE)`</span>
 <span class="co"># this is slightly different, check it out! </span>
@@ -260,7 +257,7 @@
 <code class="sourceCode R"><span class="co"># The serial axes is `Sepal.Length`, `Sepal.Width`, `Sepal.Length`</span>
 <span class="co"># With meaningful labels</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
-       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
+       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
                      Sepal.Width <span class="op">=</span> <span class="va">Sepal.Width</span>,
                      Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_path</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
@@ -269,7 +266,7 @@
 <span class="co"># The serial axes is `Sepal.Length`, `Sepal.Length`</span>
 <span class="co"># No meaningful labels</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
-       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
+       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span>,
                      Sepal.Width <span class="op">=</span> <span class="va">Sepal.Width</span>,
                      Sepal.Length <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>

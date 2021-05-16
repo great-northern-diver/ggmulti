@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
       <h1 data-toc-skip>Adding glyphs on scatterplot</h1>
                         <h4 class="author">Wayne Oldford and Zehao Xu</h4>
             
-            <h4 class="date">2021-05-02</h4>
+            <h4 class="date">2021-05-16</h4>
       
       
       <div class="hidden name"><code>glyph.Rmd</code></div>
@@ -132,19 +132,19 @@
   lat <span class="op">=</span> <span class="fl">40.730610</span>
 <span class="op">)</span>
 <span class="va">US</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span>  <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_polygon</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
                color<span class="op">=</span><span class="st">"black"</span>, fill<span class="op">=</span><span class="st">"cornsilk"</span><span class="op">)</span> 
 <span class="va">NYflightDestinationMap</span> <span class="op">&lt;-</span> <span class="va">US</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_polygon_glyph.html">geom_polygon_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">destinations</span>,
-                     mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
+                     mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
                      fill <span class="op">=</span> <span class="st">"pink"</span>,
                      <span class="co"># negate x to have each plane face west</span>
                      polygon_x <span class="op">=</span> <span class="op">-</span><span class="va">x_airplane</span>, 
                      polygon_y <span class="op">=</span> <span class="va">y_airplane</span>,
                      alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_polygon_glyph.html">geom_polygon_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">NY</span>,
-                     mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
+                     mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
                      polygon_x <span class="op">=</span> <span class="va">x_star</span>,
                      polygon_y <span class="op">=</span> <span class="va">y_star</span>, 
                      alpha <span class="op">=</span> <span class="fl">0.75</span>, 
@@ -186,24 +186,24 @@
 <span class="va">US</span> <span class="op">+</span> 
   <span class="fu">geom_polygon</span><span class="op">(</span>
     data <span class="op">=</span> <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"world"</span>,  <span class="st">"Canada"</span>, fill<span class="op">=</span><span class="cn">TRUE</span>, plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>,
-    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
     fill<span class="op">=</span><span class="st">"#ffcccb"</span>, colour <span class="op">=</span> <span class="st">"black"</span>
   <span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_polygon</span><span class="op">(</span>
     <span class="co"># lakes in Canada</span>
     data <span class="op">=</span>  <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"lakes"</span>, <span class="va">cdn.lakes</span>, plot<span class="op">=</span><span class="cn">FALSE</span>, fill<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,
-    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
     fill<span class="op">=</span><span class="st">"lightblue"</span>, colour <span class="op">=</span> <span class="st">"black"</span>
   <span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_image_glyph.html">geom_image_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GoldenState</span>,
-                   mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, 
+                   mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, 
                    images <span class="op">=</span> <span class="va">Warriors</span>,
                    imagewidth <span class="op">=</span> <span class="fl">1</span>, 
                    imageheight <span class="op">=</span> <span class="fl">1</span>, 
                    colour <span class="op">=</span> <span class="cn">NA</span>,
                    size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_image_glyph.html">geom_image_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Toronto</span>,
-                   mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, 
+                   mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, 
                    imagewidth <span class="op">=</span> <span class="fl">1</span>, 
                    imageheight <span class="op">=</span> <span class="fl">1</span>, 
                    colour <span class="op">=</span> <span class="cn">NA</span>,
@@ -219,7 +219,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="../reference/geom_serialaxes_glyph.html">geom_serialaxes_glyph</a></span><span class="op">(</span>
-    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, colour <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>,
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, colour <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>,
      <span class="co"># set serial axes data set (could be different from the original data)</span>
     serialaxes.data <span class="op">=</span> <span class="va">iris</span>,
     <span class="co"># parallel or radial axes</span>
