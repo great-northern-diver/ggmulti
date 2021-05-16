@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -155,6 +155,7 @@
   <span class='va'>images</span>,
   imagewidth <span class='op'>=</span> <span class='fl'>1.2</span>,
   imageheight <span class='op'>=</span> <span class='fl'>0.9</span>,
+  interpolate <span class='op'>=</span> <span class='cn'>TRUE</span>,
   units <span class='op'>=</span> <span class='st'>"cm"</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -215,6 +216,11 @@ to the paired geom/stat.</p></td>
       <td><p>Numerical; height of image</p></td>
     </tr>
     <tr>
+      <th>interpolate</th>
+      <td><p>A logical value indicating whether to linearly interpolate the image (the alternative is to use nearest-neighbour interpolation,
+which gives a more blocky result). See <code>rasterGrob</code>.</p></td>
+    </tr>
+    <tr>
       <th>units</th>
       <td><p>A character vector specifying the units for the image height and width, see <code>unit</code>;
 default is "cm" (force the width and height).</p></td>
@@ -268,23 +274,28 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># image glyph</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"png"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"png"</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"loon.ggplot"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='va'>img_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'ggmulti'</span><span class='op'>)</span>,
                                  <span class='st'>"images"</span><span class='op'>)</span>,
                        full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>Raptors</span> <span class='op'>&lt;-</span> <span class='fu'>png</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span><span class='op'>(</span><span class='va'>img_path</span><span class='op'>[</span><span class='fl'>1L</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>mercLogo</span> <span class='op'>&lt;-</span> <span class='fu'>png</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span><span class='op'>(</span><span class='va'>img_path</span><span class='op'>[</span><span class='fl'>1L</span><span class='op'>]</span><span class='op'>)</span>
 
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>0</span>, y <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>,
-            mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-       <span class='fu'>geom_image_glyph</span><span class='op'>(</span>images <span class='op'>=</span> <span class='va'>Raptors</span>,
-                        units <span class='op'>=</span> <span class='st'>"native"</span>,
-                        imagewidth <span class='op'>=</span> <span class='fl'>1</span>,
-                        imageheight <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>hp</span>, y <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+       <span class='fu'>geom_point</span><span class='op'>(</span>
+         data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Merc"</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span> <span class='op'>+</span>
+       <span class='fu'>geom_image_glyph</span><span class='op'>(</span>
+         data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Merc"</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>,
+         imagewidth <span class='op'>=</span> <span class='fl'>0.5</span>,
+         imageheight <span class='op'>=</span> <span class='fl'>0.5</span>,
+         images <span class='op'>=</span> <span class='va'>mercLogo</span>
+       <span class='op'>)</span>
 <span class='va'>p</span>
 
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: png</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: png</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: loon.ggplot</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'GGally':</span>
+#&gt; <span class='message'>  method from   </span>
+#&gt; <span class='message'>  +.gg   ggplot2</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

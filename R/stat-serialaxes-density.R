@@ -6,7 +6,7 @@ stat_serialaxes_density <- function(mapping = NULL, data = NULL,
                                     ...,
                                     axes.sequence = character(0L),
                                     merge = TRUE, axes.position = NULL,
-                                    scaling = c("variable", "observation", "data", "none"),
+                                    scaling = c("data", "variable", "observation", "none"),
                                     bw = "nrd0",
                                     adjust = 1,
                                     kernel = "gaussian",
@@ -73,7 +73,17 @@ StatSerialaxesDensity <- ggplot2::ggproto(
   },
   setup_data = function(data, params) {
 
-    data %>%
+    n <- nrow(data)
+    newData <- na.omit(data)
+    nNew <- nrow(newData)
+
+    if(nNew != n) {
+      warning("Removed ", n - nNew,
+              " rows containing missing values (stat_serialaxes_density).",
+              call. = FALSE)
+    }
+
+    newData %>%
       serialaxes_setup_data(params) %>%
       dplyr::mutate(
         acceptBoth = TRUE
@@ -81,7 +91,7 @@ StatSerialaxesDensity <- ggplot2::ggproto(
   },
 
   compute_group = function(self, data, scales, axes.sequence = character(0L), orientation = NA,
-                           scaling = "variable", scale.y = c("data", "variable"), axes.position = NULL,
+                           scaling = "data", scale.y = c("data", "variable"), axes.position = NULL,
                            as.mix = TRUE, positive = TRUE,
                            bw = "nrd0", trim = FALSE, adjust = 0.9, kernel = "gaussian", n = 512,
                            na.rm = FALSE, flipped_aes = TRUE) {

@@ -47,12 +47,8 @@
 
 
 <meta property="og:title" content="More general histogram — geom_hist_" />
-<meta property="og:description" content="More general histogram (geom_histogram()) or bar plot (geom_bar()).
-Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
-`y` (or `x`) the target variable to be plotted.
-The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
-If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
-the standard geom_histogram() will be executed." />
+<meta property="og:description" content="More general histogram (geom_histogram) or bar plot (geom_bar).
+Both x and y could be accommodated. See details" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -85,7 +81,7 @@ the standard geom_histogram() will be executed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -148,12 +144,8 @@ the standard geom_histogram() will be executed." />
     </div>
 
     <div class="ref-description">
-    <p>More general histogram (<code>geom_histogram()</code>) or bar plot (<code>geom_bar()</code>).
-Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
-`y` (or `x`) the target variable to be plotted.
-The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
-If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
-the standard <code>geom_histogram()</code> will be executed.</p>
+    <p>More general histogram (<code>geom_histogram</code>) or bar plot (<code>geom_bar</code>).
+Both <code>x</code> and <code>y</code> could be accommodated. See details</p>
     </div>
 
     <pre class="usage"><span class='fu'>geom_hist_</span><span class='op'>(</span>
@@ -289,8 +281,8 @@ from a <code>formula</code> (e.g. <code>~ head(.x, 10)</code>).</p></td>
     <tr>
       <th>position</th>
       <td><p>Position adjustment, either as a string, or the result of a call to a position adjustment function.
-Function `geom_hist_` and `geom_histogram_` understand `stack_` (stacks bars on top of each other),
-or `dodge_` () and `dodge2_` (overlapping objects side-to-side) instead of `stack`, `dodge` or `dodge2`</p></td>
+Function <code>geom_hist_</code> and <code>geom_histogram_</code> understand <code>stack_</code> (stacks bars on top of each other),
+or <code>dodge_</code> and <code>dodge2_</code> (overlapping objects side-to-side) instead of <code>stack</code>, <code>dodge</code> or <code>dodge2</code></p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -339,7 +331,7 @@ bin width of a time variable is the number of seconds.</p></td>
     </tr>
     <tr>
       <th>positive</th>
-      <td><p>If `y` is set as the density estimate, where the smoothed curved is faced to,
+      <td><p>If <code>y</code> is set as the density estimate, where the smoothed curved is faced to,
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?</p></td>
     </tr>
     <tr>
@@ -426,10 +418,16 @@ frequency polygons touch 0. Defaults to <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>1. `geom_hist_` is a wrapper of `geom_histogram_` and `geom_count_`. In other words, suppose the 'y' is our interest,
-<code>geom_hist_()</code> can accommodate both continuous or discrete "y" but <code>geom_histogram_()</code> is only for the continuous "y" and
-<code>geom_bar_()</code> is only for the discrete "y".</p>
-<p>2. There are four combinations of <code>scale.y</code> and <code>as.mix</code></p><dl>
+    <p><code>x</code> (or <code>y</code>) is a group variable and <code>y</code> (or <code>x</code>) a target variable to be plotted.
+The result is a different histogram of <code>y</code> (<code>x</code>) for each value of <code>x</code> (<code>y</code>).
+If only one of <code>x</code> or <code>y</code> is provided, it will be the target variable (no grouping) and
+the standard <code>geom_histogram()</code> will be executed. Several things should be noticed:</p>
+<p>1. If both <code>x</code> and <code>y</code> are given, they can be one discrete one continuous or
+two discrete. But they cannot be two continuous variables (which one will be considered as a group variable?).</p>
+<p>2. <code>geom_hist_</code> is a wrapper of <code>geom_histogram_</code> and <code>geom_count_</code>. In other words, suppose the <code>y</code> is our interest,
+<code>geom_hist_()</code> can accommodate both continuous or discrete "y" but <code>geom_histogram_()</code> is only for the continuous <code>y</code> and
+<code>geom_bar_()</code> is only for the discrete <code>y</code>.</p>
+<p>3. There are four combinations of <code>scale.y</code> and <code>as.mix</code></p><dl>
   <dt><code>scale.y</code> = "variable" and <code>as.mix</code> = FALSE</dt><dd><p>The density estimates area of each group under the same variable
   is the same and scaled to maximum of 1.</p></dd>
   <dt><code>scale.y</code> = "variable" and <code>as.mix</code> = TRUE</dt><dd><p>The density estimates area of each group under the same variable
@@ -440,8 +438,8 @@ frequency polygons touch 0. Defaults to <code>FALSE</code>.</p></td>
   <dt><code>scale.y</code> = "data" and <code>as.mix</code> = TRUE</dt><dd><p>The sum of density estimates area of all group is scaled to maximum of 1
   and the area of each group is proportional to its own count.</p></dd>
 
-</dl><p>Note that, if it is a grouped bar chart (both `x` and `y` are categorical),
-parameter `as.mix` is meaningless.</p>
+</dl><p>Note that, if it is a grouped bar chart (both <code>x</code> and <code>y</code> are categorical),
+parameter `as.mix` is useless.</p>
     <h2 class="hasAnchor" id="orientation"><a class="anchor" href="#orientation"></a>Orientation</h2>
 
     
@@ -457,22 +455,22 @@ parameter `as.mix` is meaningless.</p>
   <span class='co'># histogram</span>
   <span class='va'>p0</span> <span class='op'>&lt;-</span> <span class='va'>mpg</span> <span class='op'>%&gt;%</span>
     <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>manufacturer</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dodge"</span>, <span class='st'>"ford"</span>, <span class='st'>"toyota"</span>, <span class='st'>"volkswagen"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>manufacturer</span>, y <span class='op'>=</span> <span class='va'>cty</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>manufacturer</span>, y <span class='op'>=</span> <span class='va'>cty</span><span class='op'>)</span><span class='op'>)</span>
   <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span><span class='op'>)</span>
 
   <span class='co'>## set position</span>
   <span class='co'>#### default is "stack_"</span>
-  <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='co'>#### "dodge_"</span>
   <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"dodge_"</span>,
-                  mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
+                  mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
   <span class='co'>#### "dodge2_"</span>
   <span class='va'>p0</span> <span class='op'>+</span> <span class='fu'>geom_hist_</span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"dodge2_"</span>,
-                  mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
+                  mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>fl</span><span class='op'>)</span><span class='op'>)</span>
 
   <span class='co'># bar chart</span>
   <span class='va'>mpg</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>drv</span>, y <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>drv</span>, y <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_hist_</span><span class='op'>(</span>orientation <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
 
   <span class='co'># scale.y as "variable"</span>
@@ -480,7 +478,7 @@ parameter `as.mix` is meaningless.</p>
     <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='op'>-</span><span class='va'>Species</span>,
                         names_to <span class='op'>=</span> <span class='st'>"Outer sterile whorls"</span>,
                         values_to <span class='op'>=</span> <span class='st'>"x"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Outer sterile whorls`</span>,
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Outer sterile whorls`</span>,
                          y <span class='op'>=</span> <span class='va'>x</span>, fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>stat_hist_</span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"variable"</span>,
                adjust <span class='op'>=</span> <span class='fl'>0.6</span>,
@@ -498,12 +496,12 @@ parameter `as.mix` is meaningless.</p>
   <span class='co'>### histogram</span>
   <span class='va'>diamonds</span> <span class='op'>%&gt;%</span>
     <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>price</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>price</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_hist_</span><span class='op'>(</span><span class='op'>)</span>
   <span class='co'>### bar chart</span>
   <span class='va'>diamonds</span> <span class='op'>%&gt;%</span>
     <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample_n.html'>sample_n</a></span><span class='op'>(</span><span class='fl'>500</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>cut</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+    <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>cut</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_hist_</span><span class='op'>(</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: tidyr</span></div><div class='img'><img src='geom_hist_-1.png' alt='' width='700' height='433' /></div></pre>

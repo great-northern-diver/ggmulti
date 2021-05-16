@@ -12,7 +12,7 @@ geom_serialaxes_glyph(
   ...,
   serialaxes.data,
   axes.sequence = character(0L),
-  scaling = c("variable", "data", "observation", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   axes.layout = c("parallel", "radial"),
   andrews = FALSE,
   show.axes = FALSE,
@@ -63,11 +63,13 @@ to the paired geom/stat.}
 determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
 the \code{mapping} aesthetics will omit the duplicated axes (check examples in \code{\link{geom_serialaxes}}).}
 
-\item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data})
+to specify how the data is scaled.}
 
 \item{axes.layout}{either "radial" or "parallel"}
 
-\item{andrews}{Logical; Andrew's plot (a 'Fourier' transformation)}
+\item{andrews}{Logical; Andrew's plot (a Fourier transformation)}
 
 \item{show.axes}{boolean to indicate whether axes should be shown or not}
 

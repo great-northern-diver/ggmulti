@@ -5,7 +5,7 @@ stat_serialaxes_hist <- function(mapping = NULL, data = NULL, geom = "serialaxes
                                 position = "stack_",
                                 ...,
                                 axes.sequence = character(0L),
-                                scaling = c("variable", "observation", "data", "none"),
+                                scaling = c("data", "variable", "observation", "none"),
                                 axes.position = NULL,
                                 binwidth = NULL, bins = NULL,
                                 center = NULL, boundary = NULL, breaks = NULL,
@@ -59,7 +59,17 @@ StatSerialaxesHist <- ggplot2::ggproto(
   },
   setup_data = function(data, params) {
 
-    data %>%
+    n <- nrow(data)
+    newData <- na.omit(data)
+    nNew <- nrow(newData)
+
+    if(nNew != n) {
+      warning("Removed ", n - nNew,
+              " rows containing missing values (stat_serialaxes_hist).",
+              call. = FALSE)
+    }
+
+    newData %>%
       serialaxes_setup_data(params) %>%
       dplyr::mutate(
         acceptBoth = TRUE
@@ -67,7 +77,7 @@ StatSerialaxesHist <- ggplot2::ggproto(
   },
   compute_group = function(self, data, scales,
                            axes.sequence = character(0L), orientation = NA,
-                           axes.position = NULL, scaling = "variable",
+                           axes.position = NULL, scaling = "data",
                            scale.y = c("data", "variable"), as.mix = TRUE,
                            positive = TRUE, adjust = 0.9,
                            binwidth = NULL, bins = NULL, center = NULL,

@@ -85,7 +85,7 @@ p <- ggplot(iris,
             )
   ) +
   geom_path(alpha = 0.2)  +
-  coord_serialaxes(scaling = "none")
+  coord_serialaxes(scaling = "variable")
 p + geom_quantiles(colour = c("red", "green", "blue"),
                    quantiles = c(0.25, 0.5, 0.75),
                    size = 2)

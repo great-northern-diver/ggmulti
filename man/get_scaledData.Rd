@@ -7,7 +7,7 @@
 get_scaledData(
   data,
   sequence = NULL,
-  scaling = c("variable", "data", "observation", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   displayOrder = NULL,
   reserve = FALSE,
   as.data.frame = FALSE
@@ -19,7 +19,8 @@ get_scaledData(
 \item{sequence}{vector with variable names that defines the axes sequence.
 If \code{NULL}, it will be set as the column names automatically.}
 
-\item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data}) to specify how the data is scaled.}
 
 \item{displayOrder}{the order of the display}
 

@@ -32,7 +32,7 @@ stat_serialaxes_hist(
   position = "stack_",
   ...,
   axes.sequence = character(0L),
-  scaling = c("variable", "observation", "data", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   axes.position = NULL,
   binwidth = NULL,
   bins = NULL,
@@ -102,7 +102,7 @@ it is only meaningful to compare the density under each variable.}
 scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
 the area of each group is the same, with maximum 1.}
 
-\item{positive}{If `y` is set as the density estimate, where the smoothed curved is faced to,
+\item{positive}{If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?}
 
 \item{adjust}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
@@ -128,7 +128,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{geom}{The geometric object to use display the data}
 
-\item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data})
+to specify how the data is scaled.}
 
 \item{binwidth}{The width of the bins. Can be specified as a numeric value
 or as a function that calculates width from unscaled x. Here, "unscaled x"

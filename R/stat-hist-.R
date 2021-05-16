@@ -171,18 +171,43 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                               },
                               setup_data = function(data, params) {
 
-                                has_x <- !(is.null(data$x) && is.null(params$x))
-                                has_y <- !(is.null(data$y) && is.null(params$y))
+                                n <- nrow(data)
+                                newData <- na.omit(data)
+                                nNew <- nrow(newData)
+
+                                if(nNew != n) {
+                                  warning("Removed ", n - nNew,
+                                          " rows containing missing values (stat_hist_)",
+                                          ".",
+                                          call. = FALSE)
+                                }
+
+                                has_x <- !(is.null(newData$x) && is.null(params$x))
+                                has_y <- !(is.null(newData$y) && is.null(params$y))
 
                                 # accept Both "x" and "y"?
                                 # if not, call `StatDensity`
-                                data$acceptBoth <- TRUE
+                                newData$acceptBoth <- TRUE
                                 if((has_x && !has_y) || (has_y && !has_x)) {
-                                  data$acceptBoth <- FALSE
-                                  return(data)
+                                  newData$acceptBoth <- FALSE
+                                  return(newData)
                                 }
 
-                                setup_group(data, params)
+                                if(params$flipped_aes) {
+                                  if(!is_mapped_discrete(newData$x))
+                                    warning("The group variable is not discrete. ",
+                                            "Try to wrap it with `factor()`. ",
+                                            "See `?geom_hist_` for more details.",
+                                            call. = FALSE)
+                                } else {
+                                  if(!is_mapped_discrete(newData$y))
+                                    warning("The group variable is not discrete. ",
+                                            "Try to wrap it with `factor()`. ",
+                                            "See `?geom_hist_` for more details.",
+                                            call. = FALSE)
+                                }
+
+                                setup_group(newData, params)
                               },
                               compute_group = function(self, data, scales,
                                                        # Hack to recognize `geom_hist_` parameters

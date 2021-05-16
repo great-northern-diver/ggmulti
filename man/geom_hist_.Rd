@@ -137,8 +137,8 @@ will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
 \item{position}{Position adjustment, either as a string, or the result of a call to a position adjustment function.
-Function `geom_hist_` and `geom_histogram_` understand `stack_` (stacks bars on top of each other),
-or `dodge_` () and `dodge2_` (overlapping objects side-to-side) instead of `stack`, `dodge` or `dodge2`}
+Function \code{geom_hist_} and \code{geom_histogram_} understand \code{stack_} (stacks bars on top of each other),
+or \code{dodge_} and \code{dodge2_} (overlapping objects side-to-side) instead of \code{stack}, \code{dodge} or \code{dodge2}}
 
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
@@ -174,7 +174,7 @@ bin width of a time variable is the number of seconds.}
 
 \item{bins}{Number of bins. Overridden by \code{binwidth}. Defaults to 30.}
 
-\item{positive}{If `y` is set as the density estimate, where the smoothed curved is faced to,
+\item{positive}{If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?}
 
 \item{adjust}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
@@ -234,19 +234,23 @@ frequency polygons touch 0. Defaults to \code{FALSE}.}
 \item{width}{Bar width. By default, set to 90\% of the resolution of the data.}
 }
 \description{
-More general histogram (\code{geom_histogram()}) or bar plot (\code{geom_bar()}).
-Both `x` and `y` could be accommodated. `x` (or `y`) is a group variable and
-`y` (or `x`) the target variable to be plotted.
-The result is a different histogram of `y` (`x`) for each value of `x` (`y`).
-If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
-the standard \code{geom_histogram()} will be executed.
+More general histogram (\code{geom_histogram}) or bar plot (\code{geom_bar}).
+Both \code{x} and \code{y} could be accommodated. See details
 }
 \details{
-1. `geom_hist_` is a wrapper of `geom_histogram_` and `geom_count_`. In other words, suppose the 'y' is our interest,
-\code{geom_hist_()} can accommodate both continuous or discrete "y" but \code{geom_histogram_()} is only for the continuous "y" and
-\code{geom_bar_()} is only for the discrete "y".
+\code{x} (or \code{y}) is a group variable and \code{y} (or \code{x}) a target variable to be plotted.
+The result is a different histogram of \code{y} (\code{x}) for each value of \code{x} (\code{y}).
+If only one of \code{x} or \code{y} is provided, it will be the target variable (no grouping) and
+the standard \code{geom_histogram()} will be executed. Several things should be noticed:
 
-2. There are four combinations of \code{scale.y} and \code{as.mix}
+1. If both \code{x} and \code{y} are given, they can be one discrete one continuous or
+two discrete. But they cannot be two continuous variables (which one will be considered as a group variable?).
+
+2. \code{geom_hist_} is a wrapper of \code{geom_histogram_} and \code{geom_count_}. In other words, suppose the \code{y} is our interest,
+\code{geom_hist_()} can accommodate both continuous or discrete "y" but \code{geom_histogram_()} is only for the continuous \code{y} and
+\code{geom_bar_()} is only for the discrete \code{y}.
+
+3. There are four combinations of \code{scale.y} and \code{as.mix}
 \describe{
   \item{\code{scale.y} = "variable" and \code{as.mix} = FALSE}{The density estimates area of each group under the same variable
   is the same and scaled to maximum of 1.}
@@ -258,8 +262,8 @@ the standard \code{geom_histogram()} will be executed.
   \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimates area of all group is scaled to maximum of 1
   and the area of each group is proportional to its own count.}
 }
-Note that, if it is a grouped bar chart (both `x` and `y` are categorical),
-parameter `as.mix` is meaningless.
+Note that, if it is a grouped bar chart (both \code{x} and \code{y} are categorical),
+parameter `as.mix` is useless.
 }
 \section{Orientation}{
  

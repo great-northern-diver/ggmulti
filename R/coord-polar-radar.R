@@ -17,7 +17,8 @@ coord_polar <- function (theta = "x", start = 0, direction = 1, clip = "on", is_
 }
 
 #' @title Radar axes
-#' @description A radar (spider) coordinate.
+#' @description A radar (spider) coordinate. A wrapper of the function \code{coord_polar()} by
+#' forcing it linear.
 #' @inheritParams ggplot2::coord_polar
 #' @export
 #' @examples

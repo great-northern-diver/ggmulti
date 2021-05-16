@@ -4,7 +4,7 @@
 #' @inheritParams geom_serialaxes
 #' @param serialaxes.data a serial axes numerical data set. If not provided, \code{geom_point()} will be called.
 #' @param axes.layout either "radial" or "parallel"
-#' @param andrews Logical; Andrew's plot (a 'Fourier' transformation)
+#' @param andrews Logical; Andrew's plot (a Fourier transformation)
 #' @param show.axes boolean to indicate whether axes should be shown or not
 #' @param show.enclosing boolean to indicate whether enclosing should be shown or not
 #' @param linewidth line width of the "glyph" object
@@ -38,13 +38,13 @@
 #'                         axes.layout = "radial")
 #' p
 
-geom_serialaxes_glyph <- function(mapping = NULL, data = NULL, stat = 'identity',
-                                  position = 'identity', ..., serialaxes.data,
+geom_serialaxes_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
+                                  position = "identity", ..., serialaxes.data,
                                   axes.sequence = character(0L),
-                                  scaling = c('variable', 'data', 'observation', 'none'),
+                                  scaling = c("data", "variable", "observation", "none"),
                                   axes.layout = c("parallel", "radial"),
                                   andrews = FALSE, show.axes = FALSE, show.enclosing = FALSE,
-                                  linewidth = 1, axescolour = "black", bboxcolour = 'black',
+                                  linewidth = 1, axescolour = "black", bboxcolour = "black",
                                   na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) {
 
   if(missing(serialaxes.data) || is.null(serialaxes.data))
@@ -92,9 +92,9 @@ geom_serialaxes_glyph <- function(mapping = NULL, data = NULL, stat = 'identity'
   )
 }
 
-GeomSerialAxesGlyph <- ggplot2::ggproto('GeomSerialAxesGlyph', Geom,
-                                        required_aes = c('x', 'y'),
-                                        default_aes = aes(colour = 'black',
+GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
+                                        required_aes = c("x", "y"),
+                                        default_aes = aes(colour = "black",
                                                           size = 1, shape = 19, fill = NA, stroke = 0.5,
                                                           linetype = 1, alpha = 1),
                                         draw_key = ggplot2::draw_key_polygon,
@@ -159,7 +159,7 @@ GeomSerialAxesGlyph <- ggplot2::ggproto('GeomSerialAxesGlyph', Geom,
                                           d
                                         },
                                         draw_panel = function(data, panel_params, coord,
-                                                              serialaxes.data, axes.sequence, scaling = "variable",
+                                                              serialaxes.data, axes.sequence, scaling = "data",
                                                               axes.layout = "radial", andrews = FALSE, show.axes = FALSE,
                                                               show.enclosing = FALSE,
                                                               axescolour, bboxcolour, linewidth, na.rm) {

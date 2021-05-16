@@ -1,7 +1,7 @@
 context("test glyphs")
 library(tidyverse)
 library(ggmulti)
-
+pdf(NULL)
 test_that("test geom glyphs in ggplot", {
 
   # polygon glyph

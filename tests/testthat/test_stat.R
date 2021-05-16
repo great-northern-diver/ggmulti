@@ -3,7 +3,7 @@ library(tidyverse)
 library(ggmulti)
 library(ggplot2movies)
 
-
+pdf(NULL)
 test_that("test stat", {
   ### histogram
   data <- iris %>%

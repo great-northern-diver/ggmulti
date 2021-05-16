@@ -81,7 +81,7 @@ either on the parallel coordinate or the radial coordinate." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
       </span>
     </div>
 
@@ -150,7 +150,7 @@ either on the parallel coordinate or the radial coordinate.</p>
 
     <pre class="usage"><span class='fu'>coord_serialaxes</span><span class='op'>(</span>
   axes.layout <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"parallel"</span>, <span class='st'>"radial"</span><span class='op'>)</span>,
-  scaling <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"variable"</span>, <span class='st'>"observation"</span>, <span class='st'>"data"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
+  scaling <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span>, <span class='st'>"observation"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
   axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span><span class='op'>(</span><span class='fl'>0L</span><span class='op'>)</span>,
   positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
@@ -165,7 +165,9 @@ either on the parallel coordinate or the radial coordinate.</p>
     </tr>
     <tr>
       <th>scaling</th>
-      <td><p>One of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.</p></td>
+      <td><p>One of <code>data</code>, <code>variable</code>, <code>observation</code> or
+<code>none</code> (not suggested the layout is the same with <code>data</code>)
+to specify how the data is scaled.</p></td>
     </tr>
     <tr>
       <th>axes.sequence</th>
@@ -173,9 +175,9 @@ either on the parallel coordinate or the radial coordinate.</p>
     </tr>
     <tr>
       <th>positive</th>
-      <td><p>If `y` is set as the density estimate, where the smoothed curved is faced to,
-right (`positive`) or left (`negative`) as vertical layout;
-up (`positive`) or down (`negative`) as horizontal layout?</p></td>
+      <td><p>If <code>y</code> is set as the density estimate, where the smoothed curved is faced to,
+right (<code>positive</code>) or left (<code>negative</code>) as vertical layout;
+up (<code>positive</code>) or down (<code>negative</code>) as horizontal layout?</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -183,6 +185,9 @@ up (`positive`) or down (`negative`) as horizontal layout?</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a <code>ggproto</code> object</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Serial axes coordinate system (parallel or radial) is different from the
@@ -190,7 +195,7 @@ Cartesian coordinate system or its transformed system (say <code>polar</code> in
 since it does not have a formal transformation
 (i.e. in polar coordinate system, "x = rcos(theta)", "y = rsin(theta)").
 In serial axes coordinate system, mapping aesthetics does not really require "x" or "y". Any "non-aesthetics"
-components passed in the `mapping` system will be treated as an individual axis.</p>
+components passed in the <code>mapping</code> system will be treated as an individual axis.</p>
 <p>To project a common <code>geom</code> layer on such serialaxes,
 users can customize function <code><a href='add_serialaxes_layers.html'>add_serialaxes_layers</a></code>.</p>
 
@@ -202,7 +207,7 @@ users can customize function <code><a href='add_serialaxes_layers.html'>add_seri
 <span class='co'># an 'iris' parallel coordinate plot.</span>
 <span class='va'>p</span>
 </div><div class='img'><img src='coord_serialaxes-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># histogram layer (parallel coord)</span>
-<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_histogram</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.8</span>, mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_histogram</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.8</span>, mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='coord_serialaxes-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># density layer</span>
 <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_density</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span>
 </div><div class='img'><img src='coord_serialaxes-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># quantile layer</span>
@@ -211,7 +216,7 @@ users can customize function <code><a href='add_serialaxes_layers.html'>add_seri
 <span class='co'># radial axes</span>
 <span class='co'># set sequence in `mapping`</span>
 <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>,
-       mapping <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>
+       mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>
          Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
          Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
          Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,

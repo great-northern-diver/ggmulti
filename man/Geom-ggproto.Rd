@@ -26,7 +26,7 @@ An object of class \code{GeomSerialaxesHist} (inherits from \code{GeomBar_}, \co
 
 An object of class \code{GeomSerialaxesQuantile} (inherits from \code{GeomPath}, \code{Geom}, \code{ggproto}, \code{gg}) of length 4.
 
-An object of class \code{GeomSerialaxes} (inherits from \code{GeomPath}, \code{Geom}, \code{ggproto}, \code{gg}) of length 2.
+An object of class \code{GeomSerialaxes} (inherits from \code{GeomPath}, \code{Geom}, \code{ggproto}, \code{gg}) of length 3.
 }
 \usage{
 GeomDensity_

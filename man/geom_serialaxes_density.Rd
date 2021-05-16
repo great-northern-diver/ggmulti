@@ -33,7 +33,7 @@ stat_serialaxes_density(
   axes.sequence = character(0L),
   merge = TRUE,
   axes.position = NULL,
-  scaling = c("variable", "observation", "data", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   bw = "nrd0",
   adjust = 1,
   kernel = "gaussian",
@@ -96,7 +96,7 @@ it is only meaningful to compare the density under each variable.}
 scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
 the area of each group is the same, with maximum 1.}
 
-\item{positive}{If `y` is set as the density estimate, where the smoothed curved is faced to,
+\item{positive}{If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?}
 
 \item{adjust}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
@@ -125,7 +125,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{axes.position}{A numerical vector to determine the axes sequence position;
 the length should be the same with the length of \code{axes.sequence} (or mapping \code{aesthetics}, see examples).}
 
-\item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data})
+to specify how the data is scaled.}
 
 \item{bw}{The smoothing bandwidth to be used.
 If numeric, the standard deviation of the smoothing kernel.

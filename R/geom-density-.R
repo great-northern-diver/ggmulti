@@ -2,10 +2,7 @@
 #' @name geom_density_
 #' @description Computes and draws kernel density estimate.
 #' Compared with \code{geom_density()}, it provides more general cases that
-#' accepting `x` and `y`. The `x` (or `y`) is a group variable and  `y` (or `x`) is the target variable to be plotted.
-#' The result is a different density of `y` (`x`) for each value of `x` (`y`).
-#' If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
-#' the standard \code{geom_density()} will be executed.
+#' accepting \code{x} and \code{y}. See details
 #' @inheritParams ggplot2::geom_density
 #' @param scale.x A length 2 numerical vector. Scale the n coordinates of the points where the density is estimated.
 #' @param scale.y one of 'data', 'variable' to specify.
@@ -18,10 +15,15 @@
 #' @param as.mix Logical. Under each variable, if \code{as.mix = TRUE}, the sum of the density estimate area is mixed and
 #' scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
 #' the area of each group is the same, with maximum 1.
-#' @param positive If `y` is set as the density estimate, where the smoothed curved is faced to,
+#' @param positive If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 #' right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?
 #' @param adjust adjust the proportional maximum height of the estimate (density, histogram, ...).
 #' @details
+#' The \code{x} (or \code{y}) is a group variable and  \code{y} (or \code{x}) is the target variable to be plotted.
+#' The result is a different density of \code{y} (\code{x}) for each value of \code{x} (\code{y}).
+#' If only one of \code{x} or \code{y} is provided, it will be the target variable (no grouping) and
+#' the standard \code{geom_density()} will be executed.
+#'
 #' There are four combinations of \code{scale.y} and \code{as.mix}
 #' \describe{
 #'   \item{\code{scale.y} = "variable" and \code{as.mix} = FALSE}{The density estimates area of each group under the same variable

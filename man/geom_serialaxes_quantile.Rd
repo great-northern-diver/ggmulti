@@ -29,7 +29,7 @@ stat_serialaxes_quantile(
   axes.sequence = character(0L),
   merge = TRUE,
   quantiles = seq(0, 1, 0.25),
-  scaling = c("variable", "observation", "data", "none"),
+  scaling = c("data", "variable", "observation", "none"),
   axes.position = NULL,
   na.rm = FALSE,
   orientation = NA,
@@ -100,7 +100,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{quantiles}{numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that
 range are accepted and moved to the nearby endpoint.)}
 
-\item{scaling}{one of 'variable', 'data', 'observation' or 'none' to specify how the data is scaled.}
+\item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
+\code{none} (not suggested the layout is the same with \code{data})
+to specify how the data is scaled.}
 
 \item{axes.position}{A numerical vector to determine the axes sequence position;
 the length should be the same with the length of \code{axes.sequence} (or mapping \code{aesthetics}, see examples).}

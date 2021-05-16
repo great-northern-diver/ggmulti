@@ -2,7 +2,7 @@ context("test position")
 library(tidyverse)
 library(ggmulti)
 
-
+pdf(NULL)
 test_that("test position", {
   ### dodge
   data <- iris %>%

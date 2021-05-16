@@ -4,6 +4,8 @@
 #' @param images a list of images (a raster object, bitmap image). If not provided, \code{geom_point()} will be executed.
 #' @param imagewidth Numerical; width of image
 #' @param imageheight Numerical; height of image
+#' @param interpolate A logical value indicating whether to linearly interpolate the image (the alternative is to use nearest-neighbour interpolation,
+#' which gives a more blocky result). See \code{\link{rasterGrob}}.
 #' @param units A character vector specifying the units for the image height and width, see \code{\link{unit}};
 #' default is "cm" (force the width and height).
 #' @import grid
@@ -30,27 +32,34 @@
 #' @examples
 #' \donttest{
 #' # image glyph
-#' if(requireNamespace("png")) {
+#' if(requireNamespace("png") && requireNamespace("loon.ggplot")) {
 #'
 #' img_path <- list.files(file.path(find.package(package = 'ggmulti'),
 #'                                  "images"),
 #'                        full.names = TRUE)
-#' Raptors <- png::readPNG(img_path[1L])
+#' mercLogo <- png::readPNG(img_path[1L])
 #'
-#' p <- ggplot(data = data.frame(x = 0, y = 0),
-#'             mapping = aes(x = x, y = y)) +
-#'        geom_image_glyph(images = Raptors,
-#'                         units = "native",
-#'                         imagewidth = 1,
-#'                         imageheight = 1)
+#' p <- ggplot(mapping = aes(x = hp, y = mpg)) +
+#'        geom_point(
+#'          data = mtcars[!grepl("Merc", rownames(mtcars)), ],
+#'          color = "skyblue") +
+#'        geom_image_glyph(
+#'          data = mtcars[grepl("Merc", rownames(mtcars)), ],
+#'          images = mercLogo,
+#'          imagewidth = 1.5
+#'        )
 #' p
+#'
+#' lp <- loon.ggplot::loon.ggplot(p, activeGeomLayers = 2)
 #'
 #' }
 #' }
 
 geom_image_glyph <- function(mapping = NULL, data = NULL, stat = 'identity',
                              position = 'identity', ...,
-                             images, imagewidth = 1.2, imageheight = 0.9, units = "cm",
+                             images, imagewidth = 1.2, imageheight = 0.9,
+                             interpolate = TRUE,
+                             units = "cm",
                              na.rm = FALSE, show.legend = NA,
                              inherit.aes = TRUE) {
 
@@ -117,7 +126,8 @@ GeomImageGlyph <- ggplot2::ggproto('GeomImageGlyph', Geom,
                                      data
                                    },
                                    draw_panel = function(data, panel_params, coord, images,
-                                                         imagewidth = 1.6, imageheight = 1.2, units = "cm",
+                                                         imagewidth = 1.2, imageheight = 0.9,
+                                                         interpolate = TRUE, units = "cm",
                                                          na.rm = FALSE) {
 
                                      data <- coord$transform(data, panel_params)
@@ -147,6 +157,7 @@ GeomImageGlyph <- ggplot2::ggproto('GeomImageGlyph', Geom,
                                                                                              just = "centre",
                                                                                              width = width_p[i],
                                                                                              height = height_p[i],
+                                                                                             interpolate = interpolate,
                                                                                              gp = grid::gpar(
                                                                                                alpha = data$alpha[i]
                                                                                              )
