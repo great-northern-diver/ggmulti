@@ -32,7 +32,7 @@
 #' @examples
 #' \donttest{
 #' # image glyph
-#' if(requireNamespace("png") && requireNamespace("loon.ggplot")) {
+#' if(requireNamespace("png")) {
 #'
 #' img_path <- list.files(file.path(find.package(package = 'ggmulti'),
 #'                                  "images"),
@@ -49,8 +49,6 @@
 #'          imagewidth = 1.5
 #'        )
 #' p
-#'
-#' lp <- loon.ggplot::loon.ggplot(p, activeGeomLayers = 2)
 #'
 #' }
 #' }

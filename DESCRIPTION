@@ -21,7 +21,6 @@ Imports:
 Suggests:
     png,
     tools,
-    loon.ggplot,
     stringr,
     markdown,
     magrittr,
