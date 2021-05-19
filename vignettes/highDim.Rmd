@@ -277,12 +277,12 @@ g +
   geom_serialaxes(alpha = 0.2) + 
   geom_serialaxes_density(mapping = aes(fill = Species), alpha = 0.2)
 # radial axes can be created by 
-# calling `coord_radar()` or `coord_polar(is_linear = TRUE)`
+# calling `coord_radar()` 
 # this is slightly different, check it out! 
 g + 
   geom_serialaxes(alpha = 0.2) + 
   geom_serialaxes(alpha = 0.2) + 
-  coord_radar()
+  coord_radial()
 ```
 
 Figure 5 and 7 can be created by setting "stat" and "transform" in `geom_serialaxes`; to Figure 6, `geom_serialaxes_quantile` can be added to create a serial axes quantile layer.
