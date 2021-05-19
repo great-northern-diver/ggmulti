@@ -98,7 +98,7 @@
       <h1 data-toc-skip>High Dimensional Data Visualization</h1>
                         <h4 class="author">Wayne Oldford and Zehao Xu</h4>
             
-            <h4 class="date">2021-05-16</h4>
+            <h4 class="date">2021-05-19</h4>
       
       
       <div class="hidden name"><code>highDim.Rmd</code></div>
@@ -240,12 +240,12 @@
   <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_serialaxes_density.html">geom_serialaxes_density</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span>
 <span class="co"># radial axes can be created by </span>
-<span class="co"># calling `coord_radar()` or `coord_polar(is_linear = TRUE)`</span>
+<span class="co"># calling `coord_radial()` </span>
 <span class="co"># this is slightly different, check it out! </span>
 <span class="va">g</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="../reference/geom_serialaxes.html">geom_serialaxes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/coord_radar.html">coord_radar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/coord_radial.html">coord_radial</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Figure 5 and 7 can be created by setting “stat” and “transform” in <code>geom_serialaxes</code>; to Figure 6, <code>geom_serialaxes_quantile</code> can be added to create a serial axes quantile layer.</p>
 <p>Some slight difference should be noticed here:</p>
 <ul>

@@ -320,7 +320,7 @@ How to transform one to the other is explained in <a href='https://tidyr.tidyver
 <span class='co'># radial coordinate</span>
 <span class='va'>p</span> <span class='op'>+</span>
   <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='coord_polar.html'>coord_polar</a></span><span class='op'>(</span>is_linear <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='co'># or just call `coord_radar()`!</span>
+  <span class='fu'><a href='coord_radial.html'>coord_radial</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_serialaxes-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># andrews plot</span>
 <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"dotProduct"</span>,
@@ -330,7 +330,7 @@ How to transform one to the other is explained in <a href='https://tidyr.tidyver
 <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"dotProduct"</span>,
                     transform <span class='op'>=</span> <span class='va'>legendre</span><span class='op'>)</span>
 </div><div class='img'><img src='geom_serialaxes-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># or set the `axes.sequence` rather tahn the mapping `aes`</span>
+<span class='co'># or set the `axes.sequence` rather than the mapping `aes`</span>
 <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span> <span class='op'>+</span>
        <span class='fu'>geom_serialaxes</span><span class='op'>(</span>axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>p</span>
