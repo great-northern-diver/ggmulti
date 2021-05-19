@@ -283,19 +283,21 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 
 <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>hp</span>, y <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
        <span class='fu'>geom_point</span><span class='op'>(</span>
-         data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Merc"</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span><span class='op'>)</span> <span class='op'>+</span>
+         data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Merc"</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>,
+         color <span class='op'>=</span> <span class='st'>"skyblue"</span><span class='op'>)</span> <span class='op'>+</span>
        <span class='fu'>geom_image_glyph</span><span class='op'>(</span>
          data <span class='op'>=</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"Merc"</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>, <span class='op'>]</span>,
-         imagewidth <span class='op'>=</span> <span class='fl'>0.5</span>,
-         imageheight <span class='op'>=</span> <span class='fl'>0.5</span>,
-         images <span class='op'>=</span> <span class='va'>mercLogo</span>
+         images <span class='op'>=</span> <span class='va'>mercLogo</span>,
+         imagewidth <span class='op'>=</span> <span class='fl'>1.5</span>
        <span class='op'>)</span>
 <span class='va'>p</span>
+
+<span class='va'>lp</span> <span class='op'>&lt;-</span> <span class='fu'>loon.ggplot</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/loon.ggplot/man/loon.ggplot.html'>loon.ggplot</a></span><span class='op'>(</span><span class='va'>p</span>, activeGeomLayers <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
 <span class='op'>}</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required namespace: png</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: loon.ggplot</span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'GGally':</span>
 #&gt; <span class='message'>  method from   </span>
-#&gt; <span class='message'>  +.gg   ggplot2</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+#&gt; <span class='message'>  +.gg   ggplot2</span></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

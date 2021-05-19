@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Base Geom ggproto classes for ggplot2 — Geom-ggproto • ggmulti</title>
+<title>Radial axes — coord_radial • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,16 +46,9 @@
 
 
 
-<meta property="og:title" content="Base Geom ggproto classes for ggplot2 — Geom-ggproto" />
-<meta property="og:description" content="All geom_ functions (like geom_point) return a layer that contains a Geom
-object (like GeomPoint). The Geom object is responsible for rendering the data in the plot.
-Each of the Geom objects is a ggproto object,
-descended from the top-level Geom, and each implements various methods and fields.
-Compared to Stat and Position, Geom is a little different
-because the execution of the setup and compute functions is split up.
-setup_data runs before position adjustments, and draw_layer
-is not run until render time, much later. This means there is no setup_params
-because it's hard to communicate the changes." />
+<meta property="og:title" content="Radial axes — coord_radial" />
+<meta property="og:description" content="A radar (spider) coordinate. A wrapper of the function coord_polar() by
+forcing it linear." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -145,48 +138,51 @@ because it's hard to communicate the changes." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Base Geom ggproto classes for ggplot2</h1>
+    <h1>Radial axes</h1>
     
-    <div class="hidden name"><code>Geom-ggproto.Rd</code></div>
+    <div class="hidden name"><code>coord_radial.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>All <code>geom_</code> functions (like <code>geom_point</code>) return a layer that contains a <code>Geom</code>
-object (like <code>GeomPoint</code>). The <code>Geom</code> object is responsible for rendering the data in the plot.
-Each of the <code>Geom</code> objects is a <code>ggproto</code> object,
-descended from the top-level Geom, and each implements various methods and fields.
-Compared to <code>Stat</code> and <code>Position</code>, <code>Geom</code> is a little different
-because the execution of the setup and compute functions is split up.
-setup_data runs before position adjustments, and <code>draw_layer</code>
-is not run until render time, much later. This means there is no <code>setup_params</code>
-because it's hard to communicate the changes.</p>
+    <p>A radar (spider) coordinate. A wrapper of the function <code>coord_polar()</code> by
+forcing it linear.</p>
     </div>
 
-    <pre class="usage"><span class='va'>GeomDensity_</span>
+    <pre class="usage"><span class='fu'>coord_radial</span><span class='op'>(</span>theta <span class='op'>=</span> <span class='st'>"x"</span>, start <span class='op'>=</span> <span class='fl'>0</span>, direction <span class='op'>=</span> <span class='fl'>1</span>, clip <span class='op'>=</span> <span class='st'>"on"</span><span class='op'>)</span></pre>
 
-<span class='va'>GeomBar_</span>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>theta</th>
+      <td><p>variable to map angle to (<code>x</code> or <code>y</code>)</p></td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td><p>Offset of starting point from 12 o'clock in radians. Offset
+is applied clockwise or anticlockwise depending on value of <code>direction</code>.</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>1, clockwise; -1, anticlockwise</p></td>
+    </tr>
+    <tr>
+      <th>clip</th>
+      <td><p>Should drawing be clipped to the extent of the plot panel? A
+setting of <code>"on"</code> (the default) means yes, and a setting of <code>"off"</code>
+means no. For details, please see <code><a href='https://ggplot2.tidyverse.org/reference/coord_cartesian.html'>coord_cartesian()</a></code>.</p></td>
+    </tr>
+    </table>
 
-<span class='va'>GeomQuantiles</span>
 
-<span class='va'>GeomSerialaxesDensity</span>
-
-<span class='va'>GeomSerialaxesHist</span>
-
-<span class='va'>GeomSerialaxesQuantile</span>
-
-<span class='va'>GeomSerialaxes</span></pre>
-
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>GeomDensity_</code> (inherits from <code>GeomRibbon</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 6.</p>
-<p>An object of class <code>GeomBar_</code> (inherits from <code>GeomBar</code>, <code>GeomRect</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 4.</p>
-<p>An object of class <code>GeomQuantiles</code> (inherits from <code>GeomQuantile</code>, <code>GeomPath</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 1.</p>
-<p>An object of class <code>GeomSerialaxesDensity</code> (inherits from <code>GeomDensity_</code>, <code>GeomRibbon</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 2.</p>
-<p>An object of class <code>GeomSerialaxesHist</code> (inherits from <code>GeomBar_</code>, <code>GeomBar</code>, <code>GeomRect</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 2.</p>
-<p>An object of class <code>GeomSerialaxesQuantile</code> (inherits from <code>GeomPath</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 4.</p>
-<p>An object of class <code>GeomSerialaxes</code> (inherits from <code>GeomPath</code>, <code>Geom</code>, <code>ggproto</code>, <code>gg</code>) of length 3.</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='geom_serialaxes.html'>geom_serialaxes</a></span><span class='op'>(</span>axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='coord_radar-deprecated.html'>coord_radar</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'coord_radar' is deprecated.</span>
+#&gt; <span class='warning'>Use 'coord_radial' instead.</span>
+#&gt; <span class='warning'>See help("Deprecated") and help("ggmulti-deprecated").</span></div><div class='img'><img src='coord_radial-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
