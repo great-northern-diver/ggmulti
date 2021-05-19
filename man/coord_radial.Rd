@@ -19,12 +19,12 @@ setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
 means no. For details, please see \code{\link[ggplot2:coord_cartesian]{coord_cartesian()}}.}
 }
 \description{
-A radar (spider) coordinate. A wrapper of the function \code{coord_polar()} by
+A radial (spider) coordinate. A wrapper of the function \code{coord_polar()} by
 forcing it linear.
 }
 \examples{
 ggplot(iris, mapping = aes(colour = Species)) +
   geom_serialaxes(axes.sequence = c(colnames(iris), colnames(iris)[1])) +
-  coord_radar()
+  coord_radial()
 
 }
