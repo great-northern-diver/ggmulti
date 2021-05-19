@@ -1,6 +1,8 @@
 #' @title Serial axes coordinates
-#' @description It is mainly used to visualize the high dimensional data set
+#' @description
+#' It is mainly used to visualize the high dimensional data set
 #' either on the parallel coordinate or the radial coordinate.
+#'
 #' @param axes.layout Serial axes layout, either "parallel" or "radial".
 #' @param scaling One of \code{data}, \code{variable}, \code{observation} or
 #' \code{none} (not suggested the layout is the same with \code{data})
@@ -19,7 +21,20 @@
 #'
 #' To project a common \code{geom} layer on such serialaxes,
 #' users can customize function \code{\link{add_serialaxes_layers}}.
-#' @importFrom utils getFromNamespace globalVariables getS3method
+#'
+#' @section Potential Risk:
+#' In package \code{ggmulti}, the function \code{ggplot_build.gg} is provided.
+#' At the \code{ggplot} construction time, the system will call \code{ggplot_build.gg}
+#' first. If the plot input is not a \code{CoordSerialaxes} coordinate system, the next method
+#' \code{ggplot_build.ggplot} will be called to build a "gg" plot; else
+#' some geometric transformations will be applied first, then the next method
+#' \code{ggplot_build.ggplot} will be executed. So, the potential risk is, if some other packages
+#' e.g. \code{foo}, also provide a function \code{ggplot_build.gg} that is used for their
+#' specifications but the namespace is beyond the \code{ggmulti} (\code{ggmulti:::ggplot_build.gg} is
+#' covered), error may occur. If so, please consider using the
+#' \code{\link{geom_serialaxes}}.
+#'
+#' @importFrom utils getFromNamespace globalVariables
 #'
 #' @return a \code{ggproto} object
 #'
@@ -71,7 +86,8 @@ ggplot_build.gg <- function(plot) {
 
   object <- plot$coordinates
   # regular call
-  if(!inherits(object, "CoordSerialaxes")) return(ggplot_build_ggplot(plot))
+  if(!inherits(object, "CoordSerialaxes"))
+    return(NextMethod()) # call next method `ggplot_build.ggplot`
 
   plot$coordinates <- switch(
     object$axes.layout,
@@ -82,14 +98,14 @@ ggplot_build.gg <- function(plot) {
                                           clip = object$clip %||% "on")
     },
     "radial" = {
-      plot$coordinates <- coord_radar(theta = object$theta %||% "x",
-                                      start = object$start %||% 0,
-                                      direction = object$direction %||% 1,
-                                      clip = object$clip %||% "on")
+      plot$coordinates <- coord_radial(theta = object$theta %||% "x",
+                                       start = object$start %||% 0,
+                                       direction = object$direction %||% 1,
+                                       clip = object$clip %||% "on")
     }, NULL
   )
   plot <- update_CoordSerialaxes(plot, object)
-  ggplot_build_ggplot(plot)
+  NextMethod() # call next method `ggplot_build.ggplot`
 }
 
 update_CoordSerialaxes <- function(p, object) {
@@ -122,7 +138,7 @@ update_CoordSerialaxes <- function(p, object) {
   #  note that a quick way to fix this is to avoid x and y,
   #  e.g. set `mapping = aes(xx = ..., yy = ...)`)
   # rather than fixing it, we throw a warning to users
-  # try not avoid using names `x` or `y`, give more meaningful names
+  # try avoid using names `x` or `y`, give more meaningful names
 
   if(aes_xy(p)) {
     p
