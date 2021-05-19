@@ -3,6 +3,6 @@
 #'   the near future. When possible, alternative functions with similar
 #'   functionality are also mentioned. Help pages for deprecated functions are
 #'   available at \code{help("coord_radar")}
-#' @name loon.ggplot-deprecated
+#' @name ggmulti-deprecated
 #' @keywords internal
 NULL

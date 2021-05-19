@@ -1,12 +1,12 @@
 #' @title Radial axes
-#' @description A radar (spider) coordinate. A wrapper of the function \code{coord_polar()} by
+#' @description A radial (spider) coordinate. A wrapper of the function \code{coord_polar()} by
 #' forcing it linear.
 #' @inheritParams ggplot2::coord_polar
 #' @export
 #' @examples
 #' ggplot(iris, mapping = aes(colour = Species)) +
 #'   geom_serialaxes(axes.sequence = c(colnames(iris), colnames(iris)[1])) +
-#'   coord_radar()
+#'   coord_radial()
 #'
 coord_radial <- function (theta = "x", start = 0, direction = 1, clip = "on") {
 
