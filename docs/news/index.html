@@ -146,7 +146,9 @@
 </h1>
 <ol>
 <li><p>Fix a bug: in this version, all functions can handle data with <code>NA</code>s</p></li>
-<li><p>For functions <code>geom_hist_</code> and <code>geom_density2d</code>, if the input <code>x</code> and <code>y</code> are both numerical (neighter could be considered as the group variable), a warning will be given.</p></li>
+<li><p>For functions <code>geom_hist_</code> and <code>geom_density2d</code>, if the input <code>x</code> and <code>y</code> are both numerical, neither will be considered as the group variable and a warning will be given.</p></li>
+<li><p><code>coord_radar</code> (deprecated) –&gt; <code>coord_radial</code>; also un-export the function <code>coord_polar</code> (reduce the confusion)</p></li>
+<li><p>Update documentation (fix typos; make it more readable; point out potential risks of <code>coord_serialaxes</code>)</p></li>
 </ol>
 </div>
     <div id="ggmulti-101" class="section level1">
