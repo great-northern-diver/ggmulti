@@ -277,7 +277,7 @@ g +
   geom_serialaxes(alpha = 0.2) + 
   geom_serialaxes_density(mapping = aes(fill = Species), alpha = 0.2)
 # radial axes can be created by 
-# calling `coord_radar()` 
+# calling `coord_radial()` 
 # this is slightly different, check it out! 
 g + 
   geom_serialaxes(alpha = 0.2) + 
