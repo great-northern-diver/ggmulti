@@ -2,7 +2,11 @@
 
   1. Fix a bug: in this version, all functions can handle data with `NA`s
   
-  2. For functions `geom_hist_` and `geom_density2d`, if the input `x` and `y` are both numerical (neighter could be considered as the group variable), a warning will be given. 
+  2. For functions `geom_hist_` and `geom_density2d`, if the input `x` and `y` are both numerical, neither will be considered as the group variable and a warning will be given. 
+  
+  3. `coord_radar` (deprecated) --> `coord_radial`; also un-export the function `coord_polar` (reduce the confusion)
+  
+  4. Update documentation (fix typos; make it more readable; point out potential risks of `coord_serialaxes`)
 
 # ggmulti 1.0.1
 

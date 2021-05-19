@@ -104,7 +104,7 @@ geom_..._glyph() understands the following aesthetics (required aesthetics are i
 \examples{
 \donttest{
 # image glyph
-if(requireNamespace("png") && requireNamespace("loon.ggplot")) {
+if(requireNamespace("png")) {
 
 img_path <- list.files(file.path(find.package(package = 'ggmulti'),
                                  "images"),
@@ -121,8 +121,6 @@ p <- ggplot(mapping = aes(x = hp, y = mpg)) +
          imagewidth = 1.5
        )
 p
-
-lp <- loon.ggplot::loon.ggplot(p, activeGeomLayers = 2)
 
 }
 }

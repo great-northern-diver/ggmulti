@@ -45,6 +45,20 @@ components passed in the \code{mapping} system will be treated as an individual 
 To project a common \code{geom} layer on such serialaxes,
 users can customize function \code{\link{add_serialaxes_layers}}.
 }
+\section{Potential Risk}{
+
+In package \code{ggmulti}, the function \code{ggplot_build.gg} is provided.
+At the \code{ggplot} construction time, the system will call \code{ggplot_build.gg}
+first. If the plot input is not a \code{CoordSerialaxes} coordinate system, the next method
+\code{ggplot_build.ggplot} will be called to build a "gg" plot; else
+some geometric transformations will be applied first, then the next method
+\code{ggplot_build.ggplot} will be executed. So, the potential risk is, if some other packages
+e.g. \code{foo}, also provide a function \code{ggplot_build.gg} that is used for their
+specifications but the namespace is beyond the \code{ggmulti} (\code{ggmulti:::ggplot_build.gg} is
+covered), error may occur. If so, please consider using the
+\code{\link{geom_serialaxes}}.
+}
+
 \examples{
 # set sequence by `axes.sequence`
 p <- ggplot(iris) +

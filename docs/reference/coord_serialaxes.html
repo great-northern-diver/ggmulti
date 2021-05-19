@@ -198,6 +198,20 @@ In serial axes coordinate system, mapping aesthetics does not really require "x"
 components passed in the <code>mapping</code> system will be treated as an individual axis.</p>
 <p>To project a common <code>geom</code> layer on such serialaxes,
 users can customize function <code><a href='add_serialaxes_layers.html'>add_serialaxes_layers</a></code>.</p>
+    <h2 class="hasAnchor" id="potential-risk"><a class="anchor" href="#potential-risk"></a>Potential Risk</h2>
+
+    
+
+<p>In package <code>ggmulti</code>, the function <code>ggplot_build.gg</code> is provided.
+At the <code>ggplot</code> construction time, the system will call <code>ggplot_build.gg</code>
+first. If the plot input is not a <code>CoordSerialaxes</code> coordinate system, the next method
+<code>ggplot_build.ggplot</code> will be called to build a "gg" plot; else
+some geometric transformations will be applied first, then the next method
+<code>ggplot_build.ggplot</code> will be executed. So, the potential risk is, if some other packages
+e.g. <code>foo</code>, also provide a function <code>ggplot_build.gg</code> that is used for their
+specifications but the namespace is beyond the <code>ggmulti</code> (<code>ggmulti:::ggplot_build.gg</code> is
+covered), error may occur. If so, please consider using the
+<code><a href='geom_serialaxes.html'>geom_serialaxes</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># set sequence by `axes.sequence`</span>
