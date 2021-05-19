@@ -89,8 +89,7 @@ reference:
     Each non-aesthetics element defined in the mapping `aes()` will be treaed as the target of interest.
   contents:
   - coord_serialaxes
-  - coord_polar
-  - coord_radar
+  - coord_radial
 
 - title: Accessories
   desc: >

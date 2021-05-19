@@ -29,7 +29,7 @@
 #' # radial coordinate
 #' p +
 #'   geom_serialaxes() +
-#'   coord_polar(is_linear = TRUE) # or just call `coord_radar()`!
+#'   coord_radial()
 #'
 #' # andrews plot
 #' p + geom_serialaxes(stat = "dotProduct",
@@ -39,7 +39,7 @@
 #' p + geom_serialaxes(stat = "dotProduct",
 #'                     transform = legendre)
 #'
-#' # or set the `axes.sequence` rather tahn the mapping `aes`
+#' # or set the `axes.sequence` rather than the mapping `aes`
 #' p <- ggplot(iris) +
 #'        geom_serialaxes(axes.sequence = colnames(iris))
 #' p
