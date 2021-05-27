@@ -1,3 +1,9 @@
+# ggmulti 1.0.3
+
+  1. Fix a bug: for `geom_histogram_`, the scaling strategy (`scale.y` and `as.mix`) is not correct.
+  
+  2. The argument name `adjust` (adjust the proportional maximum height of the estimate, i.e. density, histogram, ...) is changed to `prop` since `adjust` has already been used in setting the `density`.
+
 # ggmulti 1.0.2
 
   1. Fix a bug: in this version, all functions can handle data with `NA`s
