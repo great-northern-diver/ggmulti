@@ -37,7 +37,7 @@ plot_range <- function(x = "x.range", panelParams, flip = FALSE) {
 utils::globalVariables(c("PANEL", "axes.sequence", "density", "group",
                          "height", "positive", "setup_mapping", "x", "y",
                          "ymax", "ymin", "max_density", "prop_density", "prop_n", "scalingYprop",
-                         "sum_n"))
+                         "sum_n", "max_y", "prop_y"))
 
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  abs(x - round(x)) < tol
 
