@@ -7,7 +7,7 @@ compute_scales <- function(data, obj, params, ...) {
 compute_scales.density <- function(data, obj, params) {
 
   scale.y <- params$scale.y
-  adjust <- params$adjust
+  prop <- params$prop
 
   switch(scale.y,
          "data" = {
@@ -25,7 +25,7 @@ compute_scales.density <- function(data, obj, params) {
            data %>%
              dplyr::left_join(scalingProp, by = c("PANEL", "y")) %>%
              dplyr::mutate(
-               y = density * scalingYprop * adjust
+               y = density * scalingYprop * prop
              ) %>%
              dplyr::select(-scalingYprop)
          },
@@ -38,10 +38,14 @@ compute_scales.density <- function(data, obj, params) {
            data %>%
              dplyr::left_join(scalingProp, by = c("PANEL", "y")) %>%
              dplyr::mutate(
-               y = density * scalingYprop * adjust
+               y = density * scalingYprop * prop
              ) %>%
              dplyr::select(-scalingYprop)
 
+           # data %>%
+           #   dplyr::mutate(
+           #     y = density * prop
+           #   )
          },
          "group" = { # deprecated
 
@@ -63,24 +67,28 @@ compute_scales.density <- function(data, obj, params) {
 compute_scales.histogram <- function(data, obj, params) {
 
   scale.y <- params$scale.y
-  adjust <- params$adjust
+  prop <- params$prop
 
   switch(scale.y,
          "data" = {
 
-           maxHeights <- data %>%
-             dplyr::group_by(PANEL, location, x) %>%
-             dplyr::summarise(height = sum(y, na.rm = TRUE)) %>%
-             dplyr::ungroup() %>%
-             dplyr::group_by(PANEL) %>%
-             dplyr::summarise(max_height = max(height, na.rm = TRUE))
+           scalingProp <- data %>%
+             dplyr::group_by(PANEL, location) %>%
+             dplyr::summarise(sum_n = sum(count, na.rm = TRUE),
+                              max_y = max(y, na.rm = TRUE)) %>%
+             dplyr::mutate(prop_n = sum_n/max(sum_n, na.rm = TRUE),
+                           prop_y = 1/max(max_y)) %>%
+             dplyr::transmute(PANEL = PANEL,
+                              location = location,
+                              scalingYprop = prop_n * prop_y)
 
            data %>%
-             dplyr::left_join(maxHeights, by = "PANEL") %>%
+             dplyr::left_join(scalingProp, by = c("PANEL", "location")) %>%
              dplyr::mutate(
-               y = y/max_height * adjust
+               y = y * scalingYprop * prop
              ) %>%
-             dplyr::select(-max_height)
+             dplyr::select(-scalingYprop)
+
          },
          "variable" = {
 
@@ -95,7 +103,7 @@ compute_scales.histogram <- function(data, obj, params) {
              dplyr::left_join(y = maxHeights, by = c("location", "PANEL")) %>%
              dplyr::group_by(location) %>%
              dplyr::mutate(
-               y = y/max_height * adjust
+               y = y/max_height * prop
              ) %>%
              dplyr::select(-max_height)
 
