@@ -56,8 +56,7 @@ reference:
 - subtitle: More general histogram and density plot
   desc: >
     Provide more general histograms and density plots. Both `x` and `y` can be accommodated:
-    `x` (or `y`) is a group variable,  and  `y` (or `x`) the target variable to be plotted.
-    The result is a different histogram or density of `y` (`x`) for each value of `x` (`y`).
+    `x` (or `y`) is a group variable,  and `y` (or `x`) the target variable to be plotted.
     If only one of `x` or `y` is provided, it will be the target variable (no grouping) and
     the standard `geom_histogram()` or `geom_density()` will be executed.
   contents:
