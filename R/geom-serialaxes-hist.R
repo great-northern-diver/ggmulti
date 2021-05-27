@@ -27,7 +27,7 @@ geom_serialaxes_hist <- function(mapping = NULL, data = NULL, stat = "serialaxes
                                  position = "stack_", ...,
                                  axes.sequence = character(0L),
                                  axes.position = NULL, merge = TRUE,
-                                 scale.y = c("data", "variable"), as.mix = TRUE,
+                                 scale.y = c("data", "group"), as.mix = TRUE,
                                  positive = TRUE,
                                  prop = 0.9, na.rm = FALSE, orientation = NA,
                                  show.legend = NA, inherit.aes = TRUE) {

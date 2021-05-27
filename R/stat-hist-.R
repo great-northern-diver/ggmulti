@@ -211,7 +211,7 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                               },
                               compute_group = function(self, data, scales,
                                                        # Hack to recognize `geom_hist_` parameters
-                                                       scale.x = NULL, scale.y = c("data", "variable"), as.mix = FALSE,
+                                                       scale.x = NULL, scale.y = c("data", "group"), as.mix = FALSE,
                                                        binwidth = NULL, orientation = NA,
                                                        na.rm = FALSE, bins = NULL, center = NULL, width = NULL,
                                                        boundary = NULL, breaks = NULL, flipped_aes = TRUE,

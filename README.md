@@ -108,10 +108,10 @@ iris %>%
   ggplot(mapping = aes(x = `Outer sterile whorls`,
                        y = values, 
                        fill = Species)) +
-  geom_histogram_(scale.y = "variable",
+  geom_histogram_(scale.y = "group",
                   alpha = 0.5,
                   prop = 0.6) + 
-  geom_density_(scale.y = "variable",
+  geom_density_(scale.y = "group",
                 prop = 0.6,
                 alpha = 0.5,
                 colour = NA,

@@ -16,32 +16,33 @@
 #' @export
 #' @importFrom tidyr pivot_longer
 #' @details
-#' \code{x} (or \code{y}) is a group variable and \code{y} (or \code{x}) a target variable to be plotted.
-#' The result is a different histogram of \code{y} (\code{x}) for each value of \code{x} (\code{y}).
-#' If only one of \code{x} or \code{y} is provided, it will be the target variable (no grouping) and
-#' the standard \code{geom_histogram()} will be executed. Several things should be noticed:
+#' \code{x} (or \code{y}) is a group variable (categorical) and \code{y} (or \code{x}) a target variable (numerical) to be plotted.
+#' If only one of \code{x} or \code{y} is provided, it will treated as a target variable and
+#' \code{ggplot2::geom_histogram} will be executed. Several things should be noticed:
 #'
 #' 1. If both \code{x} and \code{y} are given, they can be one discrete one continuous or
 #' two discrete. But they cannot be two continuous variables (which one will be considered as a group variable?).
 #'
-#' 2. \code{geom_hist_} is a wrapper of \code{geom_histogram_} and \code{geom_count_}. In other words, suppose the \code{y} is our interest,
-#' \code{geom_hist_()} can accommodate both continuous or discrete "y" but \code{geom_histogram_()} is only for the continuous \code{y} and
-#' \code{geom_bar_()} is only for the discrete \code{y}.
+#' 2. \code{geom_hist_} is a wrapper of \code{geom_histogram_} and \code{geom_count_}.
+#' Suppose the \code{y} is our interest (\code{x} is the categorical variable),
+#' \code{geom_hist_()} can accommodate either continuous or discrete \code{y}. While,
+#' \code{geom_histogram_()} only accommodates the continuous \code{y} and
+#' \code{geom_bar_()} only accommodates the discrete \code{y}.
 #'
-#' 3. There are four combinations of \code{scale.y} and \code{as.mix}
+#' 3. There are four combinations of \code{scale.y} and \code{as.mix}.
 #' \describe{
-#'   \item{\code{scale.y} = "variable" and \code{as.mix} = FALSE}{The density estimates area of each group under the same variable
-#'   is the same and scaled to maximum of 1.}
-#'   \item{\code{scale.y} = "variable" and \code{as.mix} = TRUE}{The density estimates area of each group under the same variable
-#'   is proportional to its own counts (over this variable).}
-#'   \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimates area of all group is scaled to maximum of 1.
-#'   The sum of the density area for each variable is proportional to the its counts (over the whole dataset).
-#'   Under each variable, the area of each group is the same.}
-#'   \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimates area of all group is scaled to maximum of 1
-#'   and the area of each group is proportional to its own count.}
+#'   \item{\code{scale.y} = "group" and \code{as.mix} = FALSE}{The density estimate area of each subgroup (represented by each color)
+#'   within the same group is the same.}
+#'   \item{\code{scale.y} = "group" and \code{as.mix} = TRUE}{The density estimate area of each subgroup (represented by each color)
+#'   within the same group is proportional to its own counts.}
+#'   \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimate area of all groups is scaled to maximum of 1.
+#'   and the density area for each group is proportional to the its count. Within each group, the area of each subgroup is the same.}
+#'   \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimate area of all groups is scaled to maximum of 1
+#'   and the area of each subgroup (represented by each color) is proportional to its own count.}
 #' }
+#' See vignettes[https://great-northern-diver.github.io/ggmulti/articles/histogram-density-.html] for more intuitive explanation.
 #' Note that, if it is a grouped bar chart (both \code{x} and \code{y} are categorical),
-#' parameter `as.mix` is useless.
+#' parameter `as.mix` is meaningless.
 #'
 #' @examples
 #' if(require(dplyr) && require(tidyr)) {
@@ -67,19 +68,19 @@
 #'     ggplot(mapping = aes(x = drv, y = class)) +
 #'     geom_hist_(orientation = "y")
 #'
-#'   # scale.y as "variable"
+#'   # scale.y as "group"
 #'   p <- iris %>%
 #'     tidyr::pivot_longer(cols = -Species,
 #'                         names_to = "Outer sterile whorls",
 #'                         values_to = "x") %>%
 #'     ggplot(mapping = aes(x = `Outer sterile whorls`,
 #'                          y = x, fill = Species)) +
-#'     stat_hist_(scale.y = "variable",
+#'     stat_hist_(scale.y = "group",
 #'                prop = 0.6,
 #'                alpha = 0.5)
 #'   p
 #'   # with density on the left
-#'   p + stat_density_(scale.y = "variable",
+#'   p + stat_density_(scale.y = "group",
 #'                     prop = 0.6,
 #'                     alpha = 0.5,
 #'                     positive = FALSE)
@@ -100,7 +101,7 @@
 #' }
 geom_hist_ <- function(mapping = NULL, data = NULL, stat = "hist_",
                        position = "stack_", ...,
-                       scale.x = NULL, scale.y = c("data", "variable"), as.mix = FALSE,
+                       scale.x = NULL, scale.y = c("data", "group", "variable"), as.mix = FALSE,
                        binwidth = NULL, bins = NULL, positive = TRUE,
                        prop = 0.9, na.rm = FALSE, orientation = NA,
                        show.legend = NA, inherit.aes = TRUE) {
@@ -134,7 +135,7 @@ geom_hist_ <- function(mapping = NULL, data = NULL, stat = "hist_",
 #'
 geom_histogram_ <- function(mapping = NULL, data = NULL, stat = "bin_",
                             position = "stack_", ...,
-                            scale.x = NULL, scale.y = c("data", "variable"), as.mix = FALSE,
+                            scale.x = NULL, scale.y = c("data", "group"), as.mix = FALSE,
                             positive = TRUE, prop = 0.9,
                             binwidth = NULL, bins = NULL, na.rm = FALSE, orientation = NA,
                             show.legend = NA, inherit.aes = TRUE) {
@@ -168,7 +169,7 @@ geom_histogram_ <- function(mapping = NULL, data = NULL, stat = "bin_",
 #'
 geom_bar_ <- function(mapping = NULL, data = NULL, stat = "count_",
                       position = "stack_", ...,
-                      scale.x = NULL, scale.y = c("data", "variable"),
+                      scale.x = NULL, scale.y = c("data", "group"),
                       positive = TRUE, prop = 0.9,
                       na.rm = FALSE, orientation = NA,
                       show.legend = NA, inherit.aes = TRUE) {
@@ -287,7 +288,7 @@ GeomBar_ <- ggplot2::ggproto(
       ggplot2::flip_data(params$flipped_aes)
   },
 
-  draw_panel = function(self, data, panel_params, coord, scale.y = c("data", "variable"),
+  draw_panel = function(self, data, panel_params, coord, scale.y = c("data", "group"),
                         scale.x = NULL, as.mix = FALSE, positive = TRUE, width = NULL,
                         prop = 0.9, na.rm = FALSE) {
 

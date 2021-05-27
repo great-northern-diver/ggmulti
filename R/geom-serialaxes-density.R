@@ -26,7 +26,7 @@
 geom_serialaxes_density <- function(mapping = NULL, data = NULL, stat = "serialaxes_density",
                                     position = "identity_", ...,
                                     axes.sequence = character(0L), merge = TRUE,
-                                    scale.y = c("data", "variable"), as.mix = TRUE,
+                                    scale.y = c("data", "group"), as.mix = TRUE,
                                     positive = TRUE,
                                     prop = 0.9, na.rm = FALSE, orientation = NA,
                                     show.legend = NA, inherit.aes = TRUE) {

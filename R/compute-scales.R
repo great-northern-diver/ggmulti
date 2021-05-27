@@ -29,7 +29,7 @@ compute_scales.density <- function(data, obj, params) {
              ) %>%
              dplyr::select(-scalingYprop)
          },
-         "variable" = {
+         "group" = {
 
            scalingProp <- data %>%
              dplyr::group_by(PANEL, y) %>%
@@ -47,13 +47,26 @@ compute_scales.density <- function(data, obj, params) {
            #     y = density * prop
            #   )
          },
-         "group" = { # deprecated
+         "variable" = {
+
+           warning("`scale.y = variable` is deprecated now. Use `group` instead.",
+                   call. = FALSE)
+
+           scalingProp <- data %>%
+             dplyr::group_by(PANEL, y) %>%
+             dplyr::summarise(scalingYprop = 1/max(density, na.rm = TRUE))
 
            data %>%
-             dplyr::group_by(PANEL, group) %>%
+             dplyr::left_join(scalingProp, by = c("PANEL", "y")) %>%
              dplyr::mutate(
-               y = rescale(density, c(0, 1))
-             )
+               y = density * scalingYprop * prop
+             ) %>%
+             dplyr::select(-scalingYprop)
+
+           # data %>%
+           #   dplyr::mutate(
+           #     y = density * prop
+           #   )
          },
          "none" = { # deprecated
            data %>%
@@ -90,7 +103,7 @@ compute_scales.histogram <- function(data, obj, params) {
              dplyr::select(-scalingYprop)
 
          },
-         "variable" = {
+         "group" = {
 
            maxHeights <- data %>%
              dplyr::group_by(PANEL, location, x) %>%
@@ -108,9 +121,26 @@ compute_scales.histogram <- function(data, obj, params) {
              dplyr::select(-max_height)
 
          },
-         "group" = { # deprecated
+         "variable" = {
 
-           stop("`group` is aborted in `geom_hist_`", call. = FALSE)
+           warning("`scale.y = variable` is deprecated now. Use `group` instead.",
+                   call. = FALSE)
+
+           maxHeights <- data %>%
+             dplyr::group_by(PANEL, location, x) %>%
+             dplyr::summarise(height = sum(y, na.rm = TRUE)) %>%
+             dplyr::ungroup() %>%
+             dplyr::group_by(location, PANEL) %>%
+             dplyr::summarise(max_height = max(height, na.rm = TRUE))
+
+           data %>%
+             dplyr::left_join(y = maxHeights, by = c("location", "PANEL")) %>%
+             dplyr::group_by(location) %>%
+             dplyr::mutate(
+               y = y/max_height * prop
+             ) %>%
+             dplyr::select(-max_height)
+
          },
          "none" = { # deprecated
            data
