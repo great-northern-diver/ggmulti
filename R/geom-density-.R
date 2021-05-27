@@ -17,7 +17,7 @@
 #' the area of each group is the same, with maximum 1.
 #' @param positive If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 #' right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?
-#' @param adjust adjust the proportional maximum height of the estimate (density, histogram, ...).
+#' @param prop adjust the proportional maximum height of the estimate (density, histogram, ...).
 #' @details
 #' The \code{x} (or \code{y}) is a group variable and  \code{y} (or \code{x}) is the target variable to be plotted.
 #' The result is a different density of \code{y} (\code{x}) for each value of \code{x} (\code{y}).
@@ -67,7 +67,7 @@
 #'     diamonds %>%
 #'       dplyr::sample_n(500) %>%
 #'       ggplot(mapping = aes(x = price, y = cut, fill = color)) +
-#'       geom_density_(orientation = "x", adjust = 0.25,
+#'       geom_density_(orientation = "x", prop = 0.25,
 #'                     position = "stack_",
 #'                     scale.y = "variable")
 #'   )
@@ -96,7 +96,7 @@
 geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
                           position = "identity_", ...,
                           scale.x = NULL, scale.y = c("data", "variable"),
-                          as.mix = FALSE, positive = TRUE, adjust = 0.9, na.rm = FALSE,
+                          as.mix = FALSE, positive = TRUE, prop = 0.9, na.rm = FALSE,
                           orientation = NA, show.legend = NA, inherit.aes = TRUE) {
   ggplot2::layer(
     data = data,
@@ -111,7 +111,7 @@ geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
       positive = positive,
       scale.x = scale.x,
       scale.y = match.arg(scale.y),
-      adjust = adjust,
+      prop = prop,
       na.rm = na.rm,
       orientation = orientation,
       ...
@@ -140,7 +140,7 @@ GeomDensity_ <- ggplot2::ggproto(
     params$as.mix <- params$as.mix %||% FALSE
     params$positive <- params$positive %||% TRUE
     params$scale.y <- params$scale.y %||% "data"
-    params$adjust <- params$adjust %||% 0.9
+    params$prop <- params$prop %||% 0.9
 
     if(!is.null(params$scale.x)) {
       if(!all(is.numeric(params$scale.x)))
@@ -164,13 +164,13 @@ GeomDensity_ <- ggplot2::ggproto(
           dplyr::group_by(group, PANEL) %>%
           summarise(sum.n = sum(n, na.rm = TRUE))%>%
           dplyr::ungroup() %>%
-          dplyr::transmute(group = group, PANEL = PANEL, prop = sum.n/ sum(sum.n, na.rm = TRUE)) %>%
+          dplyr::transmute(group = group, PANEL = PANEL, proportion = sum.n/ sum(sum.n, na.rm = TRUE)) %>%
           dplyr::right_join(data, by = c("group", "PANEL")) %>%
-          dplyr::mutate(density = density * prop,
-                        y = y * prop,
-                        count = count * prop,
-                        scaled = scaled * prop,
-                        ndensity = ndensity * prop)
+          dplyr::mutate(density = density * proportion,
+                        y = y * proportion,
+                        count = count * proportion,
+                        scaled = scaled * proportion,
+                        ndensity = ndensity * proportion)
       }
       data <- ggplot2::flip_data(data, params$flipped_aes)
       return(ggplot2::GeomArea$setup_data(data, params))
@@ -199,12 +199,14 @@ GeomDensity_ <- ggplot2::ggproto(
         dplyr::left_join(sum.l,
                          by = c("location", "PANEL")) %>%
         dplyr::ungroup() %>%
-        dplyr::transmute(location = location, group = group, PANEL = PANEL, prop = sum.g/ sum.l) %>%
+        dplyr::transmute(location = location, group = group,
+                         PANEL = PANEL,
+                         proportion = sum.g/sum.l) %>%
         dplyr::right_join(data, by = c("location", "group", "PANEL")) %>%
-        dplyr::mutate(density = density * prop,
-                      count = count * prop,
-                      scaled = scaled * prop,
-                      ndensity = ndensity * prop)
+        dplyr::mutate(density = density * proportion,
+                      count = count * proportion,
+                      scaled = scaled * proportion,
+                      ndensity = ndensity * proportion)
     }
 
     data$positive <- params$positive
@@ -222,7 +224,7 @@ GeomDensity_ <- ggplot2::ggproto(
 
   draw_group = function(self, data, panel_scales, coord, positive = TRUE,
                         scale.x = NULL, scale.y = "data", as.mix = FALSE,
-                        adjust = 0.9, na.rm = FALSE) {
+                        prop = 0.9, na.rm = FALSE) {
 
     flipped_aes <- ggplot2::has_flipped_aes(data)
 

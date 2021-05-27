@@ -110,9 +110,9 @@ iris %>%
                        fill = Species)) +
   geom_histogram_(scale.y = "variable",
                   alpha = 0.5,
-                  adjust = 0.6) + 
+                  prop = 0.6) + 
   geom_density_(scale.y = "variable",
-                adjust = 0.6,
+                prop = 0.6,
                 alpha = 0.5,
                 colour = NA,
                 positive = FALSE)

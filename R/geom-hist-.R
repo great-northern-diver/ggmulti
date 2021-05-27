@@ -75,12 +75,12 @@
 #'     ggplot(mapping = aes(x = `Outer sterile whorls`,
 #'                          y = x, fill = Species)) +
 #'     stat_hist_(scale.y = "variable",
-#'                adjust = 0.6,
+#'                prop = 0.6,
 #'                alpha = 0.5)
 #'   p
 #'   # with density on the left
 #'   p + stat_density_(scale.y = "variable",
-#'                     adjust = 0.6,
+#'                     prop = 0.6,
 #'                     alpha = 0.5,
 #'                     positive = FALSE)
 #'
@@ -102,7 +102,7 @@ geom_hist_ <- function(mapping = NULL, data = NULL, stat = "hist_",
                        position = "stack_", ...,
                        scale.x = NULL, scale.y = c("data", "variable"), as.mix = FALSE,
                        binwidth = NULL, bins = NULL, positive = TRUE,
-                       adjust = 0.9, na.rm = FALSE, orientation = NA,
+                       prop = 0.9, na.rm = FALSE, orientation = NA,
                        show.legend = NA, inherit.aes = TRUE) {
 
   ggplot2::layer(
@@ -119,7 +119,7 @@ geom_hist_ <- function(mapping = NULL, data = NULL, stat = "hist_",
       scale.y = match.arg(scale.y),
       as.mix = as.mix,
       positive = positive,
-      adjust = adjust,
+      prop = prop,
       binwidth = binwidth,
       bins = bins,
       na.rm = na.rm,
@@ -135,7 +135,7 @@ geom_hist_ <- function(mapping = NULL, data = NULL, stat = "hist_",
 geom_histogram_ <- function(mapping = NULL, data = NULL, stat = "bin_",
                             position = "stack_", ...,
                             scale.x = NULL, scale.y = c("data", "variable"), as.mix = FALSE,
-                            positive = TRUE, adjust = 0.9,
+                            positive = TRUE, prop = 0.9,
                             binwidth = NULL, bins = NULL, na.rm = FALSE, orientation = NA,
                             show.legend = NA, inherit.aes = TRUE) {
 
@@ -152,7 +152,7 @@ geom_histogram_ <- function(mapping = NULL, data = NULL, stat = "bin_",
       positive = positive,
       scale.x = scale.x,
       scale.y = match.arg(scale.y),
-      adjust = adjust,
+      prop = prop,
       binwidth = binwidth,
       bins = bins,
       as.mix = as.mix,
@@ -169,7 +169,7 @@ geom_histogram_ <- function(mapping = NULL, data = NULL, stat = "bin_",
 geom_bar_ <- function(mapping = NULL, data = NULL, stat = "count_",
                       position = "stack_", ...,
                       scale.x = NULL, scale.y = c("data", "variable"),
-                      positive = TRUE, adjust = 0.9,
+                      positive = TRUE, prop = 0.9,
                       na.rm = FALSE, orientation = NA,
                       show.legend = NA, inherit.aes = TRUE) {
 
@@ -186,7 +186,7 @@ geom_bar_ <- function(mapping = NULL, data = NULL, stat = "count_",
       positive = positive,
       scale.x = scale.x,
       scale.y = match.arg(scale.y),
-      adjust = adjust,
+      prop = prop,
       na.rm = na.rm,
       orientation = orientation,
       ...
@@ -204,7 +204,7 @@ GeomBar_ <- ggplot2::ggproto(
     params$flipped_aes <- has_flipped_aes(data, params, range_is_orthogonal = TRUE)
 
     params$positive <- params$positive %||% TRUE
-    params$adjust <- params$adjust %||% 0.9
+    params$prop <- params$prop %||% 0.9
 
     params$scale.y <- params$scale.y %||% "data"
     params$as.mix <- params$as.mix %||% FALSE
@@ -229,7 +229,7 @@ GeomBar_ <- ggplot2::ggproto(
       ggplot2::flip_data(params$flipped_aes)
 
     data$width <- data$width %||% params$width %||%
-      (resolution(data$x, FALSE) * params$adjust)
+      (resolution(data$x, FALSE) * params$prop)
 
     if(!acceptBoth) {
       data <- ggplot2::flip_data(data, params$flipped_aes)
@@ -255,26 +255,28 @@ GeomBar_ <- ggplot2::ggproto(
         dplyr::ungroup()
     }
 
-    y <- data$count
-
     if(params$as.mix) {
 
-      area <- data %>%
-        dplyr::group_by(location) %>%
-        dplyr::summarise(area = sum(count * width)) %>%
-        dplyr::right_join(data, by = "location")
+      sum.l <- data %>%
+        dplyr::group_by(location, PANEL) %>%
+        summarise(sum.l = sum(count, na.rm = TRUE))
 
-      y <- y/area$area
-
+      data <- data %>%
+        dplyr::left_join(sum.l,
+                         by = c("location", "PANEL")) %>%
+        dplyr::ungroup() %>%
+        dplyr::mutate(y = count/sum.l) %>%
+        dplyr::select(-sum.l)
     } else {
+      y <- data$count
+
       # bar chart would not work here (if so, all bars would be the same length)
       # only histogram can produce the density
-      if(!is.null(data$density)) {
+      if(!is.null(data$density))
         y <- data$density
-      }
-    }
 
-    data$y <- y
+      data$y <- y
+    }
 
     data %>%
       compute_scales("histogram", params) %>%
@@ -287,9 +289,9 @@ GeomBar_ <- ggplot2::ggproto(
 
   draw_panel = function(self, data, panel_params, coord, scale.y = c("data", "variable"),
                         scale.x = NULL, as.mix = FALSE, positive = TRUE, width = NULL,
-                        adjust = 0.9, na.rm = FALSE) {
+                        prop = 0.9, na.rm = FALSE) {
 
-    # Hack to ensure that width, positive, scale.y, scale.x, adjust and as.mix are detected as parameters
+    # Hack to ensure that width, positive, scale.y, scale.x, prop and as.mix are detected as parameters
     ggplot2::ggproto_parent(ggplot2::GeomBar, self)$draw_panel(data, panel_params, coord)
   }
 )

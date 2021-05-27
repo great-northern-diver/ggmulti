@@ -62,7 +62,7 @@ add_serialaxes_layers.GeomDensity <- function(layer, plot, object, axes) {
                      positive = layer$stat_params$positive %||% object$positive %||% TRUE,
                      scale.y = layer$stat_params$scale.y %||% "data",
                      as.mix =  layer$stat_params$as.mix %||% TRUE,
-                     adjust = layer$stat_params$adjust %||% 0.9,
+                     prop = layer$stat_params$prop %||% 0.9,
                      aesthetics = names(ggplot2::GeomDensity$default_aes))
 
   plot + do.call(fun, args)
@@ -85,7 +85,7 @@ add_serialaxes_layers.GeomBar <- function(layer, plot, object, axes) {
                      positive = layer$stat_params$positive %||% object$positive %||% TRUE,
                      scale.y = layer$stat_params$scale.y %||% "data",
                      as.mix =  layer$stat_params$as.mix %||% TRUE,
-                     adjust = layer$stat_params$adjust %||% 0.9,
+                     prop = layer$stat_params$prop %||% 0.9,
                      aesthetics = names(ggplot2::GeomBar$default_aes))
 
   plot + do.call(fun, args)
