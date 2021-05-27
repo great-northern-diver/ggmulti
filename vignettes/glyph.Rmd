@@ -68,8 +68,8 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE,
                       message = FALSE,
                       fig.align = "center", 
-                      fig.width = 6, 
-                      fig.height = 5,
+                      fig.width = 7, 
+                      fig.height = 6,
                       out.width = "60%", 
                       collapse = TRUE,
                       comment = "#>",
@@ -98,7 +98,7 @@ In `ggmulti` we provide "glyph" layers to help add this information as point sym
 
 Consider, for example, the lower 48 USA destinations  of "nyc" flights in 2013. Each destination could be marked as a "airplane" polygon symbol and New York city is highlighted by a blue star.
 
-```{r glyph_ggplot, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r glyph_ggplot}
 library(ggmulti)
 library(nycflights13)
 library(maps)
@@ -137,26 +137,22 @@ NYflightDestinationMap <- US +
 NYflightDestinationMap
 ```
 
-```{r glyph_ggplot_graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 7, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "map.png"))
-```
-
 Package "ggmulti" provides several polygon coordinates that can be used in `geom_polygon_glyph`, check `help("polygon_glyph", "ggmulti")`.
 
 ## Image glyphs
 
 We can also load image files (png, jpeg, etc) and set each image as a point glyph. Let's draw a chart of two 2020 Final NBA Teams.
 
-```{r download images, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r download images}
 library(png)
 img_path <- list.files(file.path(find.package(package = 'ggmulti'),
                                  "images"),
                        full.names = TRUE)
-Raptors <- png::readPNG(img_path[1L])
-Warriors <- png::readPNG(img_path[2L])
+Raptors <- png::readPNG(img_path[grepl("Raptors", img_path)])
+Warriors <- png::readPNG(img_path[grepl("Warriors", img_path)])
 ```
 
-```{r image glyph NBA 2020, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r image glyph NBA 2020}
 # Golden State Coordinate
 GoldenState <- data.frame(
   lon = -119.4179,
@@ -204,15 +200,11 @@ US +
   ggtitle("2019 NBA Finals")
 ```
 
-```{r image_glyph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 7, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "image_glyph.png"))
-```
-
 ## Serialaxes glyphs
 
 Additionally, 'serial axes' can also be drawn as glyphs. 
 
-```{r serialaxes glyph, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 7, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r serialaxes glyph}
 ggplot(iris) +
   geom_serialaxes_glyph(
     mapping = aes(Sepal.Length, Sepal.Width, colour = Species),
@@ -223,10 +215,6 @@ ggplot(iris) +
      # sequence of serial axes
     axes.sequence = colnames(iris)[-5]
   )
-```
-
-```{r serialaxes glyph graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 7, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "serialaxes_glyph.png"))
 ```
 
 In this figure, we can tell the specie 'setosa' lays on the left top corner and the glyph shape is like a triangle that is very distinguishable from the rest two species.

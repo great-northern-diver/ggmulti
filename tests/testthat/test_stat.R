@@ -14,9 +14,9 @@ test_that("test stat", {
               mapping = aes(x = `Outer sterile whorls`,
                             y = x,
                             fill = Species))
-  q <- p + stat_hist_(adjust = 0.5)
+  q <- p + stat_hist_(prop = 0.5)
   b <- ggplot_build(q)
-  expect_equal(b$plot$layers[[1]]$geom_params$adjust, 0.5)
+  expect_equal(b$plot$layers[[1]]$geom_params$prop, 0.5)
 
   q <- p + stat_bin_(scale.x = c(0, 1))
   b <- ggplot_build(q)
@@ -34,9 +34,9 @@ test_that("test stat", {
               mapping = aes(x = `Outer sterile whorls`,
                             y = x,
                             fill = Species))
-  q <- p + stat_density_(colour = NA, scale.y = "variable")
+  q <- p + stat_density_(colour = NA, scale.y = "group")
   b <- ggplot_build(q)
-  expect_equal(b$plot$layers[[1]]$geom_params$scale.y, "variable")
+  expect_equal(b$plot$layers[[1]]$geom_params$scale.y, "group")
 
   ### test error
   q <- p + stat_density_(colour = NA, scale.x = c('foo'))

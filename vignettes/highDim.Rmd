@@ -68,7 +68,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE,
                       message = FALSE,
                       fig.align = "center", 
-                      fig.width = 6, 
+                      fig.width = 7, 
                       fig.height = 5,
                       out.width = "60%", 
                       collapse = TRUE,
@@ -110,7 +110,7 @@ Before we start, a couple of things should be noticed:
 
 Suppose we are interested in the data set `iris`. A parallel coordinate chart can be created as followings:
 
-```{r serialaxes, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r serialaxes}
 library(ggmulti)
 # parallel axes plot
 ggplot(iris, 
@@ -125,44 +125,28 @@ ggplot(iris,
 p
 ```
 
-```{r serialaxes_graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "parallel.png"))
-```
-
 A histogram layer can be displayed by adding layer `geom_histogram`
 
-```{r serialaxes histogram, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r serialaxes histogram,}
 p + 
   geom_histogram(alpha = 0.3, 
                  mapping = aes(fill = factor(Species))) + 
   theme(axis.text.x = element_text(angle = 30, hjust = 0.7))
 ```
 
-```{r serialaxes histogram graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "parallel_histogram.png"))
-```
-
 A density layer can be drawn by adding layer `geom_density`
 
-```{r serialaxes density, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r serialaxes density}
 p + 
   geom_density(alpha = 0.3, 
                mapping = aes(fill = factor(Species)))
 ```
 
-```{r serialaxes density graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "parallel_density.png"))
-```
-
 A parallel coordinate can be converted to radial coordinate by setting `axes.layout = "radial"` in function `coord_serialaxes`. 
 
-```{r radial, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r radial, fig.width = 5}
 p$coordinates$axes.layout <- "radial"
 p
-```
-
-```{r radial graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "radial.png"))
 ```
 
 <font size="1"> 
@@ -181,7 +165,7 @@ where $\ve{y}_i$ is the $i$th responses and $\ve{a}_t$ is the orthonormal functi
 
 which are orthonormal on interval $(-\pi, \pi)$. In other word, we can project a $p$ dimensional space to an infinite $(-\pi, \pi)$ space. The following figure illustrates how to construct an "Andrew's plot".
 
-```{r andrews, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 6, fig.height = 4, fig.align = "center", out.width = "70%"}
+```{r andrews}
 p <- ggplot(iris, 
             mapping = aes(Sepal.Length = Sepal.Length,
                           Sepal.Width = Sepal.Width,
@@ -194,22 +178,14 @@ p <- ggplot(iris,
 p
 ```
 
-```{r andrews graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "andrews.png"))
-```
-
 A quantile layer can be displayed on top
 
-```{r andrews with quantile, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+```{r andrews with quantile}
 p + 
  geom_quantiles(stat = "dotProduct",
                 quantiles = c(0.25, 0.5, 0.75),
                 size = 2,
                 linetype = 2) 
-```
-
-```{r andrews with quantile graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "andrews_quantile.png"))
 ```
 
 A couple of things should be noticed:
@@ -222,7 +198,7 @@ A couple of things should be noticed:
   
   where $t \in [0, k\pi]$ [@gnanadesikan2011methods]. 
   
-    ```{r tukey, message = FALSE, warning = FALSE, eval = FALSE, fig.width = 9, fig.height = 3, fig.align = "center", out.width = "70%"}
+    ```{r tukey}
     tukey <- function(p = 4, k = 50 * (p - 1), ...) {
       t <- seq(0, p* base::pi, length.out = k)
       seq_k <- seq(p)
@@ -246,10 +222,6 @@ A couple of things should be noticed:
                          colour = Species)) +
       geom_path(alpha = 0.2, stat = "dotProduct", transform = tukey)  + 
       coord_serialaxes()
-    ```
-    
-    ```{r tukey graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 9, fig.height = 4, fig.align = "center", out.width = "70%"}
-    include_graphics(path_concat(imageDirectory, "tukey.png"))
     ```
     
   <font size="1"> 
