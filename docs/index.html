@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -180,11 +180,11 @@ ggplot(data = data.frame(x = c(1,2,1.5,2,1), y = c(1,1,1.5,2,2)),
   ggplot(mapping = aes(x = `Outer sterile whorls`,
                        y = values, 
                        fill = Species)) +
-  geom_histogram_(scale.y = "variable",
+  geom_histogram_(scale.y = "group",
                   alpha = 0.5,
-                  adjust = 0.6) + 
-  geom_density_(scale.y = "variable",
-                adjust = 0.6,
+                  prop = 0.6) + 
+  geom_density_(scale.y = "group",
+                prop = 0.6,
                 alpha = 0.5,
                 colour = NA,
                 positive = FALSE)</code></pre>

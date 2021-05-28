@@ -15,32 +15,32 @@ test_that("test built geoms in ggplot", {
               mapping = aes(x = `Outer sterile whorls`,
                             y = x,
                             fill = Species)) +
-    geom_hist_(scale.y = "variable",
+    geom_hist_(scale.y = "group",
                as.mix = FALSE,
-               adjust = 0.6,
+               prop = 0.6,
                alpha = 0.5) +
-    geom_density_(scale.y = "variable",
+    geom_density_(scale.y = "group",
                   as.mix = FALSE,
-                  adjust = 0.6,
+                  prop = 0.6,
                   alpha = 0.5,
                   positive = FALSE)
   b <- ggplot_build(p)
-  expect_equal(b$plot$layers[[1]]$geom_params$scale.y, "variable")
-  expect_equal(b$plot$layers[[2]]$geom_params$scale.y, "variable")
+  expect_equal(b$plot$layers[[1]]$geom_params$scale.y, "group")
+  expect_equal(b$plot$layers[[2]]$geom_params$scale.y, "group")
 
   # flip aes; position dodge2
   p <- ggplot(data,
               mapping = aes(y = `Outer sterile whorls`,
                             x = x,
                             fill = Species)) +
-    geom_hist_(scale.y = "variable",
+    geom_hist_(scale.y = "group",
                position = "dodge2_",
                as.mix = FALSE,
-               adjust = 0.6,
+               prop = 0.6,
                alpha = 0.5) +
-    geom_density_(scale.y = "variable",
+    geom_density_(scale.y = "group",
                   as.mix = FALSE,
-                  adjust = 0.6,
+                  prop = 0.6,
                   alpha = 0.5,
                   positive = FALSE)
   b <- ggplot_build(p)
@@ -54,7 +54,7 @@ test_that("test built geoms in ggplot", {
                position = "dodge_",
                as.mix = TRUE,
                positive = FALSE)+
-    geom_density_(scale.y = "variable",
+    geom_density_(scale.y = "group",
                   position = "stack_",
                   as.mix = TRUE)
   b <- ggplot_build(p)

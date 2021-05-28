@@ -78,8 +78,8 @@ StatSerialaxesHist <- ggplot2::ggproto(
   compute_group = function(self, data, scales,
                            axes.sequence = character(0L), orientation = NA,
                            axes.position = NULL, scaling = "data",
-                           scale.y = c("data", "variable"), as.mix = TRUE,
-                           positive = TRUE, adjust = 0.9,
+                           scale.y = c("data", "group"), as.mix = TRUE,
+                           positive = TRUE, prop = 0.9,
                            binwidth = NULL, bins = NULL, center = NULL,
                            width = NULL, boundary = NULL, breaks = NULL,
                            na.rm = FALSE, flipped_aes = TRUE, closed = c("right", "left"), pad = FALSE) {

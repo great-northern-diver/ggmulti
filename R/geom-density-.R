@@ -4,38 +4,38 @@
 #' Compared with \code{geom_density()}, it provides more general cases that
 #' accepting \code{x} and \code{y}. See details
 #' @inheritParams ggplot2::geom_density
-#' @param scale.x A length 2 numerical vector. Scale the n coordinates of the points where the density is estimated.
-#' @param scale.y one of 'data', 'variable' to specify.
+#' @param scale.x A sorted length 2 numerical vector representing
+#' the range of the whole data will be scaled to. The default value is (0, 1).
+#' @param scale.y one of \code{data} and \code{group} to specify.
 #'   \tabular{ll}{ \strong{Type} \tab \strong{Description}
 #'   \cr data (default) \tab The density estimates are scaled by the whole data set
-#'   \cr variable \tab The density estimates are scaled by each variable
+#'   \cr group \tab The density estimates are scaled by each group
 #'   }
-#'   If the \code{scale.y} is "data", it is meaningful to compare the density (shape and area) across all groups; else
-#'   it is only meaningful to compare the density under each variable.
-#' @param as.mix Logical. Under each variable, if \code{as.mix = TRUE}, the sum of the density estimate area is mixed and
-#' scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
-#' the area of each group is the same, with maximum 1.
+#'   If the \code{scale.y} is \code{data}, it is meaningful to compare the density (shape and area) across all groups; else
+#'   it is only meaningful to compare the density within each group. See details.
+#' @param as.mix Logical. Within each group, if \code{TRUE}, the sum of the density estimate area is mixed and
+#' scaled to maximum 1. The area of each subgroup (in general, within each group one color represents one subgroup)
+#' is proportional to the count; if \code{FALSE} the area of each subgroup is the same, with maximum 1. See details.
 #' @param positive If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 #' right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?
-#' @param adjust adjust the proportional maximum height of the estimate (density, histogram, ...).
+#' @param prop adjust the proportional maximum height of the estimate (density, histogram, ...).
 #' @details
-#' The \code{x} (or \code{y}) is a group variable and  \code{y} (or \code{x}) is the target variable to be plotted.
-#' The result is a different density of \code{y} (\code{x}) for each value of \code{x} (\code{y}).
-#' If only one of \code{x} or \code{y} is provided, it will be the target variable (no grouping) and
-#' the standard \code{geom_density()} will be executed.
+#' The \code{x} (or \code{y}) is a group variable (categorical) and \code{y} (or \code{x}) is the target variable (numerical) to be plotted.
+#' If only one of \code{x} or \code{y} is provided, it will treated as a target variable and
+#' \code{ggplot2::geom_density} will be executed.
 #'
-#' There are four combinations of \code{scale.y} and \code{as.mix}
+#' There are four combinations of \code{scale.y} and \code{as.mix}.
 #' \describe{
-#'   \item{\code{scale.y} = "variable" and \code{as.mix} = FALSE}{The density estimates area of each group under the same variable
-#'   is the same and scaled to maximum of 1.}
-#'   \item{\code{scale.y} = "variable" and \code{as.mix} = TRUE}{The density estimates area of each group under the same variable
-#'   is proportional to its own counts (over this variable).}
-#'   \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimates area of all group is scaled to maximum of 1.
-#'   The sum of the density area for each variable is proportional to the its counts (over the whole dataset).
-#'   Under each variable, the area of each group is the same.}
-#'   \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimates area of all group is scaled to maximum of 1
-#'   and the area of each group is proportional to its own count.}
+#'   \item{\code{scale.y} = "group" and \code{as.mix} = FALSE}{The density estimate area of each subgroup (represented by each color)
+#'   within the same group is the same.}
+#'   \item{\code{scale.y} = "group" and \code{as.mix} = TRUE}{The density estimate area of each subgroup (represented by each color)
+#'   within the same group is proportional to its own counts.}
+#'   \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimate area of all groups is scaled to maximum of 1.
+#'   and the density area for each group is proportional to the its count. Within each group, the area of each subgroup is the same.}
+#'   \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimate area of all groups is scaled to maximum of 1
+#'   and the area of each subgroup (represented by each color) is proportional to its own count.}
 #' }
+#' See vignettes[https://great-northern-diver.github.io/ggmulti/articles/histogram-density-.html] for more intuitive explanation.
 #' @export
 #' @eval rd_orientation()
 #' @seealso \code{\link{geom_density}}, \code{\link{geom_hist_}}
@@ -57,8 +57,12 @@
 #'   # set the density estimate on the left
 #'   mpg %>%
 #'     dplyr::filter(drv != "f") %>%
-#'     ggplot(mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
-#'     geom_density_(alpha = 0.1, scale.y = "data", positive = FALSE) +
+#'     ggplot(mapping = aes(x = drv, y = cty,
+#'                          fill = factor(cyl))) +
+#'     geom_density_(alpha = 0.1,
+#'                   scale.y = "group",
+#'                   as.mix = FALSE,
+#'                   positive = FALSE) +
 #'     geom_boxplot()
 #'
 #'   # x as density
@@ -67,9 +71,9 @@
 #'     diamonds %>%
 #'       dplyr::sample_n(500) %>%
 #'       ggplot(mapping = aes(x = price, y = cut, fill = color)) +
-#'       geom_density_(orientation = "x", adjust = 0.25,
+#'       geom_density_(orientation = "x", prop = 0.25,
 #'                     position = "stack_",
-#'                     scale.y = "variable")
+#'                     scale.y = "group")
 #'   )
 #' }
 #' # settings of `scale.y` and `as.mix`
@@ -77,8 +81,8 @@
 #' ggplots <- lapply(list(
 #'                       list(scale.y = "data", as.mix = TRUE),
 #'                       list(scale.y = "data", as.mix = FALSE),
-#'                       list(scale.y = "variable", as.mix = TRUE),
-#'                       list(scale.y = "variable", as.mix = FALSE)
+#'                       list(scale.y = "group", as.mix = TRUE),
+#'                       list(scale.y = "group", as.mix = FALSE)
 #'                     ),
 #'                    function(vars) {
 #'                      scale.y <- vars[["scale.y"]]
@@ -95,8 +99,8 @@
 #'
 geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
                           position = "identity_", ...,
-                          scale.x = NULL, scale.y = c("data", "variable"),
-                          as.mix = FALSE, positive = TRUE, adjust = 0.9, na.rm = FALSE,
+                          scale.x = NULL, scale.y = c("data", "group", "variable"),
+                          as.mix = FALSE, positive = TRUE, prop = 0.9, na.rm = FALSE,
                           orientation = NA, show.legend = NA, inherit.aes = TRUE) {
   ggplot2::layer(
     data = data,
@@ -111,7 +115,7 @@ geom_density_ <- function(mapping = NULL, data = NULL, stat = "density_",
       positive = positive,
       scale.x = scale.x,
       scale.y = match.arg(scale.y),
-      adjust = adjust,
+      prop = prop,
       na.rm = na.rm,
       orientation = orientation,
       ...
@@ -140,7 +144,7 @@ GeomDensity_ <- ggplot2::ggproto(
     params$as.mix <- params$as.mix %||% FALSE
     params$positive <- params$positive %||% TRUE
     params$scale.y <- params$scale.y %||% "data"
-    params$adjust <- params$adjust %||% 0.9
+    params$prop <- params$prop %||% 0.9
 
     if(!is.null(params$scale.x)) {
       if(!all(is.numeric(params$scale.x)))
@@ -164,13 +168,13 @@ GeomDensity_ <- ggplot2::ggproto(
           dplyr::group_by(group, PANEL) %>%
           summarise(sum.n = sum(n, na.rm = TRUE))%>%
           dplyr::ungroup() %>%
-          dplyr::transmute(group = group, PANEL = PANEL, prop = sum.n/ sum(sum.n, na.rm = TRUE)) %>%
+          dplyr::transmute(group = group, PANEL = PANEL, proportion = sum.n/ sum(sum.n, na.rm = TRUE)) %>%
           dplyr::right_join(data, by = c("group", "PANEL")) %>%
-          dplyr::mutate(density = density * prop,
-                        y = y * prop,
-                        count = count * prop,
-                        scaled = scaled * prop,
-                        ndensity = ndensity * prop)
+          dplyr::mutate(density = density * proportion,
+                        y = y * proportion,
+                        count = count * proportion,
+                        scaled = scaled * proportion,
+                        ndensity = ndensity * proportion)
       }
       data <- ggplot2::flip_data(data, params$flipped_aes)
       return(ggplot2::GeomArea$setup_data(data, params))
@@ -184,7 +188,7 @@ GeomDensity_ <- ggplot2::ggproto(
         dplyr::ungroup()
     }
 
-    # at each variable, the sum of the area is **one** instead of **one** for each group
+    # at each group, the sum of the area is **one** instead of **one** for each group
     if(params$as.mix) {
 
       sum.l <- data %>%
@@ -199,17 +203,19 @@ GeomDensity_ <- ggplot2::ggproto(
         dplyr::left_join(sum.l,
                          by = c("location", "PANEL")) %>%
         dplyr::ungroup() %>%
-        dplyr::transmute(location = location, group = group, PANEL = PANEL, prop = sum.g/ sum.l) %>%
+        dplyr::transmute(location = location, group = group,
+                         PANEL = PANEL,
+                         proportion = sum.g/sum.l) %>%
         dplyr::right_join(data, by = c("location", "group", "PANEL")) %>%
-        dplyr::mutate(density = density * prop,
-                      count = count * prop,
-                      scaled = scaled * prop,
-                      ndensity = ndensity * prop)
+        dplyr::mutate(density = density * proportion,
+                      count = count * proportion,
+                      scaled = scaled * proportion,
+                      ndensity = ndensity * proportion)
     }
 
     data$positive <- params$positive
 
-    # swap x, y and such variables to make sure that
+    # swap x, y and such groups to make sure that
     # **x** is always our interest.
     data %>%
       compute_scales("density", params) %>%
@@ -222,7 +228,7 @@ GeomDensity_ <- ggplot2::ggproto(
 
   draw_group = function(self, data, panel_scales, coord, positive = TRUE,
                         scale.x = NULL, scale.y = "data", as.mix = FALSE,
-                        adjust = 0.9, na.rm = FALSE) {
+                        prop = 0.9, na.rm = FALSE) {
 
     flipped_aes <- ggplot2::has_flipped_aes(data)
 

@@ -14,10 +14,10 @@ geom_serialaxes_density(
   ...,
   axes.sequence = character(0L),
   merge = TRUE,
-  scale.y = c("data", "variable"),
+  scale.y = c("data", "group"),
   as.mix = TRUE,
   positive = TRUE,
-  adjust = 0.9,
+  prop = 0.9,
   na.rm = FALSE,
   orientation = NA,
   show.legend = NA,
@@ -84,22 +84,22 @@ the \code{mapping} aesthetics will omit the duplicated axes (check examples in \
 \item{merge}{Should \code{axes.sequence} be merged with mapping aesthetics
 as a single mapping \code{uneval} object?}
 
-\item{scale.y}{one of 'data', 'variable' to specify.
+\item{scale.y}{one of \code{data} and \code{group} to specify.
 \tabular{ll}{ \strong{Type} \tab \strong{Description}
 \cr data (default) \tab The density estimates are scaled by the whole data set
-\cr variable \tab The density estimates are scaled by each variable
+\cr group \tab The density estimates are scaled by each group
 }
-If the \code{scale.y} is "data", it is meaningful to compare the density (shape and area) across all groups; else
-it is only meaningful to compare the density under each variable.}
+If the \code{scale.y} is \code{data}, it is meaningful to compare the density (shape and area) across all groups; else
+it is only meaningful to compare the density within each group. See details.}
 
-\item{as.mix}{Logical. Under each variable, if \code{as.mix = TRUE}, the sum of the density estimate area is mixed and
-scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
-the area of each group is the same, with maximum 1.}
+\item{as.mix}{Logical. Within each group, if \code{TRUE}, the sum of the density estimate area is mixed and
+scaled to maximum 1. The area of each subgroup (in general, within each group one color represents one subgroup)
+is proportional to the count; if \code{FALSE} the area of each subgroup is the same, with maximum 1. See details.}
 
 \item{positive}{If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?}
 
-\item{adjust}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
+\item{prop}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -133,6 +133,10 @@ to specify how the data is scaled.}
 If numeric, the standard deviation of the smoothing kernel.
 If character, a rule to choose the bandwidth, as listed in
 \code{\link[stats:bandwidth]{stats::bw.nrd()}}.}
+
+\item{adjust}{A multiplicate bandwidth adjustment. This makes it possible
+to adjust the bandwidth while still using the a bandwidth estimator.
+For example, \code{adjust = 1/2} means use half of the default bandwidth.}
 
 \item{kernel}{Kernel. See list of available kernels in \code{\link[=density]{density()}}.}
 

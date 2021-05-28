@@ -62,12 +62,12 @@ header-includes:
 
 ```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE, 
-                      warning = FALSE,
-                      message = FALSE,
+                      message = FALSE,  
+                      warning = FALSE, 
+                      fig.width = 4, 
+                      fig.height = 3, 
                       fig.align = "center", 
-                      fig.width = 6, 
-                      fig.height = 5,
-                      out.width = "60%", 
+                      out.width = "70%", 
                       collapse = TRUE,
                       comment = "#>",
                       tidy.opts = list(width.cutoff = 65),
@@ -83,8 +83,6 @@ path_concat <- function(path1, ..., sep="/") {
   # even sep = "\\" or possibly something else. 
   paste(path1, ..., sep = sep)
 }
-
-library(ggplot2, quietly = TRUE)
 library(dplyr, quietly = TRUE)
 ```
 
@@ -98,17 +96,24 @@ In `ggplot2`, `geom_histogram` and `geom_density` only accept one variable, `x` 
 
 ### Two dimensional bar plot: `geom_bar_`
 
-Consider the `mtcars` data set and suppose that we are interested in the relationship of number of gears given the `cyl` (number of cylinders).
+Consider the `mtcars` data set. 
 
-```{r geom_bar_, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-ggplot(mtcars, 
-            mapping = aes(x = factor(cyl), y = factor(gear))) + 
-  geom_bar_() + 
-  labs(caption = "Figure 1")
+```{r set data}
+mtcars2 <- mtcars %>% 
+  mutate(
+    cyl = factor(cyl),
+    gear  = factor(gear)
+  )
 ```
 
-```{r geom_bar_graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "barplot.png"))
+Suppose that we are interested in the relationship of number of gears given the `cyl` (number of cylinders).
+
+```{r geom_bar_graph}
+library(ggmulti)
+ggplot(mtcars2, 
+       mapping = aes(x = cyl, y = gear)) + 
+  geom_bar_(as.mix = TRUE) + 
+  labs(caption = "Figure 1")
 ```
 
 Though the Figure 1, we can tell that 
@@ -129,45 +134,39 @@ Though the Figure 1, we can tell that
 
 ### Two dimensional histogram: `geom_histogram_`
 
-Suppose now, we are interested in the distribution of `mpg` (miles per gallon) with the respect to the `cyl` (as "x" axis) and `gear` (as "fill")
+Suppose now, we are interested in the distribution of `mpg` (miles per gallon) with the respect to the `cyl` (as "x" axis) and `gear` (as "fill"). Through the Figure 2, we can easily tell that as the number of cylinders rises, the miles/gallon drops significantly. Moreover, the number of six cylinder cars is much less that the other two in our data. In addition, the transmission of V8 cars is either 3 or 5 (identical to the conclusion we draw before). 
 
-```{r geom_histogram_, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-g <- ggplot(mtcars, 
-            mapping = aes(x = factor(cyl), y = mpg, fill = factor(gear))) + 
-  geom_histogram_() + 
+```{r geom_histogram_graph}
+g <- ggplot(mtcars2, 
+            mapping = aes(x = cyl, 
+                          y = mpg, 
+                          fill = gear)) + 
+  geom_histogram_(as.mix = TRUE) + 
   labs(caption = "Figure 2")
 g
 ```
 
-```{r geom_histogram_graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "histogram.png"))
-```
-
-Through the Figure 2, we can easily tell that as the number of cylinders rises, the miles/gallon drops significantly. Moreover, the number of six cylinder cars is much less that the other two in our data. In addition, the transmission of V8 cars is either 3 or 5 (identical to the conclusion we draw before). 
-
 ### Just call `geom_hist`!
 
-Function `geom_histogram_` is often used as one factor is discrete and the other is continuous, while function `geom_bar_` accommodate two discrete variables. The former one relies on **`stat = bin_`** and the latter one is on **`stat = count_`**. However, if we turn the factor of interest as numerical in `geom_bar_`, there would be no difference between the output of a bar plot and a histogram. Hence, function `geom_hist` is created by simplifying the process. It understands both cases and users can just call `geom_hist` to create either a bar plot or a histogram.
+Function `geom_histogram_` is often used as one factor is categorical and the other is numerical, while function `geom_bar_` accommodate two categorical variables. The former one relies on **`stat = bin_`** and the latter one is on **`stat = count_`**. However, if we turn the factor of interest as numerical in `geom_bar_`, there would be no difference between the output of a bar plot and a histogram. Hence, function `geom_hist` is created by simplifying the process. It understands both cases and users can just call `geom_hist` to create either a bar plot or a histogram.
 
 ## Density
 
-We could also draw density plot side by side to better convey the data of interest. With `geom_density_`, both summaries can be displayed simultaneously in one chart. 
+We could also draw density plot side by side to better convey the data of interest. With `geom_density_`, both summaries can be displayed simultaneously in one chart. Note that for cylinder 4 and 6, the density representing 3 gear transmission and 5 gear transmission cars are missing respectively. The reason is that for these two subgroups, the number of observations is not big enough to be used to compute the density.
 
-```{r geom_density_, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
+```{r geom_density_graph}
 g + 
   # parameter "positive" controls where the summaries face to
-  geom_density_(positive = FALSE, alpha = 0.2) + 
+  geom_density_(as.mix = TRUE, 
+                positive = FALSE, 
+                alpha = 0.2) + 
   labs(caption = "Figure 3")
 ```
 
-```{r geom_density_graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "histogram_density.png"))
-```
+In Figure 3, an argument `as.mix` is set as `TRUE`. What does it mean? Before we introduce it, let us look at the total count of `cyl` in `mtcars`.
 
-Parameter `scaleY` is often used to set the scales of each density (or bar). The default "data" indicates that the area of each density is proportional to the count of such group.
-
-```{r geom_density_ count, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-tab <- table(mtcars$cyl)
+```{r geom_density_count}
+tab <- table(mtcars2$cyl)
 knitr::kable(
   data.frame(
     cyl = names(tab),
@@ -177,32 +176,94 @@ knitr::kable(
 )
 ```
 
-The area of group cylinder 8 is approximately twice as much as the group cylinder 6. 
+In the sample, the total number of cylinder 8 cars is approximately twice as much as the group cylinder 6. Within each group, if the `as.mix` is set as `FALSE` (default), shown as Figure 4, the area for each subgroup (in general, one color represents one subgroup) is 1 and the whole area is **3** in total. There is no problem to think it as a real "density", however, if we consider it as a "continuous histogram" (the binwidth is approaching 0), it may be misleading somehow. Instead, the `as.mix` could be set as `TRUE` so that the sum of the density area within each group is **1**. The area for each subgroup is proportional to the count, as Figure 5.
 
-If only one variable is provided in `geom_density_()` (so does `geom_histogram_()` and `geom_bar_()`), the original function `geom_density()` will be executed automatically.
-
-```{r geom_density_ one var, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-ggplot(mtcars, 
-       mapping = aes(x = mpg, fill = factor(cyl))) + 
+```{r geom_density, fig.width=10, fig.height=6}
+gd1 <- ggplot(mtcars2, 
+              mapping = aes(x = mpg, fill = cyl)) + 
+  # it is equivalent to call `geom_density()`
   geom_density_(alpha = 0.3) + 
+  scale_fill_brewer(palette = "Set3") + 
   labs(caption = "Figure 4")
-```
-
-```{r geom_density_ asOne FALSE graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "density_asOne_FALSE.png"))
-```
-
-which is identical to call function `geom_density()`. However, if we take a look at this chart, we can realize that the area for each group is 1. In other words, the whole area is **3** in total. In `geom_density_`, we have a parameter called `asOne`. If it is set as `TRUE`, the sum of the density area is **1** and the area for each group is proportional to its own count.
-
-```{r geom_density_ asOne TRUE, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-ggplot(mtcars, 
-       mapping = aes(x = mpg, fill = factor(cyl))) + 
+gd2 <- ggplot(mtcars2, 
+              mapping = aes(x = mpg, fill = cyl)) + 
   geom_density_(as.mix = TRUE, alpha = 0.3) + 
+  scale_fill_brewer(palette = "Set3") + 
   labs(caption = "Figure 5")
+gridExtra::grid.arrange(gd1, gd2, nrow = 1)
 ```
 
-```{r geom_density_ asOne TRUE graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "density_asOne_TRUE.png"))
+Additionally, function `geom_density_` (so does `geom_histogram_`) provides another parameter `scale.y` to set the scales across different groups (different cylinder types). The default `data` indicates that the area of each density estimates is proportional to the overall count. If the `scale.y` is set as `group`, regardless of the other groups, the density estimate of each subgroup is scaled respecting by its own group, as Figure 6. The benefit is that, within each group, the pattern of the density is easier to be visualized and compared. However, across different groups, it is *meaningless* to compare. 
+
+```{r geom_density_graph scale.y}
+g + 
+  # parameter "positive" controls where the summaries face to
+  geom_density_(positive = FALSE, 
+                alpha = 0.2, 
+                scale.y = "group") + 
+  labs(caption = "Figure 6")
+```
+
+## Scaling
+
+Functions `geom_density_` and `geom_histogram_` provide two scaling controls, `as.mix` and `scale.y`. **DO NOT** be confused. The `as.mix` controls the scaling within each group and the `scale.y` controls the scaling across different groups. Well, ..., if you are still confused, the following graph may help you better understand the `as.mix` and `scale.y`. 
+
+The data has two groups "1" and "2". Within each group, there are two subgroups "A" and "B". The count of each subgroup is shown as follows. 
+
+```{r arbitrary data}
+data <- data.frame(x = c(rep("1", 900), rep("2", 100)), 
+                   y = rnorm(1000),
+                   z = c(rep("A", 100), rep("B", 800), 
+                         rep("A", 10), rep("B", 90)))
+data %>% 
+  dplyr::group_by(x, z) %>% 
+  summarise(count = n()) %>% 
+  kable()
+```
+
+Figure 7 shows the all four combinations of `scale.y` and `as.mix`.
+
++ Compare the graphics vertically: 
+
+  * `scale.y = group`: within each group, either bins or densities are in a relatively large scale. For example, for group "2", the total count is only one tenth of the group "1". With such scaling strategy, the pattern of its bin/density can be visualized easily. However, through this figure, we cannot tell the ratio of the total number of group "1" to group "2".
+  
+  * `scale.y = data`: the area of each group is proportional to its count. Through the figure, we can easily tell that there is more observations in group "1". However, for the minority group "2", it is really hard to tell its distribution.
+  
++ Compare the graphics horizontally:
+
+  * `as.mix = TRUE`: within each group, the area of the subgroup is proportional to its count. For example, in group "1", the ratio of the count for subgroup "A" over "B" is $\frac{1}{8}$ so that the area of the "A" over "B" in group 1 is approximate $\frac{1}{8}$.
+  
+  * `as.mix = FALSE`: within each group, the area of the subgroup is identical. For group "1", the ratio of the count for subgroup "A" over "B" is $\frac{1}{8}$, but in the Figure, the area of "A" over "B" is approximate $1:1$. 
+
+```{r overall comparison, fig.width=10, fig.height=8}
+grobs <- list()
+i <- 0
+position <- "stack_"
+prop <- 0.4
+
+for(scale.y in c("data", "group")) {
+  for(as.mix in c(TRUE, FALSE)) {
+    i <- i + 1
+    g <- ggplot(data, mapping = aes(x = x, y = y, fill = z)) + 
+      geom_histogram_(scale.y = scale.y, 
+                      as.mix = as.mix, 
+                      position = position,
+                      prop = prop) + 
+      geom_density_(scale.y = scale.y, as.mix = as.mix,
+                    positive = FALSE,
+                    position = position,
+                    alpha = 0.4, 
+                    prop = prop) + 
+      ggtitle(
+        label = paste0("`scale.y` is ", scale.y, "\n",
+                       "`as.mix` is ", as.mix)
+      )
+    if(i == 4)
+      g <- g + labs(caption = "Figure 7")
+    grobs <- c(grobs, list(g))
+  }
+}
+gridExtra::grid.arrange(grobs = grobs, nrow = 2)
 ```
 
 ## Set Positions
@@ -211,26 +272,22 @@ Note that when we set `position` in function `geom_histogram_()` or `geom_densit
 
 ### Position `stack_`
 
-Similar to `geom_density`, we can stack the density on top of each other by setting `position = 'stack_'` (default `position = 'identity_'`)
+We can stack the bin/density on top of each other by setting `position = 'stack_'` (default `position = 'identity_'`)
 
-```{r set position stack, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
+```{r set position stack}
 ggplot(mtcars, 
        mapping = aes(x = factor(am), y = mpg, fill = factor(cyl))) + 
   geom_density_(position = "stack_",
-                adjust = 0.75,
+                prop = 0.75,
                 as.mix = TRUE) + 
-  labs(caption = "Figure 6")
-```
-
-```{r set position stack graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "stack_density.png"))
+  labs(caption = "Figure 8")
 ```
 
 ### Position `dodge_`(`dodge2_`)
 
-Dodging preserves the vertical position of an geom while adjusting the horizontal position (the default position of `geom_hist_`, `geom_histogram_` and `geom_bar_` is `stack_`)
+Dodging preserves the vertical position of an geom while adjusting the horizontal position.
 
-```{r set position dodge, echo = TRUE, eval = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
+```{r set position dodge}
 ggplot(mtcars, 
        mapping = aes(x = factor(am), y = mpg, fill = factor(cyl))) +
   # use more general function `geom_hist_`
@@ -239,6 +296,6 @@ ggplot(mtcars,
   labs(caption = "Figure 7")
 ```
 
-```{r set position dodge graph, echo = FALSE, message = FALSE,  warning = FALSE, fig.width = 5, fig.height = 4, fig.align = "center", out.width = "70%"}
-include_graphics(path_concat(imageDirectory, "dodge2_histogram.png"))
-```
+## Conclusions
+
+Functions `geom_histogram_` and `geom_density_` give a general solution of histogram and density plot. Two variables can be provided to compactly display the distribution of a continuous variable. Besides, different scaling strategies are provided for users to tailor their own specific problems. If only one variable is provided in `geom_density_()`, `geom_histogram_()` or `geom_bar_()`, the function `ggplot2::geom_density()`, `ggplot2::geom_histogram()` and `ggplot2::geom_bar()` will be executed automatically.

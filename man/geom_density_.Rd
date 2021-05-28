@@ -12,10 +12,10 @@ geom_density_(
   position = "identity_",
   ...,
   scale.x = NULL,
-  scale.y = c("data", "variable"),
+  scale.y = c("data", "group", "variable"),
   as.mix = FALSE,
   positive = TRUE,
-  adjust = 0.9,
+  prop = 0.9,
   na.rm = FALSE,
   orientation = NA,
   show.legend = NA,
@@ -71,24 +71,25 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{scale.x}{A length 2 numerical vector. Scale the n coordinates of the points where the density is estimated.}
+\item{scale.x}{A sorted length 2 numerical vector representing
+the range of the whole data will be scaled to. The default value is (0, 1).}
 
-\item{scale.y}{one of 'data', 'variable' to specify.
+\item{scale.y}{one of \code{data} and \code{group} to specify.
 \tabular{ll}{ \strong{Type} \tab \strong{Description}
 \cr data (default) \tab The density estimates are scaled by the whole data set
-\cr variable \tab The density estimates are scaled by each variable
+\cr group \tab The density estimates are scaled by each group
 }
-If the \code{scale.y} is "data", it is meaningful to compare the density (shape and area) across all groups; else
-it is only meaningful to compare the density under each variable.}
+If the \code{scale.y} is \code{data}, it is meaningful to compare the density (shape and area) across all groups; else
+it is only meaningful to compare the density within each group. See details.}
 
-\item{as.mix}{Logical. Under each variable, if \code{as.mix = TRUE}, the sum of the density estimate area is mixed and
-scaled to maximum 1. The area of each group is proportional to its own count; if \code{as.mix = FALSE}
-the area of each group is the same, with maximum 1.}
+\item{as.mix}{Logical. Within each group, if \code{TRUE}, the sum of the density estimate area is mixed and
+scaled to maximum 1. The area of each subgroup (in general, within each group one color represents one subgroup)
+is proportional to the count; if \code{FALSE} the area of each subgroup is the same, with maximum 1. See details.}
 
 \item{positive}{If \code{y} is set as the density estimate, where the smoothed curved is faced to,
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?}
 
-\item{adjust}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
+\item{prop}{adjust the proportional maximum height of the estimate (density, histogram, ...).}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -117,6 +118,10 @@ If numeric, the standard deviation of the smoothing kernel.
 If character, a rule to choose the bandwidth, as listed in
 \code{\link[stats:bandwidth]{stats::bw.nrd()}}.}
 
+\item{adjust}{A multiplicate bandwidth adjustment. This makes it possible
+to adjust the bandwidth while still using the a bandwidth estimator.
+For example, \code{adjust = 1/2} means use half of the default bandwidth.}
+
 \item{kernel}{Kernel. See list of available kernels in \code{\link[=density]{density()}}.}
 
 \item{n}{number of equally spaced points at which the density is to be
@@ -136,23 +141,22 @@ Compared with \code{geom_density()}, it provides more general cases that
 accepting \code{x} and \code{y}. See details
 }
 \details{
-The \code{x} (or \code{y}) is a group variable and  \code{y} (or \code{x}) is the target variable to be plotted.
-The result is a different density of \code{y} (\code{x}) for each value of \code{x} (\code{y}).
-If only one of \code{x} or \code{y} is provided, it will be the target variable (no grouping) and
-the standard \code{geom_density()} will be executed.
+The \code{x} (or \code{y}) is a group variable (categorical) and \code{y} (or \code{x}) is the target variable (numerical) to be plotted.
+If only one of \code{x} or \code{y} is provided, it will treated as a target variable and
+\code{ggplot2::geom_density} will be executed.
 
-There are four combinations of \code{scale.y} and \code{as.mix}
+There are four combinations of \code{scale.y} and \code{as.mix}.
 \describe{
-  \item{\code{scale.y} = "variable" and \code{as.mix} = FALSE}{The density estimates area of each group under the same variable
-  is the same and scaled to maximum of 1.}
-  \item{\code{scale.y} = "variable" and \code{as.mix} = TRUE}{The density estimates area of each group under the same variable
-  is proportional to its own counts (over this variable).}
-  \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimates area of all group is scaled to maximum of 1.
-  The sum of the density area for each variable is proportional to the its counts (over the whole dataset).
-  Under each variable, the area of each group is the same.}
-  \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimates area of all group is scaled to maximum of 1
-  and the area of each group is proportional to its own count.}
+  \item{\code{scale.y} = "group" and \code{as.mix} = FALSE}{The density estimate area of each subgroup (represented by each color)
+  within the same group is the same.}
+  \item{\code{scale.y} = "group" and \code{as.mix} = TRUE}{The density estimate area of each subgroup (represented by each color)
+  within the same group is proportional to its own counts.}
+  \item{\code{scale.y} = "data" and \code{as.mix} = FALSE}{The sum of density estimate area of all groups is scaled to maximum of 1.
+  and the density area for each group is proportional to the its count. Within each group, the area of each subgroup is the same.}
+  \item{\code{scale.y} = "data" and \code{as.mix} = TRUE}{The sum of density estimate area of all groups is scaled to maximum of 1
+  and the area of each subgroup (represented by each color) is proportional to its own count.}
 }
+See vignettes[https://great-northern-diver.github.io/ggmulti/articles/histogram-density-.html] for more intuitive explanation.
 }
 \section{Orientation}{
  
@@ -177,8 +181,12 @@ if(require(dplyr)) {
   # set the density estimate on the left
   mpg \%>\%
     dplyr::filter(drv != "f") \%>\%
-    ggplot(mapping = aes(x = drv, y = cty, fill = factor(cyl))) +
-    geom_density_(alpha = 0.1, scale.y = "data", positive = FALSE) +
+    ggplot(mapping = aes(x = drv, y = cty,
+                         fill = factor(cyl))) +
+    geom_density_(alpha = 0.1,
+                  scale.y = "group",
+                  as.mix = FALSE,
+                  positive = FALSE) +
     geom_boxplot()
 
   # x as density
@@ -187,9 +195,9 @@ if(require(dplyr)) {
     diamonds \%>\%
       dplyr::sample_n(500) \%>\%
       ggplot(mapping = aes(x = price, y = cut, fill = color)) +
-      geom_density_(orientation = "x", adjust = 0.25,
+      geom_density_(orientation = "x", prop = 0.25,
                     position = "stack_",
-                    scale.y = "variable")
+                    scale.y = "group")
   )
 }
 # settings of `scale.y` and `as.mix`
@@ -197,8 +205,8 @@ if(require(dplyr)) {
 ggplots <- lapply(list(
                       list(scale.y = "data", as.mix = TRUE),
                       list(scale.y = "data", as.mix = FALSE),
-                      list(scale.y = "variable", as.mix = TRUE),
-                      list(scale.y = "variable", as.mix = FALSE)
+                      list(scale.y = "group", as.mix = TRUE),
+                      list(scale.y = "group", as.mix = FALSE)
                     ),
                    function(vars) {
                      scale.y <- vars[["scale.y"]]

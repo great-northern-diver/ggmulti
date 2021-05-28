@@ -91,9 +91,9 @@ StatSerialaxesDensity <- ggplot2::ggproto(
   },
 
   compute_group = function(self, data, scales, axes.sequence = character(0L), orientation = NA,
-                           scaling = "data", scale.y = c("data", "variable"), axes.position = NULL,
+                           scaling = "data", scale.y = c("data", "group"), axes.position = NULL,
                            as.mix = TRUE, positive = TRUE,
-                           bw = "nrd0", trim = FALSE, adjust = 0.9, kernel = "gaussian", n = 512,
+                           bw = "nrd0", trim = FALSE, adjust = 1, kernel = "gaussian", n = 512,
                            na.rm = FALSE, flipped_aes = TRUE) {
 
     scales[[flipped_names(flipped_aes)$x]] <- ggplot2::ggproto(NULL,

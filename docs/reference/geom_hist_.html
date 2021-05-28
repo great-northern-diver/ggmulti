@@ -81,7 +81,7 @@ Both x and y could be accommodated. See details" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -155,12 +155,12 @@ Both <code>x</code> and <code>y</code> could be accommodated. See details</p>
   position <span class='op'>=</span> <span class='st'>"stack_"</span>,
   <span class='va'>...</span>,
   scale.x <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
+  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"group"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
   as.mix <span class='op'>=</span> <span class='cn'>FALSE</span>,
   binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
   bins <span class='op'>=</span> <span class='cn'>NULL</span>,
   positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  adjust <span class='op'>=</span> <span class='fl'>0.9</span>,
+  prop <span class='op'>=</span> <span class='fl'>0.9</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   orientation <span class='op'>=</span> <span class='cn'>NA</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -174,10 +174,10 @@ Both <code>x</code> and <code>y</code> could be accommodated. See details</p>
   position <span class='op'>=</span> <span class='st'>"stack_"</span>,
   <span class='va'>...</span>,
   scale.x <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
+  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"group"</span><span class='op'>)</span>,
   as.mix <span class='op'>=</span> <span class='cn'>FALSE</span>,
   positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  adjust <span class='op'>=</span> <span class='fl'>0.9</span>,
+  prop <span class='op'>=</span> <span class='fl'>0.9</span>,
   binwidth <span class='op'>=</span> <span class='cn'>NULL</span>,
   bins <span class='op'>=</span> <span class='cn'>NULL</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -193,9 +193,9 @@ Both <code>x</code> and <code>y</code> could be accommodated. See details</p>
   position <span class='op'>=</span> <span class='st'>"stack_"</span>,
   <span class='va'>...</span>,
   scale.x <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"variable"</span><span class='op'>)</span>,
+  scale.y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"group"</span><span class='op'>)</span>,
   positive <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  adjust <span class='op'>=</span> <span class='fl'>0.9</span>,
+  prop <span class='op'>=</span> <span class='fl'>0.9</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   orientation <span class='op'>=</span> <span class='cn'>NA</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
@@ -293,23 +293,24 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>scale.x</th>
-      <td><p>A length 2 numerical vector. Scale the n coordinates of the points where the density is estimated.</p></td>
+      <td><p>A sorted length 2 numerical vector representing
+the range of the whole data will be scaled to. The default value is (0, 1).</p></td>
     </tr>
     <tr>
       <th>scale.y</th>
-      <td><p>one of 'data', 'variable' to specify.</p><table class='table'>
+      <td><p>one of <code>data</code> and <code>group</code> to specify.</p><table class='table'>
 <tr><td><strong>Type</strong></td><td><strong>Description</strong></td></tr>
 <tr><td>data (default)</td><td>The density estimates are scaled by the whole data set</td></tr>
-<tr><td>variable</td><td>The density estimates are scaled by each variable</td></tr>
+<tr><td>group</td><td>The density estimates are scaled by each group</td></tr>
 </table>
-<p>If the <code>scale.y</code> is "data", it is meaningful to compare the density (shape and area) across all groups; else
-it is only meaningful to compare the density under each variable.</p></td>
+<p>If the <code>scale.y</code> is <code>data</code>, it is meaningful to compare the density (shape and area) across all groups; else
+it is only meaningful to compare the density within each group. See details.</p></td>
     </tr>
     <tr>
       <th>as.mix</th>
-      <td><p>Logical. Under each variable, if <code>as.mix = TRUE</code>, the sum of the density estimate area is mixed and
-scaled to maximum 1. The area of each group is proportional to its own count; if <code>as.mix = FALSE</code>
-the area of each group is the same, with maximum 1.</p></td>
+      <td><p>Logical. Within each group, if <code>TRUE</code>, the sum of the density estimate area is mixed and
+scaled to maximum 1. The area of each subgroup (in general, within each group one color represents one subgroup)
+is proportional to the count; if <code>FALSE</code> the area of each subgroup is the same, with maximum 1. See details.</p></td>
     </tr>
     <tr>
       <th>binwidth</th>
@@ -335,7 +336,7 @@ bin width of a time variable is the number of seconds.</p></td>
 right (`positive`) or left (`negative`) as vertical layout; up (`positive`) or down (`negative`) as horizontal layout?</p></td>
     </tr>
     <tr>
-      <th>adjust</th>
+      <th>prop</th>
       <td><p>adjust the proportional maximum height of the estimate (density, histogram, ...).</p></td>
     </tr>
     <tr>
@@ -418,28 +419,29 @@ frequency polygons touch 0. Defaults to <code>FALSE</code>.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>x</code> (or <code>y</code>) is a group variable and <code>y</code> (or <code>x</code>) a target variable to be plotted.
-The result is a different histogram of <code>y</code> (<code>x</code>) for each value of <code>x</code> (<code>y</code>).
-If only one of <code>x</code> or <code>y</code> is provided, it will be the target variable (no grouping) and
-the standard <code>geom_histogram()</code> will be executed. Several things should be noticed:</p>
+    <p><code>x</code> (or <code>y</code>) is a group variable (categorical) and <code>y</code> (or <code>x</code>) a target variable (numerical) to be plotted.
+If only one of <code>x</code> or <code>y</code> is provided, it will treated as a target variable and
+<code><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>ggplot2::geom_histogram</a></code> will be executed. Several things should be noticed:</p>
 <p>1. If both <code>x</code> and <code>y</code> are given, they can be one discrete one continuous or
 two discrete. But they cannot be two continuous variables (which one will be considered as a group variable?).</p>
-<p>2. <code>geom_hist_</code> is a wrapper of <code>geom_histogram_</code> and <code>geom_count_</code>. In other words, suppose the <code>y</code> is our interest,
-<code>geom_hist_()</code> can accommodate both continuous or discrete "y" but <code>geom_histogram_()</code> is only for the continuous <code>y</code> and
-<code>geom_bar_()</code> is only for the discrete <code>y</code>.</p>
-<p>3. There are four combinations of <code>scale.y</code> and <code>as.mix</code></p><dl>
-  <dt><code>scale.y</code> = "variable" and <code>as.mix</code> = FALSE</dt><dd><p>The density estimates area of each group under the same variable
-  is the same and scaled to maximum of 1.</p></dd>
-  <dt><code>scale.y</code> = "variable" and <code>as.mix</code> = TRUE</dt><dd><p>The density estimates area of each group under the same variable
-  is proportional to its own counts (over this variable).</p></dd>
-  <dt><code>scale.y</code> = "data" and <code>as.mix</code> = FALSE</dt><dd><p>The sum of density estimates area of all group is scaled to maximum of 1.
-  The sum of the density area for each variable is proportional to the its counts (over the whole dataset).
-  Under each variable, the area of each group is the same.</p></dd>
-  <dt><code>scale.y</code> = "data" and <code>as.mix</code> = TRUE</dt><dd><p>The sum of density estimates area of all group is scaled to maximum of 1
-  and the area of each group is proportional to its own count.</p></dd>
+<p>2. <code>geom_hist_</code> is a wrapper of <code>geom_histogram_</code> and <code>geom_count_</code>.
+Suppose the <code>y</code> is our interest (<code>x</code> is the categorical variable),
+<code>geom_hist_()</code> can accommodate either continuous or discrete <code>y</code>. While,
+<code>geom_histogram_()</code> only accommodates the continuous <code>y</code> and
+<code>geom_bar_()</code> only accommodates the discrete <code>y</code>.</p>
+<p>3. There are four combinations of <code>scale.y</code> and <code>as.mix</code>.</p><dl>
+  <dt><code>scale.y</code> = "group" and <code>as.mix</code> = FALSE</dt><dd><p>The density estimate area of each subgroup (represented by each color)
+  within the same group is the same.</p></dd>
+  <dt><code>scale.y</code> = "group" and <code>as.mix</code> = TRUE</dt><dd><p>The density estimate area of each subgroup (represented by each color)
+  within the same group is proportional to its own counts.</p></dd>
+  <dt><code>scale.y</code> = "data" and <code>as.mix</code> = FALSE</dt><dd><p>The sum of density estimate area of all groups is scaled to maximum of 1.
+  and the density area for each group is proportional to the its count. Within each group, the area of each subgroup is the same.</p></dd>
+  <dt><code>scale.y</code> = "data" and <code>as.mix</code> = TRUE</dt><dd><p>The sum of density estimate area of all groups is scaled to maximum of 1
+  and the area of each subgroup (represented by each color) is proportional to its own count.</p></dd>
 
-</dl><p>Note that, if it is a grouped bar chart (both <code>x</code> and <code>y</code> are categorical),
-parameter `as.mix` is useless.</p>
+</dl><p>See vignettes[https://great-northern-diver.github.io/ggmulti/articles/histogram-density-.html] for more intuitive explanation.
+Note that, if it is a grouped bar chart (both <code>x</code> and <code>y</code> are categorical),
+parameter `as.mix` is meaningless.</p>
     <h2 class="hasAnchor" id="orientation"><a class="anchor" href="#orientation"></a>Orientation</h2>
 
     
@@ -473,20 +475,20 @@ parameter `as.mix` is useless.</p>
     <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>drv</span>, y <span class='op'>=</span> <span class='va'>class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
     <span class='fu'>geom_hist_</span><span class='op'>(</span>orientation <span class='op'>=</span> <span class='st'>"y"</span><span class='op'>)</span>
 
-  <span class='co'># scale.y as "variable"</span>
+  <span class='co'># scale.y as "group"</span>
   <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='va'>iris</span> <span class='op'>%&gt;%</span>
     <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='op'>-</span><span class='va'>Species</span>,
                         names_to <span class='op'>=</span> <span class='st'>"Outer sterile whorls"</span>,
                         values_to <span class='op'>=</span> <span class='st'>"x"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
     <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Outer sterile whorls`</span>,
                          y <span class='op'>=</span> <span class='va'>x</span>, fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-    <span class='fu'>stat_hist_</span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"variable"</span>,
-               adjust <span class='op'>=</span> <span class='fl'>0.6</span>,
+    <span class='fu'>stat_hist_</span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"group"</span>,
+               prop <span class='op'>=</span> <span class='fl'>0.6</span>,
                alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
   <span class='va'>p</span>
   <span class='co'># with density on the left</span>
-  <span class='va'>p</span> <span class='op'>+</span> <span class='fu'><a href='geom_density_.html'>stat_density_</a></span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"variable"</span>,
-                    adjust <span class='op'>=</span> <span class='fl'>0.6</span>,
+  <span class='va'>p</span> <span class='op'>+</span> <span class='fu'><a href='geom_density_.html'>stat_density_</a></span><span class='op'>(</span>scale.y <span class='op'>=</span> <span class='st'>"group"</span>,
+                    prop <span class='op'>=</span> <span class='fl'>0.6</span>,
                     alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
                     positive <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 

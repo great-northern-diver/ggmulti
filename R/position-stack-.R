@@ -91,6 +91,7 @@ PositionStack_ <- ggplot2::ggproto("PositionStack_",
                                                                    c(which(negative), which(!negative))),]
                                      flip_data(data, params$flipped_aes)
                                    }
+
 )
 
 #' @export

@@ -27,9 +27,9 @@ geom_serialaxes_hist <- function(mapping = NULL, data = NULL, stat = "serialaxes
                                  position = "stack_", ...,
                                  axes.sequence = character(0L),
                                  axes.position = NULL, merge = TRUE,
-                                 scale.y = c("data", "variable"), as.mix = TRUE,
+                                 scale.y = c("data", "group"), as.mix = TRUE,
                                  positive = TRUE,
-                                 adjust = 0.9, na.rm = FALSE, orientation = NA,
+                                 prop = 0.9, na.rm = FALSE, orientation = NA,
                                  show.legend = NA, inherit.aes = TRUE) {
 
   if (merge) {
@@ -64,7 +64,7 @@ geom_serialaxes_hist <- function(mapping = NULL, data = NULL, stat = "serialaxes
       axes.position = axes.position,
       positive = positive,
       as.mix = as.mix,
-      adjust = adjust,
+      prop = prop,
       scale.y = match.arg(scale.y),
       na.rm = na.rm,
       orientation = orientation,
