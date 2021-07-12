@@ -24,7 +24,7 @@
 #' \item{stroke}
 #' }
 #'
-#' The size unit is \code{mm}
+#' The size unit is \code{cm}
 #'
 #' Note that the shape and stroke do not have real meanings unless the essential
 #' argument  \code{polygon_x} or \code{polygon_y} is missing.
@@ -94,7 +94,7 @@ GeomPolygonGlyph <- ggplot2::ggproto('GeomPolygonGlyph',
                                      ggplot2::Geom,
                                      required_aes = c('x', 'y'),
                                      default_aes = ggplot2::aes(colour = 'black',
-                                                                fill = 'black', size = 3,
+                                                                fill = 'black', size = 0.5,
                                                                 linetype = 1, alpha = 1,
                                                                 shape = 19, stroke = 0.5),
                                      draw_key = ggplot2::draw_key_polygon,
@@ -187,7 +187,7 @@ GeomPolygonGlyph <- ggplot2::ggproto('GeomPolygonGlyph',
                                      }
 )
 
-poly_coord <- function(poly, data, orientation = "x", show.area = FALSE) {
+poly_coord <- function(poly, data, orientation = "x", show.area = FALSE, unit = "cm") {
 
   n <- dim(data)[1]
 
@@ -195,10 +195,10 @@ poly_coord <- function(poly, data, orientation = "x", show.area = FALSE) {
          function(i) {
            if(show.area) {
              grid::unit(data[[orientation]][i], 'native') +
-               grid::unit(poly[[i]] * data$size[i], "mm")
+               grid::unit(poly[[i]] * data$size[i], unit)
            } else {
              grid::unit(data[[orientation]][i], 'native') +
-               grid::unit(c(poly[[i]], poly[[i]][1]) * data$size[i], "mm")
+               grid::unit(c(poly[[i]], poly[[i]][1]) * data$size[i], unit)
            }
          })
 }
