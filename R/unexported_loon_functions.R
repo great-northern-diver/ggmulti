@@ -72,16 +72,14 @@ loon_get_scaledData <-  function(data,
 
     if(!all(sequence %in% colnames(data))) {
 
-      col_name <- make.names(colnames(data))
-      # sequence names may involve invalid chars
-      # such as `(`, `)`, ` ` space, etc.
-      # call function `make.names` can remove all these chars to match data column names
-      sequence <- make.names(sequence)
+      colNames <- colnames(data)
 
-      if(!all(sequence %in% col_name)) {
-        warning("unknown variable names in sequence",
+      if(!all(sequence %in% colNames)) {
+        warning("The sequence names, ",
+                setdiff(sequence, colNames),
+                ", are not found in the data.",
                 call. = FALSE)
-        sequence <- intersect(sequence, col_name)
+        sequence <- intersect(sequence, colNames)
       }
     }
 
@@ -150,43 +148,6 @@ loon_get_scaledData <-  function(data,
          "none" = {
            dat[displayOrder, ]
          })
-}
-
-## Unexported functions in loon
-as_r_polygonGlyph_size <- function(size) {
-
-  # loon default `as_r_polygonGlyph_size`
-  fun <- function(size){
-    if (is.numeric(size)) {
-      # trial and error to choose scale for size
-      size <- size/1.25
-      size[size < 0.01] <- 0.01
-      size
-    }
-    size
-  }
-  4 * fun(size)
-}
-as_r_serialaxesGlyph_size <- function(size, coord, axesLayout) {
-
-  # loon default `as_r_serialaxesGlyph_size`
-  fun <- function(size, coord, axesLayout){
-    if (is.numeric(size)) {
-      # trial and error to choose scale for size
-      if (axesLayout == "radial") {
-        size <- sqrt(size) * 5
-      } else if (axesLayout == "parallel"){
-        if (coord == "x") {
-          size <- sqrt(size) * 6.4
-        } else if (coord == "y"){
-          size <- sqrt(size) * 3.2
-        } else size <- NA
-      } else size <- NA
-      size[size == 0] <- 0.01
-    }
-    size
-  }
-  2 * fun(size, coord, axesLayout)
 }
 
 #' # `geom_serialaxes` can be considered as a wrap of `geom_path`
