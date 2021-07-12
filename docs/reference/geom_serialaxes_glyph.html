@@ -81,7 +81,7 @@ Each point glyph is surrounded by a serial axes (parallel axes or radial axes) o
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -212,7 +212,8 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>serialaxes.data</th>
-      <td><p>a serial axes numerical data set. If not provided, <code>geom_point()</code> will be called.</p></td>
+      <td><p>a serial axes numerical data set.
+If not provided, a point visual (<code>geom_point()</code>) will be displayed.</p></td>
     </tr>
     <tr>
       <th>axes.sequence</th>
@@ -290,12 +291,16 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 <li><p>colour</p></li>
 <li><p>fill</p></li>
 <li><p>group</p></li>
-<li><p>shape</p></li>
 <li><p>size</p></li>
-<li><p>stroke</p></li>
 <li><p>linetype</p></li>
+<li><p>shape</p></li>
+<li><p>stroke</p></li>
 </ul>
 
+<p>The size unit is <code>cm</code></p>
+<p>Note that the shape and stroke do not have real meanings unless the essential
+argument <code>serialaxes.data</code> is missing. If so, a point visual will be displayed with
+corresponding shape and stroke.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='geom_polygon_glyph.html'>geom_polygon_glyph</a></code>, <code><a href='geom_image_glyph.html'>geom_image_glyph</a></code></p></div>
