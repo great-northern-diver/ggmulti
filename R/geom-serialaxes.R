@@ -19,30 +19,36 @@
 #' @export
 #' @examples
 #' # parallel coordinate
-#' p <- ggplot(iris, mapping = aes(Sepal.Length = Sepal.Length,
-#'                                 Sepal.Width = Sepal.Width,
-#'                                 Petal.Length = Petal.Length,
-#'                                 Petal.Width = Petal.Width,
-#'                                 colour = Species))
-#' p + geom_serialaxes()
+#' p <- ggplot(NBAstats2021,
+#'             mapping = aes(FGA = FGA,
+#'                           `3PA` = `3PA`,
+#'                           FTA = FTA,
+#'                           OFGA = OFGA,
+#'                           O3PA = O3PA,
+#'                           OFTA = OFTA,
+#'                           colour = CONF))
 #'
-#' # radial coordinate
+#' # Teams in West are more likely to make 3-point field goals.
+#' # Besides, they have a better performance in restricting opponents
+#' # to make 3-point field goals.
 #' p +
-#'   geom_serialaxes() +
-#'   coord_radial()
+#'   geom_serialaxes(scaling = "variable",
+#'                   alpha = 0.4,
+#'                   size = 3) +
+#'   scale_x_continuous(breaks = 1:6,
+#'                      labels = c("FGA", "3PA", "FTA",
+#'                                 "OFGA", "O3PA", "OFTA")) +
+#'   scale_y_continuous(labels = NULL)
 #'
 #' # andrews plot
 #' p + geom_serialaxes(stat = "dotProduct",
+#'                     scaling = "variable",
 #'                     transform = andrews) # default
 #'
 #' # Legendre polynomials
 #' p + geom_serialaxes(stat = "dotProduct",
+#'                     scaling = "variable",
 #'                     transform = legendre)
-#'
-#' # or set the `axes.sequence` rather than the mapping `aes`
-#' p <- ggplot(iris) +
-#'        geom_serialaxes(axes.sequence = colnames(iris))
-#' p
 #'
 #' \donttest{
 #' ############# Determine axes sequence
