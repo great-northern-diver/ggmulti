@@ -55,6 +55,12 @@ add_serialaxes_layers.GeomRibbon <- function(layer, plot, object, axes) {
 #' @export
 add_serialaxes_layers.GeomDensity <- function(layer, plot, object, axes) {
 
+  if(object$axes.layout == "radial") {
+    message("The density cannot be embedded on the radial axes yet")
+    # maintain layer position
+    return(plot + ggplot2::geom_blank())
+  }
+
   fun <- geom_serialaxes_density
 
   args <- setup_args(layer, plot, object, axes, fun,
@@ -77,6 +83,12 @@ add_serialaxes_layers.GeomFreqpoly <- function(layer, plot, object, axes) {
 
 #' @export
 add_serialaxes_layers.GeomBar <- function(layer, plot, object, axes) {
+
+  if(object$axes.layout == "radial") {
+    message("The histogram cannot be embedded on the radial axes yet")
+    # maintain layer position
+    return(plot + ggplot2::geom_blank())
+  }
 
   fun <- geom_serialaxes_hist
 
@@ -105,10 +117,6 @@ add_serialaxes_layers.GeomQuantiles <- function(layer, plot, object, axes) {
 
 #' @export
 add_serialaxes_layers.GeomQuantile <- function(layer, plot, object, axes) {
-  warning(
-    "Layer `geom_quantile` is deprecated. Please call `geom_quantiles`.",
-    call. = FALSE
-  )
   add_serialaxes_layers.GeomQuantiles(layer, plot, object, axes)
 }
 

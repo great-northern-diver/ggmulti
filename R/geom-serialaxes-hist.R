@@ -8,16 +8,23 @@
 #' @seealso \code{\link{geom_hist_}}, \code{\link{geom_serialaxes}},
 #' \code{\link{geom_serialaxes_quantile}}, \code{\link{geom_serialaxes_density}}
 #' @examples
-#' p <- ggplot(iris, mapping = aes(Sepal.Length = Sepal.Length,
-#'                                 Sepal.Width = Sepal.Width,
-#'                                 Petal.Length = Petal.Length,
-#'                                 Petal.Width = Petal.Width,
-#'                                 colour = Species,
-#'                                 fill = Species)) +
-#'             geom_serialaxes(alpha = 0.2) +
-#'             geom_serialaxes_hist(alpha = 0.5) +
-#'             scale_x_continuous(breaks = 1:4,
-#'                                labels = colnames(iris)[-5]) +
+#' p <- ggplot(NBAstats2021,
+#'             mapping = aes(`FG%` = `FG%`,
+#'                           `3P%` = `3P%`,
+#'                           `FT%` = `FT%`,
+#'                           `OFG%` = `OFG%`,
+#'                           `O3P%` = `O3P%`,
+#'                           `OFT%` = `OFT%`,
+#'                           colour = Playoff,
+#'                           fill = Playoff)) +
+#'             geom_serialaxes(alpha = 0.2,
+#'                             scaling = "variable") +
+#'             geom_serialaxes_hist(alpha = 0.5,
+#'                                  prop = 0.7,
+#'                                  scaling = "variable") +
+#'             scale_x_continuous(breaks = 1:6,
+#'                                labels = c("FG", "3P", "FT",
+#'                                           "OFG", "O3P", "OFT")) +
 #'             scale_y_continuous(labels = NULL) +
 #'             xlab("variable") +
 #'             ylab("") +

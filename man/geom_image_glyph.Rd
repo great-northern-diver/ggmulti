@@ -14,7 +14,6 @@ geom_image_glyph(
   imagewidth = 1.2,
   imageheight = 0.9,
   interpolate = TRUE,
-  units = "cm",
   na.rm = FALSE,
   show.legend = NA,
   inherit.aes = TRUE
@@ -52,7 +51,7 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{images}{a list of images (a raster object, bitmap image). If not provided, \code{geom_point()} will be executed.}
+\item{images}{a list of images (a raster object, bitmap image). If not provided, a point visual (\code{geom_point()}) will be displayed.}
 
 \item{imagewidth}{Numerical; width of image}
 
@@ -60,9 +59,6 @@ to the paired geom/stat.}
 
 \item{interpolate}{A logical value indicating whether to linearly interpolate the image (the alternative is to use nearest-neighbour interpolation,
 which gives a more blocky result). See \code{\link{rasterGrob}}.}
-
-\item{units}{A character vector specifying the units for the image height and width, see \code{\link{unit}};
-default is "cm" (force the width and height).}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -94,21 +90,52 @@ geom_..._glyph() understands the following aesthetics (required aesthetics are i
 \item{colour}
 \item{fill}
 \item{group}
-\item{shape}
 \item{size}
-\item{stroke}
 \item{linetype}
+\item{shape}
+\item{stroke}
 }
+
+The size unit is \code{cm}
+
+Note that the shape and stroke do not have real meanings unless the essential
+argument \code{images} is missing. If so, a point visual will be displayed with
+corresponding shape and stroke.
 }
 
 \examples{
 \donttest{
 # image glyph
-if(requireNamespace("png")) {
-
+if(require("png")) {
 img_path <- list.files(file.path(find.package(package = 'ggmulti'),
                                  "images"),
                        full.names = TRUE)
+Raptors <- png::readPNG(img_path[2L])
+Warriors <- png::readPNG(img_path[3L])
+
+pg <- ggplot(data = data.frame(x = 1:2, y = rep(1, 2)),
+       mapping = aes(x = x, y = y)) +
+  geom_image_glyph(images = list(Raptors,
+                                 Warriors),
+                   imagewidth = rep(1.2, 2),
+                   imageheight = c(0.9, 1.2)) +
+  coord_cartesian(xlim = extendrange(c(1,2)))
+pg
+# query the images (a numerical array)
+build <- ggplot2::ggplot_build(pg)
+# `imageRaptors` and `imageWarriors` are three dimensional
+# arrays (third dimension specifying the plane)
+imageRaptors <- build$data[[1]]$images[[1]]
+imageWarriors <- build$data[[1]]$images[[2]]
+
+if(require("grid")) {
+grid.newpage()
+grid.raster(imageRaptors)
+grid.newpage()
+grid.raster(imageWarriors)
+}
+
+# THIS IS SLOW
 mercLogo <- png::readPNG(img_path[1L])
 
 p <- ggplot(mapping = aes(x = hp, y = mpg)) +

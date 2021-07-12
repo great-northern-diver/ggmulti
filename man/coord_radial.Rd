@@ -22,9 +22,26 @@ means no. For details, please see \code{\link[ggplot2:coord_cartesian]{coord_car
 A radial (spider) coordinate. A wrapper of the function \code{coord_polar()} by
 forcing it linear.
 }
+\details{
+The serial histogram and serial density cannot be applied on
+a radial coordinate yet.
+}
 \examples{
-ggplot(iris, mapping = aes(colour = Species)) +
-  geom_serialaxes(axes.sequence = c(colnames(iris), colnames(iris)[1])) +
-  coord_radial()
-
+if(require("dplyr")) {
+ggplot(NBAstats2021, mapping = aes(colour = Playoff)) +
+  geom_serialaxes(
+    axes.sequence = c("PTS", "OPTS", "3PM", "O3PM", "PTS"),
+      scaling = "variable"
+    ) +
+  coord_radial() +
+  scale_x_continuous(
+    breaks = 1:5,
+    labels = c("Points",
+               "Oppo Points",
+               "3P Made",
+               "Oppo 3P Made",
+               "Points Per Game")) +
+  scale_y_continuous(labels = NULL) +
+  facet_wrap(~CONF)
+  }
 }

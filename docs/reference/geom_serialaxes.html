@@ -82,7 +82,7 @@ be treated as an axis." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -310,31 +310,37 @@ How to transform one to the other is explained in <a href='https://tidyr.tidyver
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># parallel coordinate</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
-                                Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
-                                Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,
-                                Petal.Width <span class='op'>=</span> <span class='va'>Petal.Width</span>,
-                                colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_serialaxes-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># radial coordinate</span>
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>NBAstats2021</span>,
+            mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>FGA <span class='op'>=</span> <span class='va'>FGA</span>,
+                          `3PA` <span class='op'>=</span> <span class='va'>`3PA`</span>,
+                          FTA <span class='op'>=</span> <span class='va'>FTA</span>,
+                          OFGA <span class='op'>=</span> <span class='va'>OFGA</span>,
+                          O3PA <span class='op'>=</span> <span class='va'>O3PA</span>,
+                          OFTA <span class='op'>=</span> <span class='va'>OFTA</span>,
+                          colour <span class='op'>=</span> <span class='va'>CONF</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Teams in West are more likely to make 3-point field goals.</span>
+<span class='co'># Besides, they have a better performance in restricting opponents</span>
+<span class='co'># to make 3-point field goals.</span>
 <span class='va'>p</span> <span class='op'>+</span>
-  <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='coord_radial.html'>coord_radial</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_serialaxes-2.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>geom_serialaxes</span><span class='op'>(</span>scaling <span class='op'>=</span> <span class='st'>"variable"</span>,
+                  alpha <span class='op'>=</span> <span class='fl'>0.4</span>,
+                  size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_x_continuous</span><span class='op'>(</span>breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>,
+                     labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FGA"</span>, <span class='st'>"3PA"</span>, <span class='st'>"FTA"</span>,
+                                <span class='st'>"OFGA"</span>, <span class='st'>"O3PA"</span>, <span class='st'>"OFTA"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_y_continuous</span><span class='op'>(</span>labels <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='img'><img src='geom_serialaxes-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># andrews plot</span>
 <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"dotProduct"</span>,
+                    scaling <span class='op'>=</span> <span class='st'>"variable"</span>,
                     transform <span class='op'>=</span> <span class='va'>andrews</span><span class='op'>)</span> <span class='co'># default</span>
-</div><div class='img'><img src='geom_serialaxes-3.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_serialaxes-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Legendre polynomials</span>
 <span class='va'>p</span> <span class='op'>+</span> <span class='fu'>geom_serialaxes</span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"dotProduct"</span>,
+                    scaling <span class='op'>=</span> <span class='st'>"variable"</span>,
                     transform <span class='op'>=</span> <span class='va'>legendre</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_serialaxes-4.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># or set the `axes.sequence` rather than the mapping `aes`</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span> <span class='op'>+</span>
-       <span class='fu'>geom_serialaxes</span><span class='op'>(</span>axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>p</span>
-</div><div class='img'><img src='geom_serialaxes-5.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='geom_serialaxes-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># \donttest{</span>
 <span class='co'>############# Determine axes sequence</span>
 <span class='co'># 1. set the duplicated axes by mapping aesthetics</span>
@@ -345,13 +351,13 @@ How to transform one to the other is explained in <a href='https://tidyr.tidyver
                            colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='co'># only two axes, duplicated axes are removed</span>
   <span class='fu'>geom_serialaxes</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Duplicated aesthetics after name standardisation: Sepal.Length, Sepal.Width</span></div><div class='img'><img src='geom_serialaxes-6.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Duplicated aesthetics after name standardisation: Sepal.Length, Sepal.Width</span></div><div class='img'><img src='geom_serialaxes-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># 2. set the duplicated axes by axes.sequence</span>
 <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'>geom_serialaxes</span><span class='op'>(</span>
     axes.sequence <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span>,
                       <span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='geom_serialaxes-7.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div><div class='img'><img src='geom_serialaxes-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -1,8 +1,18 @@
 ################################ Un-exported functions in `ggplot2` ################################
-ggname <- utils::getFromNamespace("ggname", "ggplot2")
-compute_just <- utils::getFromNamespace("compute_just", "ggplot2")
-message_wrap <- utils::getFromNamespace("message_wrap", "ggplot2")
-set_sec_axis <- utils::getFromNamespace("set_sec_axis", "ggplot2")
+# ggname <- utils::getFromNamespace("ggname", "ggplot2")
+ggname <- function (prefix, grob) {
+  grob$name <- grid::grobName(grob, prefix)
+  grob
+}
+
+# message_wrap <- utils::getFromNamespace("message_wrap", "ggplot2")
+message_wrap <- function (...) {
+  msg <- paste(..., collapse = "", sep = "")
+  wrapped <- strwrap(msg, width = getOption("width") -
+                       2)
+  message(paste0(wrapped, collapse = "\n"))
+}
+
 new_aes <- utils::getFromNamespace("new_aes", "ggplot2")
 compute_density <- utils::getFromNamespace("compute_density", "ggplot2")
 stack_var <- utils::getFromNamespace("stack_var", "ggplot2")
@@ -12,7 +22,6 @@ pos_stack <- utils::getFromNamespace("pos_stack", "ggplot2")
 rd_orientation <- utils::getFromNamespace("rd_orientation", "ggplot2")
 pos_dodge <- utils::getFromNamespace("pos_dodge", "ggplot2")
 pos_dodge2 <- utils::getFromNamespace("pos_dodge2", "ggplot2")
-new_mapped_discrete <- utils::getFromNamespace("new_mapped_discrete", "ggplot2")
-is_mapped_discrete <- utils::getFromNamespace("is_mapped_discrete", "ggplot2")
+# is_mapped_discrete <- utils::getFromNamespace("is_mapped_discrete", "ggplot2")
+is_mapped_discrete <- function (x) inherits(x, "mapped_discrete")
 dapply <- utils::getFromNamespace("dapply", "ggplot2")
-empty <- utils::getFromNamespace("empty", "ggplot2")

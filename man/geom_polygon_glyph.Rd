@@ -51,10 +51,10 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 to the paired geom/stat.}
 
 \item{polygon_x}{nested list of x-coordinates of polygons, one list element for each scatterplot point.
-If not provided, \code{geom_point()} will be executed.}
+If not provided, a point visual (\code{geom_point()}) will be displayed.}
 
 \item{polygon_y}{nested list of y-coordinates of polygons, one list element for each scatterplot point.
-If not provided, \code{geom_point()} will be executed.}
+If not provided, a point visual (\code{geom_point()}) will be displayed.}
 
 \item{linewidth}{line width of the "glyph" object}
 
@@ -90,11 +90,17 @@ geom_..._glyph() understands the following aesthetics (required aesthetics are i
 \item{colour}
 \item{fill}
 \item{group}
-\item{shape}
 \item{size}
-\item{stroke}
 \item{linetype}
+\item{shape}
+\item{stroke}
 }
+
+The size unit is \code{cm}
+
+Note that the shape and stroke do not have real meanings unless the essential
+argument  \code{polygon_x} or \code{polygon_y} is missing.
+If so, a point visual will be displayed with corresponding shape and stroke.
 }
 
 \examples{

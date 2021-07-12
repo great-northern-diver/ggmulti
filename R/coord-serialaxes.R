@@ -39,32 +39,36 @@
 #' @return a \code{ggproto} object
 #'
 #' @examples
+#' if(require("dplyr")) {
+#' # Data
+#' nba <- NBAstats2021 %>%
+#'   mutate(
+#'     dPTS = PTS - OPTS,
+#'     dREB = REB - OREB,
+#'     dAST = AST - OAST,
+#'     dTO = TO - OTO
+#'   )
 #' # set sequence by `axes.sequence`
-#' p <- ggplot(iris) +
+#' p <- ggplot(nba,
+#'             mapping = aes(
+#'               dPTS = dPTS,
+#'               dREB = dREB,
+#'               dAST = dAST,
+#'               dTO = dTO,
+#'               colour = Win
+#'             )) +
 #'        geom_path(alpha = 0.2) +
-#'        coord_serialaxes(axes.sequence = colnames(iris))
-#' # an 'iris' parallel coordinate plot.
+#'        coord_serialaxes(axes.layout = "radial") +
+#'        scale_color_gradient(low="blue", high="red")
 #' p
-#' # histogram layer (parallel coord)
-#' p + geom_histogram(alpha = 0.8, mapping = aes(fill = Species))
-#' # density layer
-#' p + geom_density(alpha = 0.8)
 #' # quantile layer
-#' p + geom_quantiles(alpha = 0.8, colour = "red", size = 2)
+#' p + geom_quantiles(quantiles = c(0.5),
+#'                    colour = "green", size = 1.2)
 #'
-#' # radial axes
-#' # set sequence in `mapping`
-#' ggplot(iris,
-#'        mapping = aes(
-#'          Sepal.Length = Sepal.Length,
-#'          Sepal.Width = Sepal.Width,
-#'          Petal.Length = Petal.Length,
-#'          Petal.Width = Petal.Width,
-#'          colour = Species
-#'        )) +
-#'        geom_path() +
-#'        coord_serialaxes(axes.layout = "radial")
-#'
+#' # facet
+#' p +
+#'   facet_grid(Playoff ~ CONF)
+#' }
 #' @export
 coord_serialaxes <- function(axes.layout = c("parallel", "radial"),
                              scaling = c("data", "variable", "observation", "none"),
@@ -92,10 +96,10 @@ ggplot_build.gg <- function(plot) {
   plot$coordinates <- switch(
     object$axes.layout,
     "parallel" = {
-      plot$coordinates <- coord_cartesian(xlim = object$xlim %||% NULL,
-                                          ylim = object$ylim %||% NULL,
-                                          expand = object$expand %||% TRUE,
-                                          clip = object$clip %||% "on")
+      plot$coordinates <- ggplot2::coord_cartesian(xlim = object$xlim %||% NULL,
+                                                   ylim = object$ylim %||% NULL,
+                                                   expand = object$expand %||% TRUE,
+                                                   clip = object$clip %||% "on")
     },
     "radial" = {
       plot$coordinates <- coord_radial(theta = object$theta %||% "x",

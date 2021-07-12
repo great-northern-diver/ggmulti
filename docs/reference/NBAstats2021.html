@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stack overlapping objects on top of each another — position_stack_ • ggmulti</title>
+<title>NBA 30 Teams Statistics in 20-21 Regular Season — NBAstats2021 • ggmulti</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Stack overlapping objects on top of each another — position_stack_" />
-<meta property="og:description" content="position_stack_ stacks bars on top of each other, conditional on locations." />
+<meta property="og:title" content="NBA 30 Teams Statistics in 20-21 Regular Season — NBAstats2021" />
+<meta property="og:description" content="A dataset containing the statistics (e.g. Points Per Game, Average Field Goals Made, etc)
+of 30 NBA Teams in 2020-2021 regular season" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,67 +138,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Stack overlapping objects on top of each another</h1>
+    <h1>NBA 30 Teams Statistics in 20-21 Regular Season</h1>
     
-    <div class="hidden name"><code>position_stack_.Rd</code></div>
+    <div class="hidden name"><code>NBAstats2021.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>position_stack_</code> stacks bars on top of each other, conditional on locations.</p>
+    <p>A dataset containing the statistics (e.g. Points Per Game, Average Field Goals Made, etc)
+of 30 NBA Teams in 2020-2021 regular season</p>
     </div>
 
-    <pre class="usage"><span class='fu'>position_stack_</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>1</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>position_fill_</span><span class='op'>(</span>vjust <span class='op'>=</span> <span class='fl'>1</span>, reverse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>vjust</th>
-      <td><p>Vertical adjustment for geoms that have a position
-(like points or lines), not a dimension (like bars or areas). Set to
-<code>0</code> to align with the bottom, <code>0.5</code> for the middle,
-and <code>1</code> (the default) for the top.</p></td>
-    </tr>
-    <tr>
-      <th>reverse</th>
-      <td><p>If <code>TRUE</code>, will reverse the default stacking order.
-This is useful if you're rotating both the plot and legend.</p></td>
-    </tr>
-    </table>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <p>A data frame with 30 rows (teams) and 42 variables:</p><dl>
+  <dt>Team</dt><dd><p>Team Names.</p></dd>
+  <dt>CONF</dt><dd><p>Factor; Conference of Teams (West or East).</p></dd>
+  <dt>DIV</dt><dd><p>Factor; Division of Teams.</p></dd>
+  <dt>Playoff</dt><dd><p>Factor; Whether Teams are in (0 or 1) Playoffs.</p></dd>
+  <dt>PTS</dt><dd><p>Points Per Game.</p></dd>
+  <dt>FGM</dt><dd><p>Average Field Goals Made.</p></dd>
+  <dt>FGA</dt><dd><p>Average Field Goals Attempted.</p></dd>
+  <dt>FG%</dt><dd><p>Field Goal Percentage.</p></dd>
+  <dt>3PM</dt><dd><p>Average 3-Point Field Goals Made.</p></dd>
+  <dt>3PA</dt><dd><p>Average 3-Point Field Goals Attempted.</p></dd>
+  <dt>3P%</dt><dd><p>3-Point Field Goal Percentage.</p></dd>
+  <dt>FTM</dt><dd><p>Average Free Throws Made.</p></dd>
+  <dt>FTA</dt><dd><p>Average Free Throws Attempted.</p></dd>
+  <dt>FT%</dt><dd><p>Free Throw Percentage.</p></dd>
+  <dt>OR</dt><dd><p>Offensive Rebounds Per Game.</p></dd>
+  <dt>DR</dt><dd><p>Defensive Rebounds Per Game.</p></dd>
+  <dt>REB</dt><dd><p>Rebounds Per Game.</p></dd>
+  <dt>AST</dt><dd><p>Assists Per Game.</p></dd>
+  <dt>STL</dt><dd><p>Steals Per Game.</p></dd>
+  <dt>BLK</dt><dd><p>Blocks Per Game.</p></dd>
+  <dt>TO</dt><dd><p>Turnovers Per Game.</p></dd>
+  <dt>PF</dt><dd><p>Fouls Per Game.</p></dd>
+  <dt>OPTS</dt><dd><p>Opponent Points Per Game.</p></dd>
+  <dt>OFGM</dt><dd><p>Opponent Average Field Goals Made.</p></dd>
+  <dt>OFGA</dt><dd><p>Opponent Average Field Goals Attempted.</p></dd>
+  <dt>OFG%</dt><dd><p>Opponent Field Goal Percentage.</p></dd>
+  <dt>O3PM</dt><dd><p>Opponent Average 3-Point Field Goals Made.</p></dd>
+  <dt>O3PA</dt><dd><p>Opponent Average 3-Point Field Goals Attempted.</p></dd>
+  <dt>O3P%</dt><dd><p>Opponent 3-Point Field Goal Percentage.</p></dd>
+  <dt>OFTM</dt><dd><p>Opponent Average Free Throws Made.</p></dd>
+  <dt>OFTA</dt><dd><p>Opponent Average Free Throws Attempted.</p></dd>
+  <dt>OFT%</dt><dd><p>Opponent Free Throw Percentage.</p></dd>
+  <dt>OOR</dt><dd><p>Opponent Offensive Rebounds Per Game.</p></dd>
+  <dt>ODR</dt><dd><p>Opponent Defensive Rebounds Per Game.</p></dd>
+  <dt>OREB</dt><dd><p>Opponent Rebounds Per Game.</p></dd>
+  <dt>OAST</dt><dd><p>Opponent Assists Per Game.</p></dd>
+  <dt>OSTL</dt><dd><p>Opponent Steals Per Game.</p></dd>
+  <dt>OBLK</dt><dd><p>Opponent Blocks Per Game.</p></dd>
+  <dt>OTO</dt><dd><p>Opponent Turnovers Per Game.</p></dd>
+  <dt>OPF</dt><dd><p>Opponent Fouls Per Game.</p></dd>
+  <dt>Win</dt><dd><p>Win Games in Regular Season.</p></dd>
+  <dt>Lose</dt><dd><p>Loss Games in Regular Season.</p></dd>
 
-    <p>It is built based on <code>position_stack</code>, but used for multiple locations, such as
-<code><a href='geom_hist_.html'>geom_hist_</a></code> or <code><a href='geom_density_.html'>geom_density_</a></code>. Rather than stack everything on top of each other,
-<code>position_stack_</code> stacks bars based on locations.
-Check examples to see the difference.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+</dl>
 
-    <div class='dont-index'><p>See <code><a href='geom_hist_.html'>geom_hist_</a></code>, <code><a href='geom_density_.html'>geom_density_</a></code>,
-<code><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></code> and <code><a href='geom_serialaxes_hist.html'>geom_serialaxes_hist</a></code> for more examples.</p>
-<p>Other position adjustments for multiple locations:
-<code><a href='position_identity_.html'>position_identity_</a></code>,
-<code><a href='position_dodge_.html'>position_dodge_</a></code>, <code><a href='position_dodge_.html'>position_dodge2_</a></code></p>
-<p>Parent: <code>position_stack</code></p></div>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>,
-       mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
-                     Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
-                     Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,
-                     Petal.Width <span class='op'>=</span> <span class='va'>Petal.Width</span>,
-                     colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>p</span> <span class='op'>+</span>
- <span class='fu'><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='fu'>position_stack_</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='position_stack_-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># \donttest{</span>
-<span class='va'>p</span> <span class='op'>+</span>
-  <span class='fu'><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='fu'>position_stack</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='img'><img src='position_stack_-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+    <p><a href='https://www.espn.com/nba/stats/team/_/season/2021'>https://www.espn.com/nba/stats/team/_/season/2021</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-</div></pre>
+    <p>Zehao Xu</p>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

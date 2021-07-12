@@ -2,7 +2,8 @@
 #' @description To visualize high dimensional data on scatterplot.
 #' Each point glyph is surrounded by a serial axes (parallel axes or radial axes) object.
 #' @inheritParams geom_serialaxes
-#' @param serialaxes.data a serial axes numerical data set. If not provided, \code{geom_point()} will be called.
+#' @param serialaxes.data a serial axes numerical data set.
+#' If not provided, a point visual (\code{geom_point()}) will be displayed.
 #' @param axes.layout either "radial" or "parallel"
 #' @param andrews Logical; Andrew's plot (a Fourier transformation)
 #' @param show.axes boolean to indicate whether axes should be shown or not
@@ -21,11 +22,17 @@
 #' \item{colour}
 #' \item{fill}
 #' \item{group}
-#' \item{shape}
 #' \item{size}
-#' \item{stroke}
 #' \item{linetype}
+#' \item{shape}
+#' \item{stroke}
 #' }
+#'
+#' The size unit is \code{cm}
+#'
+#' Note that the shape and stroke do not have real meanings unless the essential
+#' argument \code{serialaxes.data} is missing. If so, a point visual will be displayed with
+#' corresponding shape and stroke.
 #'
 #' @return a \code{geom} layer
 #' @seealso \code{\link{geom_polygon_glyph}}, \code{\link{geom_image_glyph}}
@@ -92,12 +99,18 @@ geom_serialaxes_glyph <- function(mapping = NULL, data = NULL, stat = "identity"
   )
 }
 
+#' @rdname Geom-ggproto
+#' @export
 GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                         required_aes = c("x", "y"),
                                         default_aes = aes(colour = "black",
-                                                          size = 1, shape = 19, fill = NA, stroke = 0.5,
-                                                          linetype = 1, alpha = 1),
-                                        draw_key = ggplot2::draw_key_polygon,
+                                                          size = 1.5, fill = NA,
+                                                          linetype = 1, alpha = 1,
+                                                          shape = 21, stroke = 0.5),
+                                        draw_key = function (data, params, size) {
+                                          data$size <- ggplot2::GeomPoint$default_aes$size/1.5
+                                          ggplot2::draw_key_point(data, params, size)
+                                        },
                                         setup_params = function(data, params) {
 
                                           col.names <- colnames(params$serialaxes.data)
@@ -199,15 +212,17 @@ GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                           switch(
                                             axes.layout,
                                             "parallel" = {
-                                              scale.x <- as_r_serialaxesGlyph_size(data$size, "x", "parallel")
-                                              scale.y <- as_r_serialaxesGlyph_size(data$size, "y", "parallel")
+                                              # height:width = 1:2
+                                              scale.x <- data$size
+                                              scale.y <- data$size/2
 
                                               xaxis <- t(sapply(scale.x, function(x) seq(-0.5 * x, 0.5 * x, length.out = dimension)))
                                               yaxis <- (scaledData - 0.5) * scale.y
                                             },
                                             "radial" = {
-                                              scale.x <- as_r_serialaxesGlyph_size(data$size, "x", "radial")
-                                              scale.y <- as_r_serialaxesGlyph_size(data$size, "y", "radial")
+                                              # size is diameter
+                                              scale.x <- data$size/2
+                                              scale.y <- data$size/2
 
                                               angle <- seq(0, 2*base::pi, length.out = dimension + 1)[1:dimension]
 
@@ -265,3 +280,137 @@ GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                           )
                                         }
 )
+
+
+get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos,
+                              scale.x, scale.y, xaxis, yaxis,
+                              dimension, p, show.area, show.enclosing,
+                              unit = "cm") {
+
+  enclosingX <- enclosingY <- enclosingId <- list()
+  axesX <- axesY <- axesId <- list()
+  serialCoordX <- serialCoordY <- list()
+
+  N <- length(xpos)
+
+  # side effect
+  if(axes.layout == "parallel") {
+    lapply(1:N,
+           function(i){
+
+             # `<<-` is used inside the function of `lapply`
+             # such operation only changes vars of my own namespace
+             # (i.e. `loon_get_scaledData`, `get_gridAesthetic`, etc)
+             # and global environment will not be affected.
+             # The main reason is to avoid the heavy `for` loop
+
+             # enclosing
+             enclosingX[[i]] <<- grid::unit(xpos[i], 'native') +
+               grid::unit((c(0, 0, 1, 0, 0, 1, 1, 1) - 0.5) * scale.x[i], unit)
+             enclosingY[[i]] <<- grid::unit(ypos[i], 'native') +
+               grid::unit((c(0, 0, 0, 1, 1, 0, 1, 1) - 0.5) * scale.y[i], unit)
+             enclosingId[[i]] <<- rep(((i - 1)*4 + 1):(4 * i), 2)
+
+
+             # axes
+             axesX[[i]] <<- grid::unit(xpos[i], 'native') +
+               rep(grid::unit(pth(xaxis[i, ], p), unit), each = 2)
+             axesY[[i]] <<- grid::unit(ypos[i], 'native') +
+               rep(grid::unit(c(-0.5 * scale.y[i],
+                                0.5 * scale.y[i]), unit),
+                   p)
+             axesId[[i]] <<- rep(((i - 1)*p + 1):(p * i),
+                                 each = 2)
+
+             # serialCoord
+             if(show.area) {
+               serialCoordX[[i]] <<- grid::unit(xpos[i], 'native') +
+                 grid::unit(c(xaxis[i, ], rev(xaxis[i, ])), unit)
+               serialCoordY[[i]] <<- grid::unit(ypos[i], 'native') +
+                 grid::unit(c(yaxis[i, ], rep(-0.5 * scale.y[i], dimension)), unit)
+             } else {
+               serialCoordX[[i]] <<- grid::unit(xpos[i], 'native') +
+                 grid::unit(xaxis[i, ], unit)
+               serialCoordY[[i]] <<- grid::unit(ypos[i], 'native') +
+                 grid::unit(yaxis[i, ], unit)
+             }
+           })
+
+    serialCoordId <- if(show.area) rep(1:N, each = 2*dimension) else rep(1:N, each = dimension)
+
+  } else if (axes.layout == "radial") {
+
+    len_radial <- 101
+    angle <- seq(0, 2*base::pi, length.out = dimension + 1)[1:dimension]
+
+    lapply(1:N,
+           function(i){
+
+             # `<<-` is used inside the function of `lapply`
+             # such operation only changes vars of my own namespace
+             # (i.e. `loon_get_scaledData`, `get_gridAesthetic`, etc)
+             # and global environment will not be affected.
+             # The main reason is to avoid the heavy `for` loop
+
+             # enclosing
+             enclosingX[[i]] <<- grid::unit(xpos[i], 'native') +
+               grid::unit(scale.x[i] * cos(seq(0, 2*base::pi, length=len_radial)), unit)
+             enclosingY[[i]] <<- grid::unit(ypos[i], 'native') +
+               grid::unit(scale.y[i] * sin(seq(0, 2*base::pi, length=len_radial)), unit)
+
+
+             if (show.enclosing) {
+
+               # axes
+               axesX[[i]] <<- grid::unit(xpos[i], 'native') +
+                 grid::unit(c(rep(0, p), pth(scale.x[i] * cos(angle), p, TRUE)), unit)
+               axesY[[i]] <<- grid::unit(ypos[i], 'native') +
+                 grid::unit(c(rep(0, p), pth(scale.y[i] * sin(angle), p, TRUE)), unit)
+               axesId[[i]] <<- rep(((i - 1)*p + 1):(p * i), 2)
+
+             } else {
+               # axes
+               axesX[[i]] <<- grid::unit(xpos[i], 'native') +
+                 grid::unit(c(rep(0, p), pth(xaxis[i, ], p, TRUE)), unit)
+               axesY[[i]] <<- grid::unit(ypos[i], 'native') +
+                 grid::unit(c(rep(0, p), pth(yaxis[i, ], p, TRUE)), unit)
+               axesId[[i]] <<- rep(((i - 1)*p + 1):(p * i), 2)
+             }
+
+             # serialCoord
+             serialCoordX[[i]] <<- grid::unit(xpos[i], 'native') +
+               grid::unit(c(xaxis[i, ], rev(xaxis[i, 1])), unit)
+             serialCoordY[[i]] <<- grid::unit(ypos[i], 'native') +
+               grid::unit(c(yaxis[i, ], rev(yaxis[i, 1])), unit)
+           })
+
+    enclosingId <- rep(1:N, each = len_radial)
+    serialCoordId <- rep(1:N, each = (dimension + 1))
+
+  } else stop('unknown axes layout',
+              call. = FALSE)
+
+  list(
+    enclosingX = do.call(grid::unit.c, enclosingX),
+    enclosingY = do.call(grid::unit.c, enclosingY),
+    enclosingId = unlist(enclosingId),
+    axesX = do.call(grid::unit.c, axesX),
+    axesY = do.call(grid::unit.c, axesY),
+    axesId = unlist(axesId),
+    serialCoordX = do.call(grid::unit.c, serialCoordX),
+    serialCoordY = do.call(grid::unit.c, serialCoordY),
+    serialCoordId = serialCoordId
+  )
+}
+
+pth <- function(x, p, circle = FALSE) {
+  len <- length(x)
+  if(len == p) return(x)
+  # In a circle, the first one and the last one are identical
+  if(circle) {
+    x[round(seq(1, len, length.out = p + 1))][- (p + 1)]
+  } else {
+    x[round(seq(1, len, length.out = p))]
+  }
+}
+

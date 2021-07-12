@@ -11,6 +11,7 @@
 #' @param reserve If \code{TRUE}, return the variables not shown in \code{sequence} as well;
 #' else only return the variables defined in \code{sequence}.
 #' @param as.data.frame Return a matrix or a data.frame
+# loon::l_getScaledData
 get_scaledData <- function(data,
                            sequence = NULL,
                            scaling = c("data", "variable", "observation", "none"),
@@ -69,17 +70,19 @@ loon_get_scaledData <-  function(data,
 
   if(!is.null(sequence)) {
 
-    col_name <- make.names(colnames(data))
-    # sequence names may involve invalid chars
-    # such as `(`, `)`, ` ` space, etc.
-    # call function `make.names` can remove all these chars to match data column names
-    sequence <- make.names(sequence)
+    if(!all(sequence %in% colnames(data))) {
 
-    if(!all(sequence %in% col_name)) {
-      warning("unknown variable names in sequence",
-              call. = FALSE)
-      sequence <- intersect(sequence, col_name)
+      colNames <- colnames(data)
+
+      if(!all(sequence %in% colNames)) {
+        warning("The sequence names, ",
+                setdiff(sequence, colNames),
+                ", are not found in the data.",
+                call. = FALSE)
+        sequence <- intersect(sequence, colNames)
+      }
     }
+
     data <-  data[, sequence]
   }
 
@@ -147,47 +150,10 @@ loon_get_scaledData <-  function(data,
          })
 }
 
-## Unexported functions in loon
-as_r_polygonGlyph_size <- function(size) {
-
-  # loon default `as_r_polygonGlyph_size`
-  fun <- function(size){
-    if (is.numeric(size)) {
-      # trial and error to choose scale for size
-      size <- size/1.25
-      size[size < 0.01] <- 0.01
-      size
-    }
-    size
-  }
-  4 * fun(size)
-}
-as_r_serialaxesGlyph_size <- function(size, coord, axesLayout) {
-
-  # loon default `as_r_serialaxesGlyph_size`
-  fun <- function(size, coord, axesLayout){
-    if (is.numeric(size)) {
-      # trial and error to choose scale for size
-      if (axesLayout == "radial") {
-        size <- sqrt(size) * 5
-      } else if (axesLayout == "parallel"){
-        if (coord == "x") {
-          size <- sqrt(size) * 6.4
-        } else if (coord == "y"){
-          size <- sqrt(size) * 3.2
-        } else size <- NA
-      } else size <- NA
-      size[size == 0] <- 0.01
-    }
-    size
-  }
-  2 * fun(size, coord, axesLayout)
-}
-
 #' # `geom_serialaxes` can be considered as a wrap of `geom_path`
 #' # Following example illustrates how to convert a "widens" data to a "lengthens" data
 #' # and use `geom_path` to construct the parallel axes
-#' if(requireNamespace("tidyr") && requireNamespace("dplyr")) {
+#' if(require("tidyr") && require("dplyr")) {
 #'   # pivot iris from wide to long
 #'   long_data <- iris %>%
 #'     # set the scale of data

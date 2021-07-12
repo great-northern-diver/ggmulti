@@ -98,7 +98,7 @@ In `ggmulti` we provide "glyph" layers to help add this information as point sym
 
 Consider, for example, the lower 48 USA destinations  of "nyc" flights in 2013. Each destination could be marked as a "airplane" polygon symbol and New York city is highlighted by a blue star.
 
-```{r glyph_ggplot}
+```{r glyph_ggplot, fig.width=10}
 library(ggmulti)
 library(nycflights13)
 library(maps)

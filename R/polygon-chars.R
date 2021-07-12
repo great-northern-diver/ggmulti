@@ -4,7 +4,7 @@
 #' @seealso \link{geom_polygon_glyph}
 #' @export
 #' @examples
-#' if(requireNamespace("grid")) {
+#' if(require("grid")) {
 #'   library(grid)
 #'   grid.newpage()
 #'   grid.polygon(x=(x_star + 1)/2,
