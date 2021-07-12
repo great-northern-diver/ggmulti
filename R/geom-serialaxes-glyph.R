@@ -106,8 +106,11 @@ GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                         default_aes = aes(colour = "black",
                                                           size = 1.5, fill = NA,
                                                           linetype = 1, alpha = 1,
-                                                          shape = 19, stroke = 0.5),
-                                        draw_key = ggplot2::draw_key_polygon,
+                                                          shape = 21, stroke = 0.5),
+                                        draw_key = function (data, params, size) {
+                                          data$size <- ggplot2::GeomPoint$default_aes$size/1.5
+                                          ggplot2::draw_key_point(data, params, size)
+                                        },
                                         setup_params = function(data, params) {
 
                                           col.names <- colnames(params$serialaxes.data)
@@ -277,6 +280,7 @@ GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                           )
                                         }
 )
+
 
 get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos,
                               scale.x, scale.y, xaxis, yaxis,

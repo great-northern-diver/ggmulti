@@ -131,8 +131,12 @@ GeomImageGlyph <- ggplot2::ggproto(
   required_aes = c('x', 'y'),
   default_aes = aes(colour = NA,
                     fill = NA, size = 1, alpha = 1,
-                    shape = 19, stroke = 0.5),
-  draw_key = ggplot2::draw_key_rect,
+                    shape = 21, stroke = 0.5),
+  draw_key = function(data, params, size) {
+    data$size <- ggplot2::GeomPoint$default_aes$size/1 *
+      data$size
+    ggplot2::draw_key_point(data, params, size)
+  },
   setup_params = function(data, params) {
 
     n <- dim(data)[1]

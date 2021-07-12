@@ -96,8 +96,11 @@ GeomPolygonGlyph <- ggplot2::ggproto('GeomPolygonGlyph',
                                      default_aes = ggplot2::aes(colour = 'black',
                                                                 fill = 'black', size = 0.5,
                                                                 linetype = 1, alpha = 1,
-                                                                shape = 19, stroke = 0.5),
-                                     draw_key = ggplot2::draw_key_polygon,
+                                                                shape = 21, stroke = 0.5),
+                                     draw_key = function (data, params, size) {
+                                       data$size <- ggplot2::GeomPoint$default_aes$size/0.5 * data$size
+                                       ggplot2::draw_key_point(data, params, size)
+                                     },
                                      setup_params = function(data, params) {
 
                                        n <- dim(data)[1]
