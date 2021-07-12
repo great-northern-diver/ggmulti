@@ -40,11 +40,16 @@ serialaxes_setup_data <- function(data, params, setGroup = TRUE, as.data.frame =
     get_scaledData(sequence = sequence,
                    scaling = params$scaling,
                    reserve = TRUE,
-                   as.data.frame = TRUE) %>%
-    # Make syntactically valid names out of character vectors.
-    tidyr::pivot_longer(cols = dplyr::all_of(make.names(sequence, unique = TRUE)),
-                        names_to = "names",
-                        values_to = ggplot2::flipped_names(params$flipped_aes)$x) %>%
+                   as.data.frame = TRUE)
+
+  colnames(d1) <- make.names(colnames(d1), unique = TRUE)
+  sequence <- make.names(sequence, unique = TRUE)
+
+  # Make syntactically valid names out of character vectors.
+  d1 <-  tidyr::pivot_longer(d1, cols = dplyr::all_of(sequence),
+                             names_to = "names",
+                             names_repair = "minimal",
+                             values_to = ggplot2::flipped_names(params$flipped_aes)$x) %>%
     dplyr::select(-names)
 
   ### Remove dependency `rlang`
