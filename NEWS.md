@@ -1,3 +1,21 @@
+# ggmulti 1.0.4
+
+  1. For the radial coordinate, the serial histogram and density are displayed incorrectly (I suppose the engine, `ggplot2::coord_polar` makes some changes). So, in this version, these features are unavailable for now. Hopefully, we can bring them back in the next release. 
+  
+  2. Give meaningful content to the size of each non-primitive glyph. 
+  
+      + polygon glyph: the default size is 0.5 with unit "cm". The size of the polygon glyph is the "size" multiplies the polygon coordinates.
+      
+      + serial axes glyph: the default size is 1.5 with unit "cm". 
+      
+          - If it is the "radial" coordinate, the size is the diameter of the enclosing;
+          
+          - If it is the "parallel" coordinate, the size is the width of the enclosing and the aspect ratio of height and width is 1:2.
+          
+      + image glyph: the default size is 1 with unit "cm". The height of the image is determined by `imageheight * size` and the width of the image is `imagewidth * size`.
+      
+  3. Export a data fame `NBAstats2021` which contains 30 observations and 42 statistics summaries, e.g. team names, points per game, etc. 
+
 # ggmulti 1.0.3
 
   1. Fix a bug: for `geom_histogram_`, the scaling strategy (`scale.y` and `as.mix`) is not correct.
