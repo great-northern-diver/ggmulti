@@ -7,7 +7,7 @@
 #' @inheritParams ggplot2::coord_polar
 #' @export
 #' @examples
-#' if(requireNamespace("dplyr")) {
+#' if(require("dplyr")) {
 #' ggplot(NBAstats2021, mapping = aes(colour = Playoff)) +
 #'   geom_serialaxes(
 #'     axes.sequence = c("PTS", "OPTS", "3PM", "O3PM", "PTS"),

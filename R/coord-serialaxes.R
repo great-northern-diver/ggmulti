@@ -39,7 +39,7 @@
 #' @return a \code{ggproto} object
 #'
 #' @examples
-#' if(requireNamespace("dplyr")) {
+#' if(require("dplyr")) {
 #' # Data
 #' nba <- NBAstats2021 %>%
 #'   mutate(

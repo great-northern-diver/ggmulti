@@ -60,7 +60,7 @@ covered), error may occur. If so, please consider using the
 }
 
 \examples{
-if(requireNamespace("dplyr")) {
+if(require("dplyr")) {
 # Data
 nba <- NBAstats2021 \%>\%
   mutate(

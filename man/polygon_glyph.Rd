@@ -60,7 +60,7 @@ y_maple
 polygon coordinates scaled to (0, 1)
 }
 \examples{
-if(requireNamespace("grid")) {
+if(require("grid")) {
   library(grid)
   grid.newpage()
   grid.polygon(x=(x_star + 1)/2,

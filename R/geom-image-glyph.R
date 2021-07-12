@@ -36,7 +36,7 @@
 #' @examples
 #' \donttest{
 #' # image glyph
-#' if(requireNamespace("png")) {
+#' if(require("png")) {
 #' img_path <- list.files(file.path(find.package(package = 'ggmulti'),
 #'                                  "images"),
 #'                        full.names = TRUE)
@@ -58,7 +58,7 @@
 #' imageRaptors <- build$data[[1]]$images[[1]]
 #' imageWarriors <- build$data[[1]]$images[[2]]
 #'
-#' if(requireNamespace("grid")) {
+#' if(require("grid")) {
 #' grid.newpage()
 #' grid.raster(imageRaptors)
 #' grid.newpage()

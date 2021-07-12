@@ -153,7 +153,7 @@ loon_get_scaledData <-  function(data,
 #' # `geom_serialaxes` can be considered as a wrap of `geom_path`
 #' # Following example illustrates how to convert a "widens" data to a "lengthens" data
 #' # and use `geom_path` to construct the parallel axes
-#' if(requireNamespace("tidyr") && requireNamespace("dplyr")) {
+#' if(require("tidyr") && require("dplyr")) {
 #'   # pivot iris from wide to long
 #'   long_data <- iris %>%
 #'     # set the scale of data
