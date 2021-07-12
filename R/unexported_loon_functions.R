@@ -11,6 +11,7 @@
 #' @param reserve If \code{TRUE}, return the variables not shown in \code{sequence} as well;
 #' else only return the variables defined in \code{sequence}.
 #' @param as.data.frame Return a matrix or a data.frame
+# loon::l_getScaledData
 get_scaledData <- function(data,
                            sequence = NULL,
                            scaling = c("data", "variable", "observation", "none"),
@@ -69,17 +70,21 @@ loon_get_scaledData <-  function(data,
 
   if(!is.null(sequence)) {
 
-    col_name <- make.names(colnames(data))
-    # sequence names may involve invalid chars
-    # such as `(`, `)`, ` ` space, etc.
-    # call function `make.names` can remove all these chars to match data column names
-    sequence <- make.names(sequence)
+    if(!all(sequence %in% colnames(data))) {
 
-    if(!all(sequence %in% col_name)) {
-      warning("unknown variable names in sequence",
-              call. = FALSE)
-      sequence <- intersect(sequence, col_name)
+      col_name <- make.names(colnames(data))
+      # sequence names may involve invalid chars
+      # such as `(`, `)`, ` ` space, etc.
+      # call function `make.names` can remove all these chars to match data column names
+      sequence <- make.names(sequence)
+
+      if(!all(sequence %in% col_name)) {
+        warning("unknown variable names in sequence",
+                call. = FALSE)
+        sequence <- intersect(sequence, col_name)
+      }
     }
+
     data <-  data[, sequence]
   }
 

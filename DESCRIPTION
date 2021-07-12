@@ -1,7 +1,7 @@
 Package: ggmulti
 Type: Package
 Title: High Dimensional Data Visualization
-Version: 1.0.3
+Version: 1.0.4
 Authors@R: c(
   person('Zehao', 'Xu', email = 'z267xu@uwaterloo.ca', role = c("aut", "cre")),
   person('R. Wayne', 'Oldford', email = 'rwoldford@uwaterloo.ca', role = c("aut"))
@@ -37,6 +37,7 @@ Suggests:
     nycflights13,
     ggplot2movies
 RoxygenNote: 7.1.1
+LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr
 Language: en-US
