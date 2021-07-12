@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -140,9 +140,32 @@
       
     </div>
 
+    <div id="ggmulti-104" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.4">
+<a href="#ggmulti-104" class="anchor"></a>ggmulti 1.0.4<small> Unreleased </small>
+</h1>
+<ol>
+<li><p>For the radial coordinate, the serial histogram and density are displayed incorrectly (I suppose the engine, <code><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">ggplot2::coord_polar</a></code> makes some changes). So, in this version, these features are unavailable for now. Hopefully, we can bring them back in the next release.</p></li>
+<li>
+<p>Give meaningful content to the size of each non-primitive glyph.</p>
+<ul>
+<li><p>polygon glyph: the default size is 0.5 with unit “cm”. The size of the polygon glyph is the “size” multiplies the polygon coordinates.</p></li>
+<li>
+<p>serial axes glyph: the default size is 1.5 with unit “cm”.</p>
+<ul>
+<li><p>If it is the “radial” coordinate, the size is the diameter of the enclosing;</p></li>
+<li><p>If it is the “parallel” coordinate, the size is the width of the enclosing and the aspect ratio of height and width is 1:2.</p></li>
+</ul>
+</li>
+<li><p>image glyph: the default size is 1 with unit “cm”. The height of the image is determined by <code>imageheight * size</code> and the width of the image is <code>imagewidth * size</code>.</p></li>
+</ul>
+</li>
+<li><p>Export a data fame <code>NBAstats2021</code> which contains 30 observations and 42 statistics summaries, e.g. team names, points per game, etc.</p></li>
+</ol>
+</div>
     <div id="ggmulti-103" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.3">
-<a href="#ggmulti-103" class="anchor"></a>ggmulti 1.0.3<small> Unreleased </small>
+<a href="#ggmulti-103" class="anchor"></a>ggmulti 1.0.3<small> 2021-05-28 </small>
 </h1>
 <ol>
 <li><p>Fix a bug: for <code>geom_histogram_</code>, the scaling strategy (<code>scale.y</code> and <code>as.mix</code>) is not correct.</p></li>

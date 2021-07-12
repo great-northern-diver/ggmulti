@@ -57,7 +57,8 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
-\item{serialaxes.data}{a serial axes numerical data set. If not provided, \code{geom_point()} will be called.}
+\item{serialaxes.data}{a serial axes numerical data set.
+If not provided, a point visual (\code{geom_point()}) will be displayed.}
 
 \item{axes.sequence}{A vector to define the axes sequence. In serial axes coordinate, the sequence can be either
 determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
@@ -112,11 +113,17 @@ geom_..._glyph() understands the following aesthetics (required aesthetics are i
 \item{colour}
 \item{fill}
 \item{group}
-\item{shape}
 \item{size}
-\item{stroke}
 \item{linetype}
+\item{shape}
+\item{stroke}
 }
+
+The size unit is \code{cm}
+
+Note that the shape and stroke do not have real meanings unless the essential
+argument \code{serialaxes.data} is missing. If so, a point visual will be displayed with
+corresponding shape and stroke.
 }
 
 \examples{
