@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -156,7 +156,6 @@
   imagewidth <span class='op'>=</span> <span class='fl'>1.2</span>,
   imageheight <span class='op'>=</span> <span class='fl'>0.9</span>,
   interpolate <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  units <span class='op'>=</span> <span class='st'>"cm"</span>,
   na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show.legend <span class='op'>=</span> <span class='cn'>NA</span>,
   inherit.aes <span class='op'>=</span> <span class='cn'>TRUE</span>
@@ -205,7 +204,7 @@ to the paired geom/stat.</p></td>
     </tr>
     <tr>
       <th>images</th>
-      <td><p>a list of images (a raster object, bitmap image). If not provided, <code>geom_point()</code> will be executed.</p></td>
+      <td><p>a list of images (a raster object, bitmap image). If not provided, a point visual (<code>geom_point()</code>) will be displayed.</p></td>
     </tr>
     <tr>
       <th>imagewidth</th>
@@ -219,11 +218,6 @@ to the paired geom/stat.</p></td>
       <th>interpolate</th>
       <td><p>A logical value indicating whether to linearly interpolate the image (the alternative is to use nearest-neighbour interpolation,
 which gives a more blocky result). See <code>rasterGrob</code>.</p></td>
-    </tr>
-    <tr>
-      <th>units</th>
-      <td><p>A character vector specifying the units for the image height and width, see <code>unit</code>;
-default is "cm" (force the width and height).</p></td>
     </tr>
     <tr>
       <th>na.rm</th>
@@ -261,12 +255,16 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 <li><p>colour</p></li>
 <li><p>fill</p></li>
 <li><p>group</p></li>
-<li><p>shape</p></li>
 <li><p>size</p></li>
-<li><p>stroke</p></li>
 <li><p>linetype</p></li>
+<li><p>shape</p></li>
+<li><p>stroke</p></li>
 </ul>
 
+<p>The size unit is <code>cm</code></p>
+<p>Note that the shape and stroke do not have real meanings unless the essential
+argument <code>images</code> is missing. If so, a point visual will be displayed with
+corresponding shape and stroke.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='geom_serialaxes_glyph.html'>geom_serialaxes_glyph</a></code>, <code><a href='geom_polygon_glyph.html'>geom_polygon_glyph</a></code></p></div>
@@ -274,11 +272,36 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># image glyph</span>
-<span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span><span class='op'>(</span><span class='st'>"png"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-
+<span class='kw'>if</span><span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://www.rforge.net/png/'>"png"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='va'>img_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>list.files</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/find.package.html'>find.package</a></span><span class='op'>(</span>package <span class='op'>=</span> <span class='st'>'ggmulti'</span><span class='op'>)</span>,
                                  <span class='st'>"images"</span><span class='op'>)</span>,
                        full.names <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>Raptors</span> <span class='op'>&lt;-</span> <span class='fu'>png</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span><span class='op'>(</span><span class='va'>img_path</span><span class='op'>[</span><span class='fl'>2L</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>Warriors</span> <span class='op'>&lt;-</span> <span class='fu'>png</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span><span class='op'>(</span><span class='va'>img_path</span><span class='op'>[</span><span class='fl'>3L</span><span class='op'>]</span><span class='op'>)</span>
+
+<span class='va'>pg</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>,
+       mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span>, y <span class='op'>=</span> <span class='va'>y</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_image_glyph</span><span class='op'>(</span>images <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>Raptors</span>,
+                                 <span class='va'>Warriors</span><span class='op'>)</span>,
+                   imagewidth <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1.2</span>, <span class='fl'>2</span><span class='op'>)</span>,
+                   imageheight <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.9</span>, <span class='fl'>1.2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>coord_cartesian</span><span class='op'>(</span>xlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/extendrange.html'>extendrange</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pg</span>
+<span class='co'># query the images (a numerical array)</span>
+<span class='va'>build</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot_build.html'>ggplot_build</a></span><span class='op'>(</span><span class='va'>pg</span><span class='op'>)</span>
+<span class='co'># `imageRaptors` and `imageWarriors` are three dimensional</span>
+<span class='co'># arrays (third dimension specifying the plane)</span>
+<span class='va'>imageRaptors</span> <span class='op'>&lt;-</span> <span class='va'>build</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>images</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>imageWarriors</span> <span class='op'>&lt;-</span> <span class='va'>build</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>images</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>
+
+<span class='kw'>if</span><span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"grid"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/grid/grid.newpage.html'>grid.newpage</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>imageRaptors</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/grid/grid.newpage.html'>grid.newpage</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/grid/grid.raster.html'>grid.raster</a></span><span class='op'>(</span><span class='va'>imageWarriors</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='co'># THIS IS SLOW</span>
 <span class='va'>mercLogo</span> <span class='op'>&lt;-</span> <span class='fu'>png</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/png/man/readPNG.html'>readPNG</a></span><span class='op'>(</span><span class='va'>img_path</span><span class='op'>[</span><span class='fl'>1L</span><span class='op'>]</span><span class='op'>)</span>
 
 <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>hp</span>, y <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
@@ -293,7 +316,7 @@ the default plot specification, e.g. <code><a href='https://ggplot2.tidyverse.or
 <span class='va'>p</span>
 
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: png</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: png</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: grid</span></div><div class='img'><img src='geom_image_glyph-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='geom_image_glyph-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='geom_image_glyph-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

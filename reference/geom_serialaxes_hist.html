@@ -81,7 +81,7 @@ defined in the mapping aes()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@ defined in the mapping aes()." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fas fa-github fa-lg"></span>
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -379,16 +379,23 @@ frequency polygons touch 0. Defaults to <code>FALSE</code>.</p></td>
 <code><a href='geom_serialaxes_quantile.html'>geom_serialaxes_quantile</a></code>, <code><a href='geom_serialaxes_density.html'>geom_serialaxes_density</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>iris</span>, mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>Sepal.Length <span class='op'>=</span> <span class='va'>Sepal.Length</span>,
-                                Sepal.Width <span class='op'>=</span> <span class='va'>Sepal.Width</span>,
-                                Petal.Length <span class='op'>=</span> <span class='va'>Petal.Length</span>,
-                                Petal.Width <span class='op'>=</span> <span class='va'>Petal.Width</span>,
-                                colour <span class='op'>=</span> <span class='va'>Species</span>,
-                                fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'><a href='geom_serialaxes.html'>geom_serialaxes</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'>geom_serialaxes_hist</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'>scale_x_continuous</span><span class='op'>(</span>breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>,
-                               labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>+</span>
+    <pre class="examples"><div class='input'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>NBAstats2021</span>,
+            mapping <span class='op'>=</span> <span class='fu'>aes</span><span class='op'>(</span>`FG%` <span class='op'>=</span> <span class='va'>`FG%`</span>,
+                          `3P%` <span class='op'>=</span> <span class='va'>`3P%`</span>,
+                          `FT%` <span class='op'>=</span> <span class='va'>`FT%`</span>,
+                          `OFG%` <span class='op'>=</span> <span class='va'>`OFG%`</span>,
+                          `O3P%` <span class='op'>=</span> <span class='va'>`O3P%`</span>,
+                          `OFT%` <span class='op'>=</span> <span class='va'>`OFT%`</span>,
+                          colour <span class='op'>=</span> <span class='va'>Playoff</span>,
+                          fill <span class='op'>=</span> <span class='va'>Playoff</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+            <span class='fu'><a href='geom_serialaxes.html'>geom_serialaxes</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.2</span>,
+                            scaling <span class='op'>=</span> <span class='st'>"variable"</span><span class='op'>)</span> <span class='op'>+</span>
+            <span class='fu'>geom_serialaxes_hist</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.5</span>,
+                                 prop <span class='op'>=</span> <span class='fl'>0.7</span>,
+                                 scaling <span class='op'>=</span> <span class='st'>"variable"</span><span class='op'>)</span> <span class='op'>+</span>
+            <span class='fu'>scale_x_continuous</span><span class='op'>(</span>breaks <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span>,
+                               labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"FG"</span>, <span class='st'>"3P"</span>, <span class='st'>"FT"</span>,
+                                          <span class='st'>"OFG"</span>, <span class='st'>"O3P"</span>, <span class='st'>"OFT"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
             <span class='fu'>scale_y_continuous</span><span class='op'>(</span>labels <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span> <span class='op'>+</span>
             <span class='fu'>xlab</span><span class='op'>(</span><span class='st'>"variable"</span><span class='op'>)</span> <span class='op'>+</span>
             <span class='fu'>ylab</span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span> <span class='op'>+</span>
