@@ -4,9 +4,9 @@
 #' customize their own polygons.
 #' @inheritParams geom_serialaxes_glyph
 #' @param polygon_x nested list of x-coordinates of polygons, one list element for each scatterplot point.
-#' If not provided, \code{geom_point()} will be executed.
+#' If not provided, a point visual (\code{geom_point()}) will be displayed.
 #' @param polygon_y nested list of y-coordinates of polygons, one list element for each scatterplot point.
-#' If not provided, \code{geom_point()} will be executed.
+#' If not provided, a point visual (\code{geom_point()}) will be displayed.
 #' @export
 #'
 #' @section Aesthetics:
@@ -18,11 +18,18 @@
 #' \item{colour}
 #' \item{fill}
 #' \item{group}
-#' \item{shape}
 #' \item{size}
-#' \item{stroke}
 #' \item{linetype}
+#' \item{shape}
+#' \item{stroke}
 #' }
+#'
+#' The size unit is \code{mm}
+#'
+#' Note that the shape and stroke do not have real meanings unless the essential
+#' argument  \code{polygon_x} or \code{polygon_y} is missing.
+#' If so, a point visual will be displayed with corresponding shape and stroke.
+#'
 #'
 #' @return a \code{geom} layer
 #' @seealso \code{\link{geom_serialaxes_glyph}}, \code{\link{geom_image_glyph}}
@@ -81,11 +88,13 @@ geom_polygon_glyph <- function(mapping = NULL, data = NULL, stat = 'identity',
   )
 }
 
+#' @rdname Geom-ggproto
+#' @export
 GeomPolygonGlyph <- ggplot2::ggproto('GeomPolygonGlyph',
                                      ggplot2::Geom,
                                      required_aes = c('x', 'y'),
                                      default_aes = ggplot2::aes(colour = 'black',
-                                                                fill = 'black', size = 1,
+                                                                fill = 'black', size = 3,
                                                                 linetype = 1, alpha = 1,
                                                                 shape = 19, stroke = 0.5),
                                      draw_key = ggplot2::draw_key_polygon,
@@ -186,10 +195,10 @@ poly_coord <- function(poly, data, orientation = "x", show.area = FALSE) {
          function(i) {
            if(show.area) {
              grid::unit(data[[orientation]][i], 'native') +
-               grid::unit(poly[[i]] * as_r_polygonGlyph_size(data$size[i]), "mm")
+               grid::unit(poly[[i]] * data$size[i], "mm")
            } else {
              grid::unit(data[[orientation]][i], 'native') +
-               grid::unit(c(poly[[i]], poly[[i]][1]) * as_r_polygonGlyph_size(data$size[i]), "mm")
+               grid::unit(c(poly[[i]], poly[[i]][1]) * data$size[i], "mm")
            }
          })
 }

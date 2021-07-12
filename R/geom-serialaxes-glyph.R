@@ -2,7 +2,8 @@
 #' @description To visualize high dimensional data on scatterplot.
 #' Each point glyph is surrounded by a serial axes (parallel axes or radial axes) object.
 #' @inheritParams geom_serialaxes
-#' @param serialaxes.data a serial axes numerical data set. If not provided, \code{geom_point()} will be called.
+#' @param serialaxes.data a serial axes numerical data set.
+#' If not provided, a point visual (\code{geom_point()}) will be displayed.
 #' @param axes.layout either "radial" or "parallel"
 #' @param andrews Logical; Andrew's plot (a Fourier transformation)
 #' @param show.axes boolean to indicate whether axes should be shown or not
@@ -21,11 +22,17 @@
 #' \item{colour}
 #' \item{fill}
 #' \item{group}
-#' \item{shape}
 #' \item{size}
-#' \item{stroke}
 #' \item{linetype}
+#' \item{shape}
+#' \item{stroke}
 #' }
+#'
+#' The size unit is \code{cm}
+#'
+#' Note that the shape and stroke do not have real meanings unless the essential
+#' argument \code{serialaxes.data} is missing. If so, a point visual will be displayed with
+#' corresponding shape and stroke.
 #'
 #' @return a \code{geom} layer
 #' @seealso \code{\link{geom_polygon_glyph}}, \code{\link{geom_image_glyph}}
@@ -92,11 +99,14 @@ geom_serialaxes_glyph <- function(mapping = NULL, data = NULL, stat = "identity"
   )
 }
 
+#' @rdname Geom-ggproto
+#' @export
 GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                         required_aes = c("x", "y"),
                                         default_aes = aes(colour = "black",
-                                                          size = 1, shape = 19, fill = NA, stroke = 0.5,
-                                                          linetype = 1, alpha = 1),
+                                                          size = 1, fill = NA,
+                                                          linetype = 1, alpha = 1,
+                                                          shape = 19, stroke = 0.5),
                                         draw_key = ggplot2::draw_key_polygon,
                                         setup_params = function(data, params) {
 
@@ -199,15 +209,17 @@ GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                           switch(
                                             axes.layout,
                                             "parallel" = {
-                                              scale.x <- as_r_serialaxesGlyph_size(data$size, "x", "parallel")
-                                              scale.y <- as_r_serialaxesGlyph_size(data$size, "y", "parallel")
+                                              # height:width = 1:2
+                                              scale.x <- data$size
+                                              scale.y <- data$size/2
 
                                               xaxis <- t(sapply(scale.x, function(x) seq(-0.5 * x, 0.5 * x, length.out = dimension)))
                                               yaxis <- (scaledData - 0.5) * scale.y
                                             },
                                             "radial" = {
-                                              scale.x <- as_r_serialaxesGlyph_size(data$size, "x", "radial")
-                                              scale.y <- as_r_serialaxesGlyph_size(data$size, "y", "radial")
+                                              # size is diameter
+                                              scale.x <- data$size/2
+                                              scale.y <- data$size/2
 
                                               angle <- seq(0, 2*base::pi, length.out = dimension + 1)[1:dimension]
 
