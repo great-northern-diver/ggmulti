@@ -140,7 +140,7 @@ has_positive <- function(data) {
 }
 
 get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos, scale.x, scale.y, xaxis, yaxis,
-                              dimension, p, show.area, show.enclosing) {
+                              dimension, p, show.area, show.enclosing, unit = "cm") {
 
   enclosingX <- enclosingY <- enclosingId <- list()
   axesX <- axesY <- axesId <- list()
@@ -161,18 +161,18 @@ get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos, scale.x, scale.y
 
              # enclosing
              enclosingX[[i]] <<- grid::unit(xpos[i], 'native') +
-               grid::unit((c(0, 0, 1, 0, 0, 1, 1, 1) - 0.5) * scale.x[i], "mm")
+               grid::unit((c(0, 0, 1, 0, 0, 1, 1, 1) - 0.5) * scale.x[i], unit)
              enclosingY[[i]] <<- grid::unit(ypos[i], 'native') +
-               grid::unit((c(0, 0, 0, 1, 1, 0, 1, 1) - 0.5) * scale.y[i], "mm")
+               grid::unit((c(0, 0, 0, 1, 1, 0, 1, 1) - 0.5) * scale.y[i], unit)
              enclosingId[[i]] <<- rep(((i - 1)*4 + 1):(4 * i), 2)
 
 
              # axes
              axesX[[i]] <<- grid::unit(xpos[i], 'native') +
-               rep(grid::unit(pth(xaxis[i, ], p), "mm"), each = 2)
+               rep(grid::unit(pth(xaxis[i, ], p), unit), each = 2)
              axesY[[i]] <<- grid::unit(ypos[i], 'native') +
                rep(grid::unit(c(-0.5 * scale.y[i],
-                                0.5 * scale.y[i]), "mm"),
+                                0.5 * scale.y[i]), unit),
                    p)
              axesId[[i]] <<- rep(((i - 1)*p + 1):(p * i),
                                  each = 2)
@@ -180,14 +180,14 @@ get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos, scale.x, scale.y
              # serialCoord
              if(show.area) {
                serialCoordX[[i]] <<- grid::unit(xpos[i], 'native') +
-                 grid::unit(c(xaxis[i, ], rev(xaxis[i, ])), "mm")
+                 grid::unit(c(xaxis[i, ], rev(xaxis[i, ])), unit)
                serialCoordY[[i]] <<- grid::unit(ypos[i], 'native') +
-                 grid::unit(c(yaxis[i, ], rep(-0.5 * scale.y[i], dimension)), "mm")
+                 grid::unit(c(yaxis[i, ], rep(-0.5 * scale.y[i], dimension)), unit)
              } else {
                serialCoordX[[i]] <<- grid::unit(xpos[i], 'native') +
-                 grid::unit(xaxis[i, ], "mm")
+                 grid::unit(xaxis[i, ], unit)
                serialCoordY[[i]] <<- grid::unit(ypos[i], 'native') +
-                 grid::unit(yaxis[i, ], "mm")
+                 grid::unit(yaxis[i, ], unit)
              }
            })
 
@@ -209,34 +209,34 @@ get_gridAesthetic <- function(axes.layout, andrews, xpos, ypos, scale.x, scale.y
 
              # enclosing
              enclosingX[[i]] <<- grid::unit(xpos[i], 'native') +
-               grid::unit(scale.x[i] * cos(seq(0, 2*base::pi, length=len_radial)), "mm")
+               grid::unit(scale.x[i] * cos(seq(0, 2*base::pi, length=len_radial)), unit)
              enclosingY[[i]] <<- grid::unit(ypos[i], 'native') +
-               grid::unit(scale.y[i] * sin(seq(0, 2*base::pi, length=len_radial)), "mm")
+               grid::unit(scale.y[i] * sin(seq(0, 2*base::pi, length=len_radial)), unit)
 
 
              if (show.enclosing) {
 
                # axes
                axesX[[i]] <<- grid::unit(xpos[i], 'native') +
-                 grid::unit(c(rep(0, p), pth(scale.x[i] * cos(angle), p, TRUE)), "mm")
+                 grid::unit(c(rep(0, p), pth(scale.x[i] * cos(angle), p, TRUE)), unit)
                axesY[[i]] <<- grid::unit(ypos[i], 'native') +
-                 grid::unit(c(rep(0, p), pth(scale.y[i] * sin(angle), p, TRUE)), "mm")
+                 grid::unit(c(rep(0, p), pth(scale.y[i] * sin(angle), p, TRUE)), unit)
                axesId[[i]] <<- rep(((i - 1)*p + 1):(p * i), 2)
 
              } else {
                # axes
                axesX[[i]] <<- grid::unit(xpos[i], 'native') +
-                 grid::unit(c(rep(0, p), pth(xaxis[i, ], p, TRUE)), "mm")
+                 grid::unit(c(rep(0, p), pth(xaxis[i, ], p, TRUE)), unit)
                axesY[[i]] <<- grid::unit(ypos[i], 'native') +
-                 grid::unit(c(rep(0, p), pth(yaxis[i, ], p, TRUE)), "mm")
+                 grid::unit(c(rep(0, p), pth(yaxis[i, ], p, TRUE)), unit)
                axesId[[i]] <<- rep(((i - 1)*p + 1):(p * i), 2)
              }
 
              # serialCoord
              serialCoordX[[i]] <<- grid::unit(xpos[i], 'native') +
-               grid::unit(c(xaxis[i, ], rev(xaxis[i, 1])), "mm")
+               grid::unit(c(xaxis[i, ], rev(xaxis[i, 1])), unit)
              serialCoordY[[i]] <<- grid::unit(ypos[i], 'native') +
-               grid::unit(c(yaxis[i, ], rev(yaxis[i, 1])), "mm")
+               grid::unit(c(yaxis[i, ], rev(yaxis[i, 1])), unit)
            })
 
     enclosingId <- rep(1:N, each = len_radial)
