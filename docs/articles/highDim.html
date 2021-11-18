@@ -98,7 +98,7 @@
       <h1 data-toc-skip>High Dimensional Data Visualization</h1>
                         <h4 class="author">Wayne Oldford and Zehao Xu</h4>
             
-            <h4 class="date">2021-07-12</h4>
+            <h4 class="date">2021-11-18</h4>
       
       
       <div class="hidden name"><code>highDim.Rmd</code></div>
@@ -160,9 +160,9 @@
 <h3 class="hasAnchor">
 <a href="#infinite-axes" class="anchor"></a>Infinite axes</h3>
 <p><span class="citation"><a href="#ref-andrews1972plots" role="doc-biblioref">Andrews</a> (<a href="#ref-andrews1972plots" role="doc-biblioref">1972</a>)</span> plot is a way to project multi-response observations into a function <span class="math inline">\(f(t)\)</span>, by defining <span class="math inline">\(f(t)\)</span> as an inner product of the observed values of responses and orthonormal functions in <span class="math inline">\(t\)</span></p>
-<p><span class="math display">\[f_{y_i}(t) = &lt;\mathbf{y}_i, \mathbf{a}_t&gt;\]</span></p>
+<p>[f_{y_i}(t) = &lt;_i, _t&gt;]</p>
 <p>where <span class="math inline">\(\mathbf{y}_i\)</span> is the <span class="math inline">\(i\)</span>th responses and <span class="math inline">\(\mathbf{a}_t\)</span> is the orthonormal functions under certain interval. Andrew suggests to use the Fourier transformation</p>
-<p><span class="math display">\[\mathbf{a}_t = \{\frac{1}{\sqrt{2}}, \sin(t), \cos(t), \sin(2t), \cos(2t), ...\}\]</span></p>
+<p>[_t = {, (t), (t), (2t), (2t), …}]</p>
 <p>which are orthonormal on interval <span class="math inline">\((-\pi, \pi)\)</span>. In other word, we can project a <span class="math inline">\(p\)</span> dimensional space to an infinite <span class="math inline">\((-\pi, \pi)\)</span> space. The following figure illustrates how to construct an “Andrew’s plot.”</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span>, 
@@ -189,7 +189,7 @@
 <li><p>mapping aesthetics is used to define the <span class="math inline">\(p\)</span> dimensional space, if not provided, all columns in the dataset ‘iris’ will be transformed. An alternative way to determine the <span class="math inline">\(p\)</span> dimensional space to set parameter <code>axes.sequence</code> in each layer or in <code>coord_serialaxes</code>.</p></li>
 <li>
 <p>To construct a dot product serial axes plot, say Fourier transformation, “Andrew’s plot,” we need to set the parameter <code>stat</code> in <code>geom_path</code> to “dotProduct.” The default transformation function is the Andrew’s (function <code>andrews</code>). Users can customize their own, for example, Tukey suggests the following projected space</p>
-<p><span class="math display">\[\mathbf{a}_t = \{\cos(t), \cos(\sqrt{2}t), \cos(\sqrt{3}t), \cos(\sqrt{5}t), ...\}\]</span></p>
+<p>[_t = {(t), (t), (t), (t), …}]</p>
 <p>where <span class="math inline">\(t \in [0, k\pi]\)</span> <span class="citation">(<a href="#ref-gnanadesikan2011methods" role="doc-biblioref">Gnanadesikan 2011</a>)</span>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tukey</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p</span> <span class="op">=</span> <span class="fl">4</span>, <span class="va">k</span> <span class="op">=</span> <span class="fl">50</span> <span class="op">*</span> <span class="op">(</span><span class="va">p</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>

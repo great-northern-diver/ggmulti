@@ -1,10 +1,11 @@
-# ggmulti <img src="man/figures/logo.png" align="right" width="120" />
+# ggmulti 
 
 [![Build Status](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)](https://travis-ci.com/great-northern-diver/ggmulti.svg?branch=main)
 [![Codecov test coverage](https://codecov.io/gh/great-northern-diver/ggmulti/branch/main/graph/badge.svg)](https://codecov.io/gh/great-northern-diver/ggmulti?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/ggmulti)](https://cran.r-project.org/web/packages/ggmulti/index.html)
 ![R-CMD-check](https://github.com/great-northern-diver/ggmulti/workflows/R-CMD-check/badge.svg)
 
+<img src="man/figures/logo.png" align="right" width="120" />
 It provides materials (i.e. serialaxes objects) to visualize high dimensional data in `ggplot`.
 
 Documentation: https://great-northern-diver.github.io/ggmulti/
