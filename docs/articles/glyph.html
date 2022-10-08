@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -45,16 +47,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -77,8 +73,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/great-northern-diver/ggmulti" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -92,13 +88,14 @@
 
       
 
-      </header><script src="glyph_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Adding glyphs on scatterplot</h1>
-                        <h4 class="author">Wayne Oldford and Zehao Xu</h4>
+                        <h4 data-toc-skip class="author">Wayne Oldford
+and Zehao Xu</h4>
             
-            <h4 class="date">2021-11-18</h4>
+            <h4 data-toc-skip class="date">2022-10-05</h4>
       
       
       <div class="hidden name"><code>glyph.Rmd</code></div>
@@ -107,135 +104,150 @@
 
     
     
-<p>Glyphs can be used as point symbols in a scatterplot to convey more information on each point. This information could range from providing a more evocative picture for each point (e.g., an airplane for flight data or a team’s logo for sports data) to incorporating quantitative information (e.g., the values of other variables in a serial axes or star glyph or as a Chernoff face).</p>
-<p>In <code>ggmulti</code> we provide “glyph” layers to help add this information as point symbols on a plot <span class="citation">(<a href="#ref-loon" role="doc-biblioref">Waddell and Oldford 2020</a>)</span>.</p>
-<div id="polygon-glyphs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#polygon-glyphs" class="anchor"></a>Polygon glyphs</h2>
-<p>Consider, for example, the lower 48 USA destinations of “nyc” flights in 2013. Each destination could be marked as a “airplane” polygon symbol and New York city is highlighted by a blue star.</p>
+<p>Glyphs can be used as point symbols in a scatterplot to convey more
+information on each point. This information could range from providing a
+more evocative picture for each point (e.g., an airplane for flight data
+or a team’s logo for sports data) to incorporating quantitative
+information (e.g., the values of other variables in a serial axes or
+star glyph or as a Chernoff face).</p>
+<p>In <code>ggmulti</code> we provide “glyph” layers to help add this
+information as point symbols on a plot <span class="citation">(<a href="#ref-loon" role="doc-biblioref">Waddell and Oldford
+2020</a>)</span>.</p>
+<div class="section level2">
+<h2 id="polygon-glyphs">Polygon glyphs<a class="anchor" aria-label="anchor" href="#polygon-glyphs"></a>
+</h2>
+<p>Consider, for example, the lower 48 USA destinations of “nyc” flights
+in 2013. Each destination could be marked as a “airplane” polygon symbol
+and New York city is highlighted by a blue star.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggmulti</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13">nycflights13</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">maps</span><span class="op">)</span>
-
-<span class="co"># Flight destinations</span>
-<span class="va">destinations</span> <span class="op">&lt;-</span> <span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/airports.html">airports</a></span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>dest <span class="op">=</span> <span class="va">faa</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">flights</a></span>, by <span class="op">=</span> <span class="st">"dest"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tzone <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"America/"</span>, <span class="st">""</span>, <span class="va">tzone</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">lon</span> <span class="op">&gt;</span> <span class="op">-</span><span class="fl">151</span>, 
-                <span class="va">lat</span> <span class="op">&lt;</span> <span class="fl">55</span><span class="op">)</span>
-
-<span class="co"># New York City coordinates</span>
-<span class="va">NY</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  lon <span class="op">=</span> <span class="op">-</span><span class="fl">73.935242</span>,
-  lat <span class="op">=</span> <span class="fl">40.730610</span>
-<span class="op">)</span>
-<span class="va">US</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span>  <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
-               color<span class="op">=</span><span class="st">"black"</span>, fill<span class="op">=</span><span class="st">"cornsilk"</span><span class="op">)</span> 
-<span class="va">NYflightDestinationMap</span> <span class="op">&lt;-</span> <span class="va">US</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_polygon_glyph.html">geom_polygon_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">destinations</span>,
-                     mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
-                     fill <span class="op">=</span> <span class="st">"pink"</span>,
-                     <span class="co"># negate x to have each plane face west</span>
-                     polygon_x <span class="op">=</span> <span class="op">-</span><span class="va">x_airplane</span>, 
-                     polygon_y <span class="op">=</span> <span class="va">y_airplane</span>,
-                     alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_polygon_glyph.html">geom_polygon_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">NY</span>,
-                     mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,
-                     polygon_x <span class="op">=</span> <span class="va">x_star</span>,
-                     polygon_y <span class="op">=</span> <span class="va">y_star</span>, 
-                     alpha <span class="op">=</span> <span class="fl">0.75</span>, 
-                     fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>
-<span class="va">NYflightDestinationMap</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ggmulti</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13" class="external-link">nycflights13</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">maps</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Flight destinations</span></span>
+<span><span class="va">destinations</span> <span class="op">&lt;-</span> <span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/airports.html" class="external-link">airports</a></span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>dest <span class="op">=</span> <span class="va">faa</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html" class="external-link">semi_join</a></span><span class="op">(</span><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html" class="external-link">flights</a></span>, by <span class="op">=</span> <span class="st">"dest"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>tzone <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"America/"</span>, <span class="st">""</span>, <span class="va">tzone</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lon</span> <span class="op">&gt;</span> <span class="op">-</span><span class="fl">151</span>, </span>
+<span>                <span class="va">lat</span> <span class="op">&lt;</span> <span class="fl">55</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># New York City coordinates</span></span>
+<span><span class="va">NY</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  lon <span class="op">=</span> <span class="op">-</span><span class="fl">73.935242</span>,</span>
+<span>  lat <span class="op">=</span> <span class="fl">40.730610</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">US</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html" class="external-link">map_data</a></span><span class="op">(</span><span class="st">"state"</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, </span>
+<span>               color<span class="op">=</span><span class="st">"black"</span>, fill<span class="op">=</span><span class="st">"cornsilk"</span><span class="op">)</span> </span>
+<span><span class="va">NYflightDestinationMap</span> <span class="op">&lt;-</span> <span class="va">US</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_polygon_glyph.html">geom_polygon_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">destinations</span>,</span>
+<span>                     mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,</span>
+<span>                     fill <span class="op">=</span> <span class="st">"pink"</span>,</span>
+<span>                     <span class="co"># negate x to have each plane face west</span></span>
+<span>                     polygon_x <span class="op">=</span> <span class="op">-</span><span class="va">x_airplane</span>, </span>
+<span>                     polygon_y <span class="op">=</span> <span class="va">y_airplane</span>,</span>
+<span>                     alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_polygon_glyph.html">geom_polygon_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">NY</span>,</span>
+<span>                     mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,</span>
+<span>                     polygon_x <span class="op">=</span> <span class="va">x_star</span>,</span>
+<span>                     polygon_y <span class="op">=</span> <span class="va">y_star</span>, </span>
+<span>                     alpha <span class="op">=</span> <span class="fl">0.75</span>, </span>
+<span>                     fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span>
+<span><span class="va">NYflightDestinationMap</span></span></code></pre></div>
 <p><img src="glyph_files/figure-html/glyph_ggplot-1.png" width="60%" style="display: block; margin: auto;"></p>
-<p>Package “ggmulti” provides several polygon coordinates that can be used in <code>geom_polygon_glyph</code>, check <code><a href="../reference/polygon_glyph.html">help("polygon_glyph", "ggmulti")</a></code>.</p>
+<p>Package “ggmulti” provides several polygon coordinates that can be
+used in <code>geom_polygon_glyph</code>, check
+<code><a href="../reference/polygon_glyph.html">help("polygon_glyph", "ggmulti")</a></code>.</p>
 </div>
-<div id="image-glyphs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#image-glyphs" class="anchor"></a>Image glyphs</h2>
-<p>We can also load image files (png, jpeg, etc) and set each image as a point glyph. Let’s draw a chart of two 2020 Final NBA Teams.</p>
+<div class="section level2">
+<h2 id="image-glyphs">Image glyphs<a class="anchor" aria-label="anchor" href="#image-glyphs"></a>
+</h2>
+<p>We can also load image files (png, jpeg, etc) and set each image as a
+point glyph. Let’s draw a chart of two 2020 Final NBA Teams.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/png/">png</a></span><span class="op">)</span>
-<span class="va">img_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/find.package.html">find.package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">'ggmulti'</span><span class="op">)</span>,
-                                 <span class="st">"images"</span><span class="op">)</span>,
-                       full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">Raptors</span> <span class="op">&lt;-</span> <span class="fu">png</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html">readPNG</a></span><span class="op">(</span><span class="va">img_path</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Raptors"</span>, <span class="va">img_path</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="va">Warriors</span> <span class="op">&lt;-</span> <span class="fu">png</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html">readPNG</a></span><span class="op">(</span><span class="va">img_path</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span><span class="op">(</span><span class="st">"Warriors"</span>, <span class="va">img_path</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/png/" class="external-link">png</a></span><span class="op">)</span></span>
+<span><span class="va">img_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/find.package.html" class="external-link">find.package</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">'ggmulti'</span><span class="op">)</span>,</span>
+<span>                                 <span class="st">"images"</span><span class="op">)</span>,</span>
+<span>                       full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">Raptors</span> <span class="op">&lt;-</span> <span class="fu">png</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html" class="external-link">readPNG</a></span><span class="op">(</span><span class="va">img_path</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Raptors"</span>, <span class="va">img_path</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">Warriors</span> <span class="op">&lt;-</span> <span class="fu">png</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html" class="external-link">readPNG</a></span><span class="op">(</span><span class="va">img_path</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Warriors"</span>, <span class="va">img_path</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Golden State Coordinate</span>
-<span class="va">GoldenState</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  lon <span class="op">=</span> <span class="op">-</span><span class="fl">119.4179</span>,
-  lat <span class="op">=</span> <span class="fl">36.7783</span>
-<span class="op">)</span>
-
-<span class="va">Toronto</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-  lon <span class="op">=</span> <span class="op">-</span><span class="fl">79.3832</span>,
-  lat <span class="op">=</span> <span class="fl">43.6532</span>
-<span class="op">)</span>
-
-<span class="co"># Get the Canada lakes</span>
-<span class="va">cdn.lakes</span> <span class="op">&lt;-</span>  <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"lakes"</span>,
-                        plot<span class="op">=</span><span class="cn">FALSE</span>,
-                        fill<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">names</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">27</span>,<span class="fl">22</span>, <span class="fl">25</span>,
-                                           <span class="fl">68</span><span class="op">:</span><span class="fl">73</span>, <span class="fl">82</span>, <span class="fl">85</span>
-                        <span class="op">)</span><span class="op">]</span>
-
-<span class="va">US</span> <span class="op">+</span> 
-  <span class="fu">geom_polygon</span><span class="op">(</span>
-    data <span class="op">=</span> <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"world"</span>,  <span class="st">"Canada"</span>, fill<span class="op">=</span><span class="cn">TRUE</span>, plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>,
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
-    fill<span class="op">=</span><span class="st">"#ffcccb"</span>, colour <span class="op">=</span> <span class="st">"black"</span>
-  <span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_polygon</span><span class="op">(</span>
-    <span class="co"># lakes in Canada</span>
-    data <span class="op">=</span>  <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html">map</a></span><span class="op">(</span><span class="st">"lakes"</span>, <span class="va">cdn.lakes</span>, plot<span class="op">=</span><span class="cn">FALSE</span>, fill<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, 
-    fill<span class="op">=</span><span class="st">"lightblue"</span>, colour <span class="op">=</span> <span class="st">"black"</span>
-  <span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_image_glyph.html">geom_image_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GoldenState</span>,
-                   mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, 
-                   images <span class="op">=</span> <span class="va">Warriors</span>,
-                   imagewidth <span class="op">=</span> <span class="fl">1</span>, 
-                   imageheight <span class="op">=</span> <span class="fl">1</span>, 
-                   colour <span class="op">=</span> <span class="cn">NA</span>,
-                   size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_image_glyph.html">geom_image_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Toronto</span>,
-                   mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, 
-                   imagewidth <span class="op">=</span> <span class="fl">1</span>, 
-                   imageheight <span class="op">=</span> <span class="fl">1</span>, 
-                   colour <span class="op">=</span> <span class="cn">NA</span>,
-                   size <span class="op">=</span> <span class="fl">3</span>,
-                   images <span class="op">=</span> <span class="va">Raptors</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">ggtitle</span><span class="op">(</span><span class="st">"2019 NBA Finals"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Golden State Coordinate</span></span>
+<span><span class="va">GoldenState</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  lon <span class="op">=</span> <span class="op">-</span><span class="fl">119.4179</span>,</span>
+<span>  lat <span class="op">=</span> <span class="fl">36.7783</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">Toronto</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  lon <span class="op">=</span> <span class="op">-</span><span class="fl">79.3832</span>,</span>
+<span>  lat <span class="op">=</span> <span class="fl">43.6532</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get the Canada lakes</span></span>
+<span><span class="va">cdn.lakes</span> <span class="op">&lt;-</span>  <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"lakes"</span>,</span>
+<span>                        plot<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>                        fill<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">names</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">27</span>,<span class="fl">22</span>, <span class="fl">25</span>,</span>
+<span>                                           <span class="fl">68</span><span class="op">:</span><span class="fl">73</span>, <span class="fl">82</span>, <span class="fl">85</span></span>
+<span>                        <span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="va">US</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>,  <span class="st">"Canada"</span>, fill<span class="op">=</span><span class="cn">TRUE</span>, plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, </span>
+<span>    fill<span class="op">=</span><span class="st">"#ffcccb"</span>, colour <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span></span>
+<span>    <span class="co"># lakes in Canada</span></span>
+<span>    data <span class="op">=</span>  <span class="fu">maps</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"lakes"</span>, <span class="va">cdn.lakes</span>, plot<span class="op">=</span><span class="cn">FALSE</span>, fill<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>, </span>
+<span>    fill<span class="op">=</span><span class="st">"lightblue"</span>, colour <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_image_glyph.html">geom_image_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">GoldenState</span>,</span>
+<span>                   mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, </span>
+<span>                   images <span class="op">=</span> <span class="va">Warriors</span>,</span>
+<span>                   imagewidth <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                   imageheight <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                   colour <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                   size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_image_glyph.html">geom_image_glyph</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Toronto</span>,</span>
+<span>                   mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>, </span>
+<span>                   imagewidth <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                   imageheight <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                   colour <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                   size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                   images <span class="op">=</span> <span class="va">Raptors</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"2019 NBA Finals"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="glyph_files/figure-html/image%20glyph%20NBA%202020-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
-<div id="serialaxes-glyphs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#serialaxes-glyphs" class="anchor"></a>Serialaxes glyphs</h2>
+<div class="section level2">
+<h2 id="serialaxes-glyphs">Serialaxes glyphs<a class="anchor" aria-label="anchor" href="#serialaxes-glyphs"></a>
+</h2>
 <p>Additionally, ‘serial axes’ can also be drawn as glyphs.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/geom_serialaxes_glyph.html">geom_serialaxes_glyph</a></span><span class="op">(</span>
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, colour <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>,
-     <span class="co"># set serial axes data set (could be different from the original data)</span>
-    serialaxes.data <span class="op">=</span> <span class="va">iris</span>,
-    <span class="co"># parallel or radial axes</span>
-    axes.layout <span class="op">=</span> <span class="st">"radial"</span>, 
-     <span class="co"># sequence of serial axes</span>
-    axes.sequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">5</span><span class="op">]</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_serialaxes_glyph.html">geom_serialaxes_glyph</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Sepal.Length</span>, <span class="va">Sepal.Width</span>, colour <span class="op">=</span> <span class="va">Species</span><span class="op">)</span>,</span>
+<span>     <span class="co"># set serial axes data set (could be different from the original data)</span></span>
+<span>    serialaxes.data <span class="op">=</span> <span class="va">iris</span>,</span>
+<span>    <span class="co"># parallel or radial axes</span></span>
+<span>    axes.layout <span class="op">=</span> <span class="st">"radial"</span>, </span>
+<span>     <span class="co"># sequence of serial axes</span></span>
+<span>    axes.sequence <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">5</span><span class="op">]</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="glyph_files/figure-html/serialaxes%20glyph-1.png" width="60%" style="display: block; margin: auto;"></p>
-<p>In this figure, we can tell the specie ‘setosa’ lays on the left top corner and the glyph shape is like a triangle that is very distinguishable from the rest two species.</p>
+<p>In this figure, we can tell the specie ‘setosa’ lays on the left top
+corner and the glyph shape is like a triangle that is very
+distinguishable from the rest two species.</p>
 </div>
-<div id="reference" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#reference" class="anchor"></a>Reference</h2>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-loon" class="csl-entry">
-Waddell, Adrian, and R. Wayne Oldford. 2020. <em>Loon: Interactive Statistical Data Visualization</em>. <a href="http://great-northern-diver.github.io/loon/">http://great-northern-diver.github.io/loon/</a>.
+Waddell, Adrian, and R. Wayne Oldford. 2020. <em>Loon: Interactive
+Statistical Data Visualization</em>. <a href="http://great-northern-diver.github.io/loon/" class="external-link">http://great-northern-diver.github.io/loon/</a>.
 </div>
 </div>
 </div>
@@ -252,11 +264,13 @@ Waddell, Adrian, and R. Wayne Oldford. 2020. <em>Loon: Interactive Statistical D
 
 
       <footer><div class="copyright">
-  <p>Developed by Zehao Xu, R. Wayne Oldford.</p>
+  <p></p>
+<p>Developed by Zehao Xu, R. Wayne Oldford.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -264,6 +278,8 @@ Waddell, Adrian, and R. Wayne Oldford. 2020. <em>Loon: Interactive Statistical D
 
   
 
+
+  
 
   </body>
 </html>

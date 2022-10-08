@@ -3,6 +3,7 @@
 #' the fitted quantiles with lines. However, \code{geom_quantiles()} is mainly used to draw quantile lines
 #' on serial axes. See examples
 #' @inheritParams ggplot2::geom_quantile
+#' @param stat The statistical transformation to use on the data for this layer, as a string.
 #' @export
 #' @seealso \code{\link{geom_serialaxes_quantile}}
 #' @examples

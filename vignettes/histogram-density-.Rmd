@@ -10,7 +10,7 @@ urlcolor: blue
 graphics: yes
 vignette: >
   %\VignetteIndexEntry{Histogram and Density}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   \usepackage[utf8]{inputenc}
   
 header-includes:

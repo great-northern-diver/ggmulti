@@ -147,17 +147,7 @@ bin width of a time variable is the number of seconds.}
 
 \item{bins}{Number of bins. Overridden by \code{binwidth}. Defaults to 30.}
 
-\item{center}{bin position specifiers. Only one, \code{center} or
-\code{boundary}, may be specified for a single plot. \code{center} specifies the
-center of one of the bins. \code{boundary} specifies the boundary between two
-bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of \code{binwidth}.
-For example, to center on integers use \code{binwidth = 1} and \code{center = 0}, even
-if \code{0} is outside the range of the data. Alternatively, this same alignment
-can be specified with \code{binwidth = 1} and \code{boundary = 0.5}, even if \code{0.5} is
-outside the range of the data.}
-
-\item{boundary}{bin position specifiers. Only one, \code{center} or
+\item{center, boundary}{bin position specifiers. Only one, \code{center} or
 \code{boundary}, may be specified for a single plot. \code{center} specifies the
 center of one of the bins. \code{boundary} specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things

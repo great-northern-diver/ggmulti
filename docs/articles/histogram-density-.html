@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -45,16 +47,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -77,8 +73,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/great-northern-diver/ggmulti">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/great-northern-diver/ggmulti" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -92,13 +88,14 @@
 
       
 
-      </header><script src="histogram-density-_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Histogram and Density</h1>
-                        <h4 class="author">Wayne Oldford and Zehao Xu</h4>
+                        <h4 data-toc-skip class="author">Wayne Oldford
+and Zehao Xu</h4>
             
-            <h4 class="date">2021-11-18</h4>
+            <h4 data-toc-skip class="date">2022-10-05</h4>
       
       
       <div class="hidden name"><code>histogram-density-.Rmd</code></div>
@@ -107,93 +104,136 @@
 
     
     
-<p>Histograms (and bar plots) are common tools to visualize a single variable. The x axis is often used to locate the bins and the y axis is for the counts. Density plots can be considered as the smoothed version of the histogram.</p>
-<p>Boxplot is another method to visualize one dimensional data. Five summary statistics can be easily traced on the plot. However, compared with histograms and density plots, boxplot can accommodate two variables, <code>group</code>s (often on the <code>x</code> axis) and <code>y</code>s (on the <code>y</code> axis).</p>
-<p>In <code>ggplot2</code>, <code>geom_histogram</code> and <code>geom_density</code> only accept one variable, <code>x</code> or <code>y</code> (swapped). Providing both positions is forbidden. Inspired by the boxplot (<code>geom_boxplot</code> in <code>ggplot2</code>), we create functions <code>geom_histogram_</code>, <code>geom_bar_</code> and <code>geom_density_</code> which can accommodate both variables, just like the <code>geom_boxplot</code>!</p>
-<div id="hist-histogram-and-bar-plot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hist-histogram-and-bar-plot" class="anchor"></a>Hist (histogram and bar plot)</h2>
-<div id="two-dimensional-bar-plot-geom_bar_" class="section level3">
-<h3 class="hasAnchor">
-<a href="#two-dimensional-bar-plot-geom_bar_" class="anchor"></a>Two dimensional bar plot: <code>geom_bar_</code>
+<p>Histograms (and bar plots) are common tools to visualize a single
+variable. The x axis is often used to locate the bins and the y axis is
+for the counts. Density plots can be considered as the smoothed version
+of the histogram.</p>
+<p>Boxplot is another method to visualize one dimensional data. Five
+summary statistics can be easily traced on the plot. However, compared
+with histograms and density plots, boxplot can accommodate two
+variables, <code>group</code>s (often on the <code>x</code> axis) and
+<code>y</code>s (on the <code>y</code> axis).</p>
+<p>In <code>ggplot2</code>, <code>geom_histogram</code> and
+<code>geom_density</code> only accept one variable, <code>x</code> or
+<code>y</code> (swapped). Providing both positions is forbidden.
+Inspired by the boxplot (<code>geom_boxplot</code> in
+<code>ggplot2</code>), we create functions <code>geom_histogram_</code>,
+<code>geom_bar_</code> and <code>geom_density_</code> which can
+accommodate both variables, just like the <code>geom_boxplot</code>!</p>
+<div class="section level2">
+<h2 id="hist-histogram-and-bar-plot">Hist (histogram and bar plot)<a class="anchor" aria-label="anchor" href="#hist-histogram-and-bar-plot"></a>
+</h2>
+<div class="section level3">
+<h3 id="two-dimensional-bar-plot-geom_bar_">Two dimensional bar plot: <code>geom_bar_</code><a class="anchor" aria-label="anchor" href="#two-dimensional-bar-plot-geom_bar_"></a>
 </h3>
 <p>Consider the <code>mtcars</code> data set.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
-    cyl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>,
-    gear  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
-<p>Suppose that we are interested in the relationship of number of gears given the <code>cyl</code> (number of cylinders).</p>
+<code class="sourceCode R"><span><span class="va">mtcars2</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    cyl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>,</span>
+<span>    gear  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>Suppose that we are interested in the relationship of number of gears
+given the <code>cyl</code> (number of cylinders).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ggmulti</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars2</span>, 
-       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cyl</span>, y <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_hist_.html">geom_bar_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 1"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ggmulti</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars2</span>, </span>
+<span>       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cyl</span>, y <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_hist_.html">geom_bar_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 1"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/geom_bar_graph-1.png" width="70%" style="display: block; margin: auto;"></p>
 <p>Though the Figure 1, we can tell that</p>
 <ul>
 <li>
-<p>Compare vertically: given the number of engines, tell the gears</p>
+<p>Compare vertically: given the number of engines, tell the
+gears</p>
 <ul>
-<li><p>Most V8 engine cars prefer 3 gear transmission. V8 cars do not use 4 gear transmission</p></li>
+<li><p>Most V8 engine cars prefer 3 gear transmission. V8 cars do not
+use 4 gear transmission</p></li>
 <li><p>Most V4 engine cars prefer 4 gears transmission.</p></li>
 </ul>
 </li>
 <li>
-<p>Compare horizontally: given the number of gears, tell the engines</p>
+<p>Compare horizontally: given the number of gears, tell the
+engines</p>
 <ul>
 <li><p>Most 3 gear transmission cars carry a V8 engine.</p></li>
-<li><p>Most 4 gear transmission cars carry a V4 engine, then V6 engine, but never V8 engine.</p></li>
-<li><p>Five gear transmission cars can carry either a V4, V6 or V8 engine. However, compared with other two transmissions, 5 gear is not a common choice.</p></li>
+<li><p>Most 4 gear transmission cars carry a V4 engine, then V6 engine,
+but never V8 engine.</p></li>
+<li><p>Five gear transmission cars can carry either a V4, V6 or V8
+engine. However, compared with other two transmissions, 5 gear is not a
+common choice.</p></li>
 </ul>
 </li>
 </ul>
 </div>
-<div id="two-dimensional-histogram-geom_histogram_" class="section level3">
-<h3 class="hasAnchor">
-<a href="#two-dimensional-histogram-geom_histogram_" class="anchor"></a>Two dimensional histogram: <code>geom_histogram_</code>
+<div class="section level3">
+<h3 id="two-dimensional-histogram-geom_histogram_">Two dimensional histogram: <code>geom_histogram_</code><a class="anchor" aria-label="anchor" href="#two-dimensional-histogram-geom_histogram_"></a>
 </h3>
-<p>Suppose now, we are interested in the distribution of <code>mpg</code> (miles per gallon) with the respect to the <code>cyl</code> (as “x” axis) and <code>gear</code> (as “fill”). Through the Figure 2, we can easily tell that as the number of cylinders rises, the miles/gallon drops significantly. Moreover, the number of six cylinder cars is much less that the other two in our data. In addition, the transmission of V8 cars is either 3 or 5 (identical to the conclusion we draw before).</p>
+<p>Suppose now, we are interested in the distribution of
+<code>mpg</code> (miles per gallon) with the respect to the
+<code>cyl</code> (as “x” axis) and <code>gear</code> (as “fill”).
+Through the Figure 2, we can easily tell that as the number of cylinders
+rises, the miles/gallon drops significantly. Moreover, the number of six
+cylinder cars is much less that the other two in our data. In addition,
+the transmission of V8 cars is either 3 or 5 (identical to the
+conclusion we draw before).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars2</span>, 
-            mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cyl</span>, 
-                          y <span class="op">=</span> <span class="va">mpg</span>, 
-                          fill <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_hist_.html">geom_histogram_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 2"</span><span class="op">)</span>
-<span class="va">g</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars2</span>, </span>
+<span>            mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cyl</span>, </span>
+<span>                          y <span class="op">=</span> <span class="va">mpg</span>, </span>
+<span>                          fill <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_hist_.html">geom_histogram_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 2"</span><span class="op">)</span></span>
+<span><span class="va">g</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/geom_histogram_graph-1.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
-<div id="just-call-geom_hist" class="section level3">
-<h3 class="hasAnchor">
-<a href="#just-call-geom_hist" class="anchor"></a>Just call <code>geom_hist</code>!</h3>
-<p>Function <code>geom_histogram_</code> is often used as one factor is categorical and the other is numerical, while function <code>geom_bar_</code> accommodate two categorical variables. The former one relies on <strong><code>stat = bin_</code></strong> and the latter one is on <strong><code>stat = count_</code></strong>. However, if we turn the factor of interest as numerical in <code>geom_bar_</code>, there would be no difference between the output of a bar plot and a histogram. Hence, function <code>geom_hist</code> is created by simplifying the process. It understands both cases and users can just call <code>geom_hist</code> to create either a bar plot or a histogram.</p>
+<div class="section level3">
+<h3 id="just-call-geom_hist">Just call <code>geom_hist</code>!<a class="anchor" aria-label="anchor" href="#just-call-geom_hist"></a>
+</h3>
+<p>Function <code>geom_histogram_</code> is often used as one factor is
+categorical and the other is numerical, while function
+<code>geom_bar_</code> accommodate two categorical variables. The former
+one relies on <strong><code>stat = bin_</code></strong> and the latter
+one is on <strong><code>stat = count_</code></strong>. However, if we
+turn the factor of interest as numerical in <code>geom_bar_</code>,
+there would be no difference between the output of a bar plot and a
+histogram. Hence, function <code>geom_hist</code> is created by
+simplifying the process. It understands both cases and users can just
+call <code>geom_hist</code> to create either a bar plot or a
+histogram.</p>
 </div>
 </div>
-<div id="density" class="section level2">
-<h2 class="hasAnchor">
-<a href="#density" class="anchor"></a>Density</h2>
-<p>We could also draw density plot side by side to better convey the data of interest. With <code>geom_density_</code>, both summaries can be displayed simultaneously in one chart. Note that for cylinder 4 and 6, the density representing 3 gear transmission and 5 gear transmission cars are missing respectively. The reason is that for these two subgroups, the number of observations is not big enough to be used to compute the density.</p>
+<div class="section level2">
+<h2 id="density">Density<a class="anchor" aria-label="anchor" href="#density"></a>
+</h2>
+<p>We could also draw density plot side by side to better convey the
+data of interest. With <code>geom_density_</code>, both summaries can be
+displayed simultaneously in one chart. Note that for cylinder 4 and 6,
+the density representing 3 gear transmission and 5 gear transmission
+cars are missing respectively. The reason is that for these two
+subgroups, the number of observations is not big enough to be used to
+compute the density.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">+</span> 
-  <span class="co"># parameter "positive" controls where the summaries face to</span>
-  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span>, 
-                positive <span class="op">=</span> <span class="cn">FALSE</span>, 
-                alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 3"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span> </span>
+<span>  <span class="co"># parameter "positive" controls where the summaries face to</span></span>
+<span>  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                positive <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 3"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/geom_density_graph-1.png" width="70%" style="display: block; margin: auto;"></p>
-<p>In Figure 3, an argument <code>as.mix</code> is set as <code>TRUE</code>. What does it mean? Before we introduce it, let us look at the total count of <code>cyl</code> in <code>mtcars</code>.</p>
+<p>In Figure 3, an argument <code>as.mix</code> is set as
+<code>TRUE</code>. What does it mean? Before we introduce it, let us
+look at the total count of <code>cyl</code> in <code>mtcars</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-    cyl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span>,
-    count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span>,
-    row.names <span class="op">=</span> <span class="cn">NULL</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">mtcars2</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    cyl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span>,</span>
+<span>    count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">unclass</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span>,</span>
+<span>    row.names <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">cyl</th>
@@ -214,45 +254,73 @@
 </tr>
 </tbody>
 </table>
-<p>In the sample, the total number of cylinder 8 cars is approximately twice as much as the group cylinder 6. Within each group, if the <code>as.mix</code> is set as <code>FALSE</code> (default), shown as Figure 4, the area for each subgroup (in general, one color represents one subgroup) is 1 and the whole area is <strong>3</strong> in total. There is no problem to think it as a real “density”, however, if we consider it as a “continuous histogram” (the binwidth is approaching 0), it may be misleading somehow. Instead, the <code>as.mix</code> could be set as <code>TRUE</code> so that the sum of the density area within each group is <strong>1</strong>. The area for each subgroup is proportional to the count, as Figure 5.</p>
+<p>In the sample, the total number of cylinder 8 cars is approximately
+twice as much as the group cylinder 6. Within each group, if the
+<code>as.mix</code> is set as <code>FALSE</code> (default), shown as
+Figure 4, the area for each subgroup (in general, one color represents
+one subgroup) is 1 and the whole area is <strong>3</strong> in total.
+There is no problem to think it as a real “density”, however, if we
+consider it as a “continuous histogram” (the binwidth is approaching 0),
+it may be misleading somehow. Instead, the <code>as.mix</code> could be
+set as <code>TRUE</code> so that the sum of the density area within each
+group is <strong>1</strong>. The area for each subgroup is proportional
+to the count, as Figure 5.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gd1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars2</span>, 
-              mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="co"># it is equivalent to call `geom_density()`</span>
-  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 4"</span><span class="op">)</span>
-<span class="va">gd2</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars2</span>, 
-              mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">scale_fill_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 5"</span><span class="op">)</span>
-<span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span><span class="va">gd1</span>, <span class="va">gd2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gd1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars2</span>, </span>
+<span>              mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="co"># it is equivalent to call `geom_density()`</span></span>
+<span>  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 4"</span><span class="op">)</span></span>
+<span><span class="va">gd2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars2</span>, </span>
+<span>              mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>as.mix <span class="op">=</span> <span class="cn">TRUE</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set3"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 5"</span><span class="op">)</span></span>
+<span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">gd1</span>, <span class="va">gd2</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/geom_density-1.png" width="70%" style="display: block; margin: auto;"></p>
-<p>Additionally, function <code>geom_density_</code> (so does <code>geom_histogram_</code>) provides another parameter <code>scale.y</code> to set the scales across different groups (different cylinder types). The default <code>data</code> indicates that the area of each density estimates is proportional to the overall count. If the <code>scale.y</code> is set as <code>group</code>, regardless of the other groups, the density estimate of each subgroup is scaled respecting by its own group, as Figure 6. The benefit is that, within each group, the pattern of the density is easier to be visualized and compared. However, across different groups, it is <em>meaningless</em> to compare.</p>
+<p>Additionally, function <code>geom_density_</code> (so does
+<code>geom_histogram_</code>) provides another parameter
+<code>scale.y</code> to set the scales across different groups
+(different cylinder types). The default <code>data</code> indicates that
+the area of each density estimates is proportional to the overall count.
+If the <code>scale.y</code> is set as <code>group</code>, regardless of
+the other groups, the density estimate of each subgroup is scaled
+respecting by its own group, as Figure 6. The benefit is that, within
+each group, the pattern of the density is easier to be visualized and
+compared. However, across different groups, it is <em>meaningless</em>
+to compare.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">+</span> 
-  <span class="co"># parameter "positive" controls where the summaries face to</span>
-  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>positive <span class="op">=</span> <span class="cn">FALSE</span>, 
-                alpha <span class="op">=</span> <span class="fl">0.2</span>, 
-                scale.y <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 6"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span> </span>
+<span>  <span class="co"># parameter "positive" controls where the summaries face to</span></span>
+<span>  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>positive <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                alpha <span class="op">=</span> <span class="fl">0.2</span>, </span>
+<span>                scale.y <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 6"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/geom_density_graph%20scale.y-1.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
-<div id="scaling" class="section level2">
-<h2 class="hasAnchor">
-<a href="#scaling" class="anchor"></a>Scaling</h2>
-<p>Functions <code>geom_density_</code> and <code>geom_histogram_</code> provide two scaling controls, <code>as.mix</code> and <code>scale.y</code>. <strong>DO NOT</strong> be confused. The <code>as.mix</code> controls the scaling within each group and the <code>scale.y</code> controls the scaling across different groups. Well, …, if you are still confused, the following graph may help you better understand the <code>as.mix</code> and <code>scale.y</code>.</p>
-<p>The data has two groups “1” and “2”. Within each group, there are two subgroups “A” and “B”. The count of each subgroup is shown as follows.</p>
+<div class="section level2">
+<h2 id="scaling">Scaling<a class="anchor" aria-label="anchor" href="#scaling"></a>
+</h2>
+<p>Functions <code>geom_density_</code> and <code>geom_histogram_</code>
+provide two scaling controls, <code>as.mix</code> and
+<code>scale.y</code>. <strong>DO NOT</strong> be confused. The
+<code>as.mix</code> controls the scaling within each group and the
+<code>scale.y</code> controls the scaling across different groups. Well,
+…, if you are still confused, the following graph may help you better
+understand the <code>as.mix</code> and <code>scale.y</code>.</p>
+<p>The data has two groups “1” and “2”. Within each group, there are two
+subgroups “A” and “B”. The count of each subgroup is shown as
+follows.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="fl">900</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>, 
-                   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>,
-                   z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="fl">800</span><span class="op">)</span>, 
-                         <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">data</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">z</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="fl">900</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"2"</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>,</span>
+<span>                   z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">100</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="fl">800</span><span class="op">)</span>, </span>
+<span>                         <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="fl">10</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">z</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>count <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">x</th>
@@ -282,90 +350,119 @@
 </tr>
 </tbody>
 </table>
-<p>Figure 7 shows the all four combinations of <code>scale.y</code> and <code>as.mix</code>.</p>
+<p>Figure 7 shows the all four combinations of <code>scale.y</code> and
+<code>as.mix</code>.</p>
 <ul>
 <li>
 <p>Compare the graphics vertically:</p>
 <ul>
-<li><p><code>scale.y = group</code>: within each group, either bins or densities are in a relatively large scale. For example, for group “2”, the total count is only one tenth of the group “1”. With such scaling strategy, the pattern of its bin/density can be visualized easily. However, through this figure, we cannot tell the ratio of the total number of group “1” to group “2”.</p></li>
-<li><p><code>scale.y = data</code>: the area of each group is proportional to its count. Through the figure, we can easily tell that there is more observations in group “1”. However, for the minority group “2”, it is really hard to tell its distribution.</p></li>
+<li><p><code>scale.y = group</code>: within each group, either bins or
+densities are in a relatively large scale. For example, for group “2”,
+the total count is only one tenth of the group “1”. With such scaling
+strategy, the pattern of its bin/density can be visualized easily.
+However, through this figure, we cannot tell the ratio of the total
+number of group “1” to group “2”.</p></li>
+<li><p><code>scale.y = data</code>: the area of each group is
+proportional to its count. Through the figure, we can easily tell that
+there is more observations in group “1”. However, for the minority group
+“2”, it is really hard to tell its distribution.</p></li>
 </ul>
 </li>
 <li>
 <p>Compare the graphics horizontally:</p>
 <ul>
-<li><p><code>as.mix = TRUE</code>: within each group, the area of the subgroup is proportional to its count. For example, in group “1”, the ratio of the count for subgroup “A” over “B” is <span class="math inline">\(\frac{1}{8}\)</span> so that the area of the “A” over “B” in group 1 is approximate <span class="math inline">\(\frac{1}{8}\)</span>.</p></li>
-<li><p><code>as.mix = FALSE</code>: within each group, the area of the subgroup is identical. For group “1”, the ratio of the count for subgroup “A” over “B” is <span class="math inline">\(\frac{1}{8}\)</span>, but in the Figure, the area of “A” over “B” is approximate <span class="math inline">\(1:1\)</span>.</p></li>
+<li><p><code>as.mix = TRUE</code>: within each group, the area of the
+subgroup is proportional to its count. For example, in group “1”, the
+ratio of the count for subgroup “A” over “B” is <span class="math inline">\(\frac{1}{8}\)</span> so that the area of the “A”
+over “B” in group 1 is approximate <span class="math inline">\(\frac{1}{8}\)</span>.</p></li>
+<li><p><code>as.mix = FALSE</code>: within each group, the area of the
+subgroup is identical. For group “1”, the ratio of the count for
+subgroup “A” over “B” is <span class="math inline">\(\frac{1}{8}\)</span>, but in the Figure, the area
+of “A” over “B” is approximate <span class="math inline">\(1:1\)</span>.</p></li>
 </ul>
 </li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">grobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span>
-<span class="va">position</span> <span class="op">&lt;-</span> <span class="st">"stack_"</span>
-<span class="va">prop</span> <span class="op">&lt;-</span> <span class="fl">0.4</span>
-
-<span class="kw">for</span><span class="op">(</span><span class="va">scale.y</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="kw">for</span><span class="op">(</span><span class="va">as.mix</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span>
-    <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">data</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, fill <span class="op">=</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-      <span class="fu"><a href="../reference/geom_hist_.html">geom_histogram_</a></span><span class="op">(</span>scale.y <span class="op">=</span> <span class="va">scale.y</span>, 
-                      as.mix <span class="op">=</span> <span class="va">as.mix</span>, 
-                      position <span class="op">=</span> <span class="va">position</span>,
-                      prop <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">+</span> 
-      <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>scale.y <span class="op">=</span> <span class="va">scale.y</span>, as.mix <span class="op">=</span> <span class="va">as.mix</span>,
-                    positive <span class="op">=</span> <span class="cn">FALSE</span>,
-                    position <span class="op">=</span> <span class="va">position</span>,
-                    alpha <span class="op">=</span> <span class="fl">0.4</span>, 
-                    prop <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">+</span> 
-      <span class="fu">ggtitle</span><span class="op">(</span>
-        label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"`scale.y` is "</span>, <span class="va">scale.y</span>, <span class="st">"\n"</span>,
-                       <span class="st">"`as.mix` is "</span>, <span class="va">as.mix</span><span class="op">)</span>
-      <span class="op">)</span>
-    <span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
-      <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 7"</span><span class="op">)</span>
-    <span class="va">grobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">grobs</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>
-<span class="op">}</span>
-<span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span>grobs <span class="op">=</span> <span class="va">grobs</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">grobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">position</span> <span class="op">&lt;-</span> <span class="st">"stack_"</span></span>
+<span><span class="va">prop</span> <span class="op">&lt;-</span> <span class="fl">0.4</span></span>
+<span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">scale.y</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">for</span><span class="op">(</span><span class="va">as.mix</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>    <span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">data</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, fill <span class="op">=</span> <span class="va">z</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="../reference/geom_hist_.html">geom_histogram_</a></span><span class="op">(</span>scale.y <span class="op">=</span> <span class="va">scale.y</span>, </span>
+<span>                      as.mix <span class="op">=</span> <span class="va">as.mix</span>, </span>
+<span>                      position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>                      prop <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>scale.y <span class="op">=</span> <span class="va">scale.y</span>, as.mix <span class="op">=</span> <span class="va">as.mix</span>,</span>
+<span>                    positive <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                    position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>                    alpha <span class="op">=</span> <span class="fl">0.4</span>, </span>
+<span>                    prop <span class="op">=</span> <span class="va">prop</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span></span>
+<span>        label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"`scale.y` is "</span>, <span class="va">scale.y</span>, <span class="st">"\n"</span>,</span>
+<span>                       <span class="st">"`as.mix` is "</span>, <span class="va">as.mix</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span></span>
+<span>      <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 7"</span><span class="op">)</span></span>
+<span>    <span class="va">grobs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">grobs</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span>grobs <span class="op">=</span> <span class="va">grobs</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/overall%20comparison-1.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
-<div id="set-positions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#set-positions" class="anchor"></a>Set Positions</h2>
-<p>Note that when we set <code>position</code> in function <code><a href="../reference/geom_hist_.html">geom_histogram_()</a></code> or <code>geom_density</code>, we should use the underscore case, that is “stack_”, “dodge_” or “dodge2_” (instead of “stack”, “dodge” or “dodge2”).</p>
-<div id="position-stack_" class="section level3">
-<h3 class="hasAnchor">
-<a href="#position-stack_" class="anchor"></a>Position <code>stack_</code>
+<div class="section level2">
+<h2 id="set-positions">Set Positions<a class="anchor" aria-label="anchor" href="#set-positions"></a>
+</h2>
+<p>Note that when we set <code>position</code> in function
+<code><a href="../reference/geom_hist_.html">geom_histogram_()</a></code> or <code>geom_density</code>, we should
+use the underscore case, that is “stack_”, “dodge_” or “dodge2_”
+(instead of “stack”, “dodge” or “dodge2”).</p>
+<div class="section level3">
+<h3 id="position-stack_">Position <code>stack_</code><a class="anchor" aria-label="anchor" href="#position-stack_"></a>
 </h3>
-<p>We can stack the bin/density on top of each other by setting <code>position = 'stack_'</code> (default <code>position = 'identity_'</code>)</p>
+<p>We can stack the bin/density on top of each other by setting
+<code>position = 'stack_'</code> (default
+<code>position = 'identity_'</code>)</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars</span>, 
-       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">am</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack_"</span>,
-                prop <span class="op">=</span> <span class="fl">0.75</span>,
-                as.mix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 8"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, </span>
+<span>       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">am</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="../reference/geom_density_.html">geom_density_</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack_"</span>,</span>
+<span>                prop <span class="op">=</span> <span class="fl">0.75</span>,</span>
+<span>                as.mix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 8"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/set%20position%20stack-1.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
-<div id="position-dodge_dodge2_" class="section level3">
-<h3 class="hasAnchor">
-<a href="#position-dodge_dodge2_" class="anchor"></a>Position <code>dodge_</code>(<code>dodge2_</code>)</h3>
-<p>Dodging preserves the vertical position of an geom while adjusting the horizontal position.</p>
+<div class="section level3">
+<h3 id="position-dodge_dodge2_">Position <code>dodge_</code>(<code>dodge2_</code>)<a class="anchor" aria-label="anchor" href="#position-dodge_dodge2_"></a>
+</h3>
+<p>Dodging preserves the vertical position of an geom while adjusting
+the horizontal position.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">mtcars</span>, 
-       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">am</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="co"># use more general function `geom_hist_`</span>
-  <span class="co"># `dodge2` works without a grouping variable in a layer</span>
-  <span class="fu"><a href="../reference/geom_hist_.html">geom_hist_</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge2_"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 7"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, </span>
+<span>       mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">am</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">mpg</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># use more general function `geom_hist_`</span></span>
+<span>  <span class="co"># `dodge2` works without a grouping variable in a layer</span></span>
+<span>  <span class="fu"><a href="../reference/geom_hist_.html">geom_hist_</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge2_"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Figure 7"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="histogram-density-_files/figure-html/set%20position%20dodge-1.png" width="70%" style="display: block; margin: auto;"></p>
 </div>
 </div>
-<div id="conclusions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#conclusions" class="anchor"></a>Conclusions</h2>
-<p>Functions <code>geom_histogram_</code> and <code>geom_density_</code> give a general solution of histogram and density plot. Two variables can be provided to compactly display the distribution of a continuous variable. Besides, different scaling strategies are provided for users to tailor their own specific problems. If only one variable is provided in <code><a href="../reference/geom_density_.html">geom_density_()</a></code>, <code><a href="../reference/geom_hist_.html">geom_histogram_()</a></code> or <code><a href="../reference/geom_hist_.html">geom_bar_()</a></code>, the function <code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">ggplot2::geom_density()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">ggplot2::geom_histogram()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">ggplot2::geom_bar()</a></code> will be executed automatically.</p>
+<div class="section level2">
+<h2 id="conclusions">Conclusions<a class="anchor" aria-label="anchor" href="#conclusions"></a>
+</h2>
+<p>Functions <code>geom_histogram_</code> and <code>geom_density_</code>
+give a general solution of histogram and density plot. Two variables can
+be provided to compactly display the distribution of a continuous
+variable. Besides, different scaling strategies are provided for users
+to tailor their own specific problems. If only one variable is provided
+in <code><a href="../reference/geom_density_.html">geom_density_()</a></code>, <code><a href="../reference/geom_hist_.html">geom_histogram_()</a></code> or
+<code><a href="../reference/geom_hist_.html">geom_bar_()</a></code>, the function
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">ggplot2::geom_density()</a></code>,
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">ggplot2::geom_histogram()</a></code> and
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">ggplot2::geom_bar()</a></code> will be executed automatically.</p>
 </div>
   </div>
 
@@ -380,11 +477,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Zehao Xu, R. Wayne Oldford.</p>
+  <p></p>
+<p>Developed by Zehao Xu, R. Wayne Oldford.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -392,6 +491,8 @@
 
   
 
+
+  
 
   </body>
 </html>
