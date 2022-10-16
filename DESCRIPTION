@@ -1,7 +1,7 @@
 Package: ggmulti
 Type: Package
 Title: High Dimensional Data Visualization
-Version: 1.0.5
+Version: 1.0.6
 Authors@R: c(
   person('Zehao', 'Xu', email = 'z267xu@uwaterloo.ca', role = c("aut", "cre")),
   person('R. Wayne', 'Oldford', email = 'rwoldford@uwaterloo.ca', role = c("aut"))
@@ -17,7 +17,8 @@ Imports:
     utils,
     grid,
     dplyr,
-    tidyr
+    tidyr,
+    cli
 Suggests:
     png,
     tools,
