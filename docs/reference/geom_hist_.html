@@ -18,7 +18,7 @@ Both x and y could be accommodated. See details"><meta property="og:image" conte
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -181,10 +181,10 @@ Both <code>x</code> and <code>y</code> could be accommodated. See details</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mapping</dt>
-<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code> or
-<code><a href="https://ggplot2.tidyverse.org/reference/aes_.html" class="external-link">aes_()</a></code>. If specified and <code>inherit.aes = TRUE</code> (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply <code>mapping</code> if there is no plot mapping.</p></dd>
+<dd><p>Set of aesthetic mappings created by <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code>. If specified and
+<code>inherit.aes = TRUE</code> (the default), it is combined with the default mapping
+at the top level of the plot. You must supply <code>mapping</code> if there is no plot
+mapping.</p></dd>
 
 
 <dt>data</dt>
@@ -289,19 +289,7 @@ the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.or
 stat_hist_()/stat_bin_()/stat_count_().</p></dd>
 
 
-<dt>center</dt>
-<dd><p>bin position specifiers. Only one, <code>center</code> or
-<code>boundary</code>, may be specified for a single plot. <code>center</code> specifies the
-center of one of the bins. <code>boundary</code> specifies the boundary between two
-bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of <code>binwidth</code>.
-For example, to center on integers use <code>binwidth = 1</code> and <code>center = 0</code>, even
-if <code>0</code> is outside the range of the data. Alternatively, this same alignment
-can be specified with <code>binwidth = 1</code> and <code>boundary = 0.5</code>, even if <code>0.5</code> is
-outside the range of the data.</p></dd>
-
-
-<dt>boundary</dt>
+<dt>center, boundary</dt>
 <dd><p>bin position specifiers. Only one, <code>center</code> or
 <code>boundary</code>, may be specified for a single plot. <code>center</code> specifies the
 center of one of the bins. <code>boundary</code> specifies the boundary between two
@@ -330,7 +318,8 @@ frequency polygons touch 0. Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt>width</dt>
-<dd><p>Bar width. By default, set to 90% of the resolution of the data.</p></dd>
+<dd><p>Bar width. By default, set to 90% of the <code><a href="https://ggplot2.tidyverse.org/reference/resolution.html" class="external-link">resolution()</a></code> of the
+data.</p></dd>
 
 </dl></div>
     <div id="details">

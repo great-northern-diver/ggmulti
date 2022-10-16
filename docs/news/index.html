@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ggmulti</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -63,6 +63,17 @@
       
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.6" id="ggmulti-106">ggmulti 1.0.6<a class="anchor" aria-label="anchor" href="#ggmulti-106"></a></h2>
+<p>Bug fix:</p>
+<ul><li><p>Error: <code>geom_hist_</code> fails and provides unexpected warnings</p></li>
+<li><p>Reason: the class name of the discrete variable in <code>ggplot2</code> is changed from <code>mapped_discrete</code> to <code>ggplot2_mapped_discrete</code>. Therefore, many binary checks by <code>is_mapped_discrete()</code> does not pass.</p></li>
+<li><p>Fix: a new binary check function <code>is_ggplot2_mapped_discrete()</code> is created, and <code>is_mapped_discrete()</code> is deprecated.</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.5" id="ggmulti-105">ggmulti 1.0.5<small>2022-10-08</small><a class="anchor" aria-label="anchor" href="#ggmulti-105"></a></h2>
+<p>Minor changes on documentations</p>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.4" id="ggmulti-104">ggmulti 1.0.4<small>2021-07-23</small><a class="anchor" aria-label="anchor" href="#ggmulti-104"></a></h2>
 <ol style="list-style-type: decimal"><li><p>For the radial coordinate, the serial histogram and density are displayed incorrectly (I suppose the engine, <code><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html" class="external-link">ggplot2::coord_polar</a></code> makes some changes). So, in this version, these features are unavailable for now. Hopefully, we can bring them back in the next release.</p></li>
