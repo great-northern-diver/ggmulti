@@ -1,3 +1,17 @@
+# ggmulti 1.0.6
+
+Bug fix:
+
+  * Error: `geom_hist_` fails and provides unexpected warnings
+
+  * Reason: the class name of the discrete variable in `ggplot2` is changed from `mapped_discrete` to `ggplot2_mapped_discrete`. Therefore, many binary checks by `is_mapped_discrete()` does not pass.
+  
+  * Fix: a new binary check function `is_ggplot2_mapped_discrete()` is created, and `is_mapped_discrete()` is deprecated.
+
+# ggmulti 1.0.5
+
+Minor changes on documentations
+
 # ggmulti 1.0.4
 
   1. For the radial coordinate, the serial histogram and density are displayed incorrectly (I suppose the engine, `ggplot2::coord_polar` makes some changes). So, in this version, these features are unavailable for now. Hopefully, we can bring them back in the next release. 
