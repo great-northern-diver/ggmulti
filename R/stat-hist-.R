@@ -121,8 +121,9 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                                                                  params,
                                                                                  main_is_orthogonal = FALSE)
                                   x <- ggplot2::flipped_names(params$flipped_aes)$x
-                                  if (is_ggplot2_mapped_discrete(data[[x]])) {
-
+                                  if (is_ggplot2_mapped_discrete(data[[x]]) || is_mapped_discrete(data[[x]])) {
+                                    # `is_mapped_discrete` is for ggplot2 < 3.3.6.9
+                                    # and `is_ggplot2_mapped_discrete` is for ggplot2 >= 3.3.6.9
                                     params$binwidth <- NULL
                                     params$bins <- NULL
                                     params$center <- NULL
@@ -143,7 +144,7 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
 
                                 x <- ggplot2::flipped_names(params$flipped_aes)$x
                                 # the count
-                                if(is_ggplot2_mapped_discrete(data[[x]])) return(params)
+                                if(is_ggplot2_mapped_discrete(data[[x]]) || is_mapped_discrete(data[[x]])) return(params)
 
                                 if (!is.null(params$drop)) {
                                   warning("`drop` is deprecated. Please use `pad` instead.",
@@ -193,13 +194,13 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                 }
 
                                 if(params$flipped_aes) {
-                                  if(!is_ggplot2_mapped_discrete(newData$x))
+                                  if(!is_ggplot2_mapped_discrete(newData$x) && !is_mapped_discrete(data[[x]]))
                                     warning("The group variable is not discrete. ",
                                             "Try to wrap it with `factor()`. ",
                                             "See `?geom_hist_` for more details.",
                                             call. = FALSE)
                                 } else {
-                                  if(!is_ggplot2_mapped_discrete(newData$y))
+                                  if(!is_ggplot2_mapped_discrete(newData$y) && !is_mapped_discrete(data[[x]]))
                                     warning("The group variable is not discrete. ",
                                             "Try to wrap it with `factor()`. ",
                                             "See `?geom_hist_` for more details.",
