@@ -23,5 +23,9 @@ rd_orientation <- utils::getFromNamespace("rd_orientation", "ggplot2")
 pos_dodge <- utils::getFromNamespace("pos_dodge", "ggplot2")
 pos_dodge2 <- utils::getFromNamespace("pos_dodge2", "ggplot2")
 # is_mapped_discrete <- utils::getFromNamespace("is_mapped_discrete", "ggplot2")
+# `is_mapped_discrete` is deprecated
 is_mapped_discrete <- function (x) inherits(x, "mapped_discrete")
+is_ggplot2_mapped_discrete <- function(x) {
+  inherits(x, "ggplot2_mapped_discrete")
+}
 dapply <- utils::getFromNamespace("dapply", "ggplot2")
