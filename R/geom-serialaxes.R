@@ -34,7 +34,7 @@
 #' p +
 #'   geom_serialaxes(scaling = "variable",
 #'                   alpha = 0.4,
-#'                   size = 3) +
+#'                   linewidth = 3) +
 #'   scale_x_continuous(breaks = 1:6,
 #'                      labels = c("FGA", "3PA", "FTA",
 #'                                 "OFGA", "O3PA", "OFTA")) +

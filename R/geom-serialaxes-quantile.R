@@ -17,7 +17,7 @@
 #'        geom_serialaxes(stat = "dotProduct") +
 #'        geom_serialaxes_quantile(stat = "dotProduct",
 #'                                 quantiles = c(0.25, 0.5, 0.75),
-#'                                 colour = c("red", "blue", "green"), size = 2)
+#'                                 colour = c("red", "blue", "green"), linewidth = 2)
 #' p
 #'
 geom_serialaxes_quantile <- function(mapping = NULL, data = NULL, stat = "serialaxes",

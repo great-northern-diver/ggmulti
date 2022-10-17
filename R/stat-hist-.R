@@ -194,13 +194,13 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                 }
 
                                 if(params$flipped_aes) {
-                                  if(!is_ggplot2_mapped_discrete(newData$x) && !is_mapped_discrete(data[[x]]))
+                                  if(!is_ggplot2_mapped_discrete(newData$x) && !is_mapped_discrete(data[[newData$x]]))
                                     warning("The group variable is not discrete. ",
                                             "Try to wrap it with `factor()`. ",
                                             "See `?geom_hist_` for more details.",
                                             call. = FALSE)
                                 } else {
-                                  if(!is_ggplot2_mapped_discrete(newData$y) && !is_mapped_discrete(data[[x]]))
+                                  if(!is_ggplot2_mapped_discrete(newData$y) && !is_mapped_discrete(data[[newData$y]]))
                                     warning("The group variable is not discrete. ",
                                             "Try to wrap it with `factor()`. ",
                                             "See `?geom_hist_` for more details.",
