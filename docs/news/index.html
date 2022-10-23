@@ -66,9 +66,16 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.6" id="ggmulti-106">ggmulti 1.0.6<a class="anchor" aria-label="anchor" href="#ggmulti-106"></a></h2>
 <p>Bug fix:</p>
+<ul><li>
+<p>Bug 1</p>
 <ul><li><p>Error: <code>geom_hist_</code> fails and provides unexpected warnings</p></li>
 <li><p>Reason: the class name of the discrete variable in <code>ggplot2</code> is changed from <code>mapped_discrete</code> to <code>ggplot2_mapped_discrete</code>. Therefore, many binary checks by <code>is_mapped_discrete()</code> does not pass.</p></li>
-<li><p>Fix: a new binary check function <code>is_ggplot2_mapped_discrete()</code> is created, and <code>is_mapped_discrete()</code> is deprecated.</p></li>
+</ul></li>
+<li>
+<p>Bug 2</p>
+<ul><li><p>Error: <code>stat_count_</code> fails to draw bins</p></li>
+<li><p>Reason: a default setting of the bin width of the new version <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">ggplot2::stat_count</a></code> is recently set in <code>set_params</code>; when we replicate <code>set_params</code> of the old version <code>ggplot2</code>, the bin width is not set.</p></li>
+</ul></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.5" id="ggmulti-105">ggmulti 1.0.5<small>2022-10-08</small><a class="anchor" aria-label="anchor" href="#ggmulti-105"></a></h2>

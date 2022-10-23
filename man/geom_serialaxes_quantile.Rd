@@ -12,6 +12,7 @@ geom_serialaxes_quantile(
   stat = "serialaxes",
   position = "identity",
   ...,
+  quantiles = seq(0, 1, 0.25),
   axes.sequence = character(0L),
   merge = TRUE,
   na.rm = FALSE,
@@ -73,6 +74,9 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 
+\item{quantiles}{numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that
+range are accepted and moved to the nearby endpoint.)}
+
 \item{axes.sequence}{A vector to define the axes sequence. In serial axes coordinate, the sequence can be either
 determined in \code{mapping} (function \code{aes()}) or by \code{axes.sequence}. The only difference is that
 the \code{mapping} aesthetics will omit the duplicated axes (check examples in \code{\link{geom_serialaxes}}).}
@@ -103,9 +107,6 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \code{ggproto} \code{Geom} subclass or as a string naming the geom stripped of the
 \code{geom_} prefix (e.g. \code{"point"} rather than \code{"geom_point"})}
 
-\item{quantiles}{numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that
-range are accepted and moved to the nearby endpoint.)}
-
 \item{scaling}{one of \code{data}, \code{variable}, \code{observation} or
 \code{none} (not suggested the layout is the same with \code{data})
 to specify how the data is scaled.}
@@ -126,7 +127,7 @@ p <- ggplot(iris, mapping = aes(Sepal.Length = Sepal.Length,
        geom_serialaxes(stat = "dotProduct") +
        geom_serialaxes_quantile(stat = "dotProduct",
                                 quantiles = c(0.25, 0.5, 0.75),
-                                colour = c("red", "blue", "green"), size = 2)
+                                colour = c("red", "blue", "green"))
 p
 
 }

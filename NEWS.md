@@ -2,11 +2,17 @@
 
 Bug fix:
 
+- Bug 1
+
   * Error: `geom_hist_` fails and provides unexpected warnings
 
   * Reason: the class name of the discrete variable in `ggplot2` is changed from `mapped_discrete` to `ggplot2_mapped_discrete`. Therefore, many binary checks by `is_mapped_discrete()` does not pass.
   
-  * Fix: a new binary check function `is_ggplot2_mapped_discrete()` is created, and `is_mapped_discrete()` is deprecated.
+- Bug 2
+
+  * Error: `stat_count_` fails to draw bins
+  
+  * Reason: a default setting of the bin width of the new version `ggplot2::stat_count` is recently set in `set_params`; when we replicate `set_params` of the old version `ggplot2`, the bin width is not set.
 
 # ggmulti 1.0.5
 
