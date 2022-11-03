@@ -115,3 +115,15 @@ reference:
   - Stat-ggproto
   - Position-ggproto
   - Geom-ggproto
+
+- title: High dimensional data
+  desc: >
+    Provide a high dimensional data set used for visualization
+  contents:
+  - NBAstats2021
+
+- title: Helper functions (deprecated in the future)
+  desc: >
+    Some helper functions
+  contents:
+  - get_scaledData

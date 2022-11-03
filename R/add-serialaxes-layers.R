@@ -121,7 +121,7 @@ add_serialaxes_layers.GeomQuantile <- function(layer, plot, object, axes) {
 }
 
 setup_args <- function(layer, plot, object, axes,
-                       fun, aesthetics = c("colour", "size", "alpha", "linetype"),
+                       fun, aesthetics = c("colour", "size", "alpha", "linetype", "linewidth"),
                        position = layer$position,
                        ...) {
 

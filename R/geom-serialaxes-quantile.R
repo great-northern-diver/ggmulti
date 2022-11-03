@@ -17,11 +17,12 @@
 #'        geom_serialaxes(stat = "dotProduct") +
 #'        geom_serialaxes_quantile(stat = "dotProduct",
 #'                                 quantiles = c(0.25, 0.5, 0.75),
-#'                                 colour = c("red", "blue", "green"), size = 2)
+#'                                 colour = c("red", "blue", "green"))
 #' p
 #'
 geom_serialaxes_quantile <- function(mapping = NULL, data = NULL, stat = "serialaxes",
                                      position = "identity", ...,
+                                     quantiles = seq(0, 1, 0.25),
                                      axes.sequence = character(0L), merge = TRUE,
                                      na.rm = FALSE, orientation = NA,
                                      show.legend = NA, inherit.aes = TRUE) {
@@ -57,6 +58,7 @@ geom_serialaxes_quantile <- function(mapping = NULL, data = NULL, stat = "serial
       axes.sequence = axes.sequence,
       na.rm = na.rm,
       orientation = orientation,
+      quantiles = quantiles,
       ...
     )
   )

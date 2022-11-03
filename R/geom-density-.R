@@ -238,7 +238,7 @@ GeomDensity_ <- ggplot2::ggproto(
                                                                          flipped_aes = flipped_aes,
                                                                          outline.type = "both"))
   },
-  default_aes = ggplot2::aes(fill = NA, weight = 1, colour = "black",
+  default_aes = ggplot2::aes(fill = NA, weight = 1, colour = "black", linewidth = 0.5,
                              alpha = NA, size = 0.5, linetype = 1),
   required_aes = c("x", "y")
 )

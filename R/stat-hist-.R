@@ -120,10 +120,10 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                   params$flipped_aes <- ggplot2::has_flipped_aes(data,
                                                                                  params,
                                                                                  main_is_orthogonal = FALSE)
-
                                   x <- ggplot2::flipped_names(params$flipped_aes)$x
-                                  if (is.integer(data[[x]])) {
-
+                                  if (is_ggplot2_mapped_discrete(data[[x]]) || is_mapped_discrete(data[[x]]) || is.integer(data[[x]])) {
+                                    # `is_mapped_discrete` is for ggplot2 < 3.3.6.9
+                                    # and `is_ggplot2_mapped_discrete` is for ggplot2 >= 3.3.6.9
                                     params$binwidth <- NULL
                                     params$bins <- NULL
                                     params$center <- NULL
@@ -143,9 +143,19 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                 }
 
                                 x <- ggplot2::flipped_names(params$flipped_aes)$x
-                                # the count
-                                if(is.integer(data[[x]])) return(params)
 
+                                # bar plot: StatCount
+                                if(is_ggplot2_mapped_discrete(data[[x]]) || is_mapped_discrete(data[[x]]) || is.integer(data[[x]])) {
+
+                                  if (is.null(params$width)) {
+                                    x <- if (params$flipped_aes) "y" else "x"
+                                    params$width <- resolution(data[[x]]) * 0.9
+                                  }
+
+                                  return(params)
+                                }
+
+                                # histogram: StatHist
                                 if (!is.null(params$drop)) {
                                   warning("`drop` is deprecated. Please use `pad` instead.",
                                           call. = FALSE)
@@ -194,13 +204,13 @@ StatHist_ <- ggplot2::ggproto("StatHist_",
                                 }
 
                                 if(params$flipped_aes) {
-                                  if(!is_mapped_discrete(newData$x))
+                                  if(!is_ggplot2_mapped_discrete(newData$x) && !is_mapped_discrete(newData$x))
                                     warning("The group variable is not discrete. ",
                                             "Try to wrap it with `factor()`. ",
                                             "See `?geom_hist_` for more details.",
                                             call. = FALSE)
                                 } else {
-                                  if(!is_mapped_discrete(newData$y))
+                                  if(!is_ggplot2_mapped_discrete(newData$y) && !is_mapped_discrete(newData$y))
                                     warning("The group variable is not discrete. ",
                                             "Try to wrap it with `factor()`. ",
                                             "See `?geom_hist_` for more details.",
@@ -266,7 +276,7 @@ StatBin_ <- ggplot2::ggproto("StatBin_",
 
                                flipped_aes <- ggplot2::has_flipped_aes(data, params, main_is_continuous = TRUE)
                                x <- ggplot2::flipped_names(flipped_aes)$x
-                               if (is.integer(data[[x]])) {
+                               if (is_ggplot2_mapped_discrete(data[[x]])) {
                                  stop("StatBin_ requires a continuous ",
                                       x,
                                       " variable: the ",

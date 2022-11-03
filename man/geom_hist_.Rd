@@ -116,10 +116,10 @@ stat_count_(
 )
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}} or
-\code{\link[ggplot2:aes_]{aes_()}}. If specified and \code{inherit.aes = TRUE} (the
-default), it is combined with the default mapping at the top level of the
-plot. You must supply \code{mapping} if there is no plot mapping.}
+\item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2:aes]{aes()}}. If specified and
+\code{inherit.aes = TRUE} (the default), it is combined with the default mapping
+at the top level of the plot. You must supply \code{mapping} if there is no plot
+mapping.}
 
 \item{data}{The data to be displayed in this layer. There are three
 options:
@@ -202,17 +202,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 \item{geom, stat}{Use to override the default connection between geom_hist_()/geom_histogram_()/geom_bar_() and
 stat_hist_()/stat_bin_()/stat_count_().}
 
-\item{center}{bin position specifiers. Only one, \code{center} or
-\code{boundary}, may be specified for a single plot. \code{center} specifies the
-center of one of the bins. \code{boundary} specifies the boundary between two
-bins. Note that if either is above or below the range of the data, things
-will be shifted by the appropriate integer multiple of \code{binwidth}.
-For example, to center on integers use \code{binwidth = 1} and \code{center = 0}, even
-if \code{0} is outside the range of the data. Alternatively, this same alignment
-can be specified with \code{binwidth = 1} and \code{boundary = 0.5}, even if \code{0.5} is
-outside the range of the data.}
-
-\item{boundary}{bin position specifiers. Only one, \code{center} or
+\item{center, boundary}{bin position specifiers. Only one, \code{center} or
 \code{boundary}, may be specified for a single plot. \code{center} specifies the
 center of one of the bins. \code{boundary} specifies the boundary between two
 bins. Note that if either is above or below the range of the data, things
@@ -232,7 +222,8 @@ or left edges of bins are included in the bin.}
 \item{pad}{If \code{TRUE}, adds empty bins at either end of x. This ensures
 frequency polygons touch 0. Defaults to \code{FALSE}.}
 
-\item{width}{Bar width. By default, set to 90\% of the resolution of the data.}
+\item{width}{Bar width. By default, set to 90\% of the \code{\link[ggplot2:resolution]{resolution()}} of the
+data.}
 }
 \description{
 More general histogram (\code{geom_histogram}) or bar plot (\code{geom_bar}).

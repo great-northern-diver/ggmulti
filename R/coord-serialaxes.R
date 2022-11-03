@@ -63,7 +63,7 @@
 #' p
 #' # quantile layer
 #' p + geom_quantiles(quantiles = c(0.5),
-#'                    colour = "green", size = 1.2)
+#'                    colour = "green", linewidth = 1.2)
 #'
 #' # facet
 #' p +
