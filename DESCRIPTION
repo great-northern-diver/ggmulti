@@ -38,6 +38,8 @@ Suggests:
     nycflights13,
     ggplot2movies
 RoxygenNote: 7.2.1
+URL: https://great-northern-diver.github.io/ggmulti/, https://github.com/great-northern-diver/ggmulti
+BugReports: https://github.com/great-northern-diver/ggmulti/issues
 LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr
