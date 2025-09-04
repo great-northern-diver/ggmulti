@@ -86,7 +86,14 @@ coord_serialaxes <- function(axes.layout = c("parallel", "radial"),
 }
 
 #' @export
-ggplot_build.gg <- function(plot) {
+#' @importFrom ggplot2 ggplot_add
+ggplot_add.CoordSerialaxes <- function(object, plot, ...) {
+  class(plot) <- union("ggplot_multi", class(plot))
+  NextMethod()
+}
+
+#' @export
+ggplot_build.ggplot_multi <- function(plot) {
 
   object <- plot$coordinates
   # regular call
