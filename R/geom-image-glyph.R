@@ -133,7 +133,7 @@ GeomImageGlyph <- ggplot2::ggproto(
                     fill = NA, size = 1, alpha = 1,
                     shape = 21, stroke = 0.5),
   draw_key = function(data, params, size) {
-    data$size <- ggplot2::GeomPoint$default_aes$size/1 *
+    data$size <- ggplot2::get_geom_defaults(ggplot2::GeomPoint)$size *
       data$size
     ggplot2::draw_key_point(data, params, size)
   },
