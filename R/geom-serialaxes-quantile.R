@@ -111,8 +111,8 @@ GeomSerialaxesQuantile <- ggplot2::ggproto(
   draw_panel = function(self, data, panel_params, coord, arrow = NULL,
                         quantiles = seq(0, 1, 0.25), lineend = "butt", linejoin = "round",
                         linemitre = 10, na.rm = FALSE) {
-    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$draw_panel(data, panel_params, coord, arrow,
-                                                                lineend, linejoin, linemitre, na.rm)
+    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$draw_panel(data = data, panel_params = panel_params, coord = coord, arrow = arrow,
+                                                                lineend = lineend, linejoin = linejoin, linemitre = linemitre, na.rm = na.rm)
   }
 )
 
