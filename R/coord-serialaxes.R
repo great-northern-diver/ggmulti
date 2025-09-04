@@ -93,7 +93,7 @@ ggplot_add.CoordSerialaxes <- function(object, plot, ...) {
 }
 
 #' @export
-ggplot_build.ggplot_multi <- function(plot) {
+ggplot_build.ggplot_multi <- function(plot, ...) {
 
   object <- plot$coordinates
   # regular call
