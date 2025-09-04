@@ -44,7 +44,7 @@ test_that("test built geoms in ggplot", {
                   alpha = 0.5,
                   positive = FALSE)
   b <- ggplot_build(p)
-  expect_equal(class(p), c("gg", "ggplot"))
+  expect_true(is_ggplot(p))
   # flip aes; position dodge;
   p <- ggplot(data,
               mapping = aes(y = `Outer sterile whorls`,
