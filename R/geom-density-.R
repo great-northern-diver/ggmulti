@@ -38,7 +38,7 @@
 #' See vignettes[https://great-northern-diver.github.io/ggmulti/articles/histogram-density-.html] for more intuitive explanation.
 #' @export
 #' @eval rd_orientation()
-#' @seealso \code{\link{geom_density}}, \code{\link{geom_hist_}}
+#' @seealso \code{\link[ggplot2]{geom_density}}, \code{\link{geom_hist_}}
 #' @examples
 #' if(require(dplyr)) {
 #'   mpg %>%

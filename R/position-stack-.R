@@ -2,7 +2,7 @@
 #' @description \code{position_stack_} stacks bars on top of each other, conditional on locations.
 #' @name position_stack_
 #' @inherit ggplot2::position_stack
-#' @details It is built based on \code{\link{position_stack}}, but used for multiple locations, such as
+#' @details It is built based on \code{\link[ggplot2]{position_stack}}, but used for multiple locations, such as
 #' \code{\link{geom_hist_}} or \code{\link{geom_density_}}. Rather than stack everything on top of each other,
 #' \code{position_stack_} stacks bars based on locations.
 #' Check examples to see the difference.
@@ -14,7 +14,7 @@
 #' \code{\link{position_identity_}},
 #' \code{\link{position_dodge_}}, \code{\link{position_dodge2_}}
 #'
-#' Parent: \code{\link{position_stack}}
+#' Parent: \code{\link[ggplot2]{position_stack}}
 #'
 #' @export
 #' @examples
