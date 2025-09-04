@@ -2,8 +2,8 @@
 % Please edit documentation in R/ggmulti-package.R
 \docType{package}
 \name{ggmulti-package}
+\alias{ggmulti}
 \alias{ggmulti-package}
-\alias{_PACKAGE}
 \title{ggmulti: High Dimensional Data Visualization}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}

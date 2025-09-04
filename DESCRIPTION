@@ -37,7 +37,7 @@ Suggests:
     maps,
     nycflights13,
     ggplot2movies
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr
