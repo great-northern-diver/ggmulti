@@ -6,7 +6,7 @@ stat_hist_ <- function(mapping = NULL, data = NULL, geom = "bar_",
                        ...,
                        binwidth = NULL, bins = NULL,
                        center = NULL, boundary = NULL, breaks = NULL,
-                       closed = c("right", "left"), pad = FALSE, width = NULL,
+                       closed = c("right", "left"), pad = FALSE,
                        na.rm = FALSE, orientation = NA, show.legend = NA,
                        inherit.aes = TRUE) {
 
@@ -27,7 +27,6 @@ stat_hist_ <- function(mapping = NULL, data = NULL, geom = "bar_",
       breaks = breaks,
       closed = closed,
       pad = pad,
-      width = width,
       na.rm = na.rm,
       orientation = orientation,
       ...
@@ -77,7 +76,7 @@ stat_bin_ <- function(mapping = NULL, data = NULL, geom = "bar_",
 stat_count_ <- function(mapping = NULL, data = NULL, geom = "bar_",
                         position = "stack_",
                         ...,
-                        width = NULL, na.rm = FALSE,
+                        na.rm = FALSE,
                         orientation = NA, show.legend = NA, inherit.aes = TRUE) {
 
   ggplot2::layer(
@@ -90,7 +89,6 @@ stat_count_ <- function(mapping = NULL, data = NULL, geom = "bar_",
     inherit.aes = inherit.aes,
     check.aes = TRUE,
     params = list(
-      width = width,
       na.rm = na.rm,
       orientation = orientation,
       ...

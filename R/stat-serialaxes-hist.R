@@ -9,7 +9,7 @@ stat_serialaxes_hist <- function(mapping = NULL, data = NULL, geom = "serialaxes
                                 axes.position = NULL,
                                 binwidth = NULL, bins = NULL,
                                 center = NULL, boundary = NULL, breaks = NULL,
-                                closed = c("right", "left"), pad = FALSE, width = NULL,
+                                closed = c("right", "left"), pad = FALSE,
                                 na.rm = FALSE, orientation = NA, show.legend = NA,
                                 inherit.aes = TRUE) {
 
@@ -33,7 +33,6 @@ stat_serialaxes_hist <- function(mapping = NULL, data = NULL, geom = "serialaxes
       breaks = breaks,
       closed = closed,
       pad = pad,
-      width = width,
       na.rm = na.rm,
       orientation = orientation,
       ...

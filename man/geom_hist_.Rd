@@ -76,7 +76,6 @@ stat_hist_(
   breaks = NULL,
   closed = c("right", "left"),
   pad = FALSE,
-  width = NULL,
   na.rm = FALSE,
   orientation = NA,
   show.legend = NA,
@@ -108,7 +107,6 @@ stat_count_(
   geom = "bar_",
   position = "stack_",
   ...,
-  width = NULL,
   na.rm = FALSE,
   orientation = NA,
   show.legend = NA,
@@ -221,9 +219,6 @@ or left edges of bins are included in the bin.}
 
 \item{pad}{If \code{TRUE}, adds empty bins at either end of x. This ensures
 frequency polygons touch 0. Defaults to \code{FALSE}.}
-
-\item{width}{Bar width. By default, set to 90\% of the \code{\link[ggplot2:resolution]{resolution()}} of the
-data.}
 }
 \description{
 More general histogram (\code{geom_histogram}) or bar plot (\code{geom_bar}).
