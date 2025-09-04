@@ -115,7 +115,7 @@ GeomSerialaxes <- ggplot2::ggproto(
   "GeomSerialaxes",
   ggplot2::GeomPath,
   required_aes = NULL,
-  use_defaults = function(self, data, params = list(), modifiers = aes()) {
+  use_defaults = function(self, data, params = list(), modifiers = aes(), ...) {
 
     n <- dim(data)[1]
     uniGroup <- unique(data$group)
@@ -137,7 +137,7 @@ GeomSerialaxes <- ggplot2::ggproto(
       )
     }
 
-    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$use_defaults(data, params, modifiers)
+    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$use_defaults(data, params, modifiers, ...)
   }
 )
 
