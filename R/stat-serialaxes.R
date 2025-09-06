@@ -202,7 +202,7 @@ StatDotProduct <- ggplot2::ggproto(
       stats::setNames(nm = newSeqName)
 
     cbind(newData, computeTrans) %>%
-      dplyr::select(-axes.sequence) %>%
+      dplyr::select(-all_of(axes.sequence)) %>%
       tidyr::pivot_longer(cols = dplyr::all_of(newSeqName),
                           names_to = "names",
                           values_to = ggplot2::flipped_names(params$flipped_aes)$x) %>%
