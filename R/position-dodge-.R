@@ -2,7 +2,7 @@
 #' @description Dodging preserves the vertical position of an geom while adjusting the horizontal position.
 #' \code{position_dodge_()} dodges bars side by side but conditional on locations.
 #' @inherit ggplot2::position_dodge
-#' @details It is built based on \code{\link{position_dodge}}, but used for multiple locations, such as
+#' @details It is built based on \code{\link[ggplot2]{position_dodge}}, but used for multiple locations, such as
 #' \code{geom_hist_()} or \code{geom_density_()}. Check examples to see the difference.
 #' @seealso
 #' See \code{\link{geom_hist_}} and \code{\link{geom_serialaxes_hist}} for more examples.
@@ -11,7 +11,7 @@
 #' \code{\link{position_identity_}},
 #' \code{\link{position_stack_}}, \code{\link{position_fill_}}
 #'
-#' Parent: \code{\link{position_dodge}}
+#' Parent: \code{\link[ggplot2]{position_dodge}}
 #'
 #' @export
 #' @examples

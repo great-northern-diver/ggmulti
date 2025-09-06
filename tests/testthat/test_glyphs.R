@@ -38,7 +38,7 @@ test_that("test geom glyphs in ggplot", {
                           bboxcolour = alpha("black", 0.2),
                           show.enclosing = TRUE)
   p
-  expect_equal(class(p), c("gg", "ggplot"))
+  expect_true(is_ggplot(p))
 
   p <- ggplot(data = iris, mapping = aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
     geom_serialaxes_glyph(serialaxes.data = iris[, -5],
@@ -49,7 +49,7 @@ test_that("test geom glyphs in ggplot", {
                           bboxcolour = alpha("black", 0.2),
                           show.enclosing = TRUE)
   p
-  expect_equal(class(p), c("gg", "ggplot"))
+  expect_true(is_ggplot(p))
 
   ### test warning
   p <- ggplot(data = iris,

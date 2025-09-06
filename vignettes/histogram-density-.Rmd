@@ -7,7 +7,7 @@ output:
     toc: true
 geometry: margin=.75in
 urlcolor: blue
-graphics: yes
+graphics: true
 vignette: >
   %\VignetteIndexEntry{Histogram and Density}
   %\VignetteEngine{knitr::knitr}

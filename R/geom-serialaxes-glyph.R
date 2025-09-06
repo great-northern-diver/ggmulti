@@ -108,7 +108,7 @@ GeomSerialAxesGlyph <- ggplot2::ggproto("GeomSerialAxesGlyph", Geom,
                                                           linetype = 1, alpha = 1,
                                                           shape = 21, stroke = 0.5),
                                         draw_key = function (data, params, size) {
-                                          data$size <- ggplot2::GeomPoint$default_aes$size/1.5
+                                          data$size <- ggplot2::get_geom_defaults(ggplot2::GeomPoint)$size/1.5
                                           ggplot2::draw_key_point(data, params, size)
                                         },
                                         setup_params = function(data, params) {

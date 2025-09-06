@@ -11,7 +11,7 @@ License: GPL-2
 Depends:
     R (>= 3.4.0),
     methods,
-    ggplot2
+    ggplot2 (>= 3.5.2)
 Imports:
     stats,
     utils,
@@ -37,7 +37,7 @@ Suggests:
     maps,
     nycflights13,
     ggplot2movies
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr

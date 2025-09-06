@@ -104,7 +104,7 @@ mbind <- function(new_mapping = aes(), mapping) {
          call. = FALSE)
   }
 
-  new_aes(new_mapping %<-% mapping)
+  aes(!!!(new_mapping %<-% mapping))
 }
 
 `%<-%` <- function(x, y) {

@@ -13,7 +13,6 @@ message_wrap <- function (...) {
   message(paste0(wrapped, collapse = "\n"))
 }
 
-new_aes <- utils::getFromNamespace("new_aes", "ggplot2")
 compute_density <- utils::getFromNamespace("compute_density", "ggplot2")
 stack_var <- utils::getFromNamespace("stack_var", "ggplot2")
 collide <- utils::getFromNamespace("collide", "ggplot2")

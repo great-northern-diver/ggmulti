@@ -84,7 +84,7 @@ GeomSerialaxesQuantile <- ggplot2::ggproto(
       as.data.frame() %>%
       ggplot2::flip_data(flip = flip)
   },
-  use_defaults = function(self, data, params = list(), modifiers = aes()) {
+  use_defaults = function(self, data, params = list(), modifiers = aes(), ...) {
 
     n <- dim(data)[1]
     uniGroup <- unique(data$group)
@@ -106,13 +106,13 @@ GeomSerialaxesQuantile <- ggplot2::ggproto(
       )
     }
 
-    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$use_defaults(data, params, modifiers)
+    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$use_defaults(data, params, modifiers, ...)
   },
   draw_panel = function(self, data, panel_params, coord, arrow = NULL,
                         quantiles = seq(0, 1, 0.25), lineend = "butt", linejoin = "round",
                         linemitre = 10, na.rm = FALSE) {
-    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$draw_panel(data, panel_params, coord, arrow,
-                                                                lineend, linejoin, linemitre, na.rm)
+    ggplot2::ggproto_parent(ggplot2::GeomPath, self)$draw_panel(data = data, panel_params = panel_params, coord = coord, arrow = arrow,
+                                                                lineend = lineend, linejoin = linejoin, linemitre = linemitre, na.rm = na.rm)
   }
 )
 

@@ -4,7 +4,7 @@ compute_scales <- function(data, obj, params, ...) {
   UseMethod("compute_scales", obj)
 }
 
-compute_scales.density <- function(data, obj, params) {
+compute_scales.density <- function(data, obj, params, ...) {
 
   scale.y <- params$scale.y
   prop <- params$prop
@@ -77,7 +77,7 @@ compute_scales.density <- function(data, obj, params) {
   )
 }
 
-compute_scales.histogram <- function(data, obj, params) {
+compute_scales.histogram <- function(data, obj, params, ...) {
 
   scale.y <- params$scale.y
   prop <- params$prop
