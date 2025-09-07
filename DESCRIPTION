@@ -3,7 +3,7 @@ Type: Package
 Title: High Dimensional Data Visualization
 Version: 1.0.8
 Authors@R: c(
-  person('Zehao', 'Xu', email = 'z267xu@uwaterloo.ca', role = c("aut", "cre")),
+  person('Zehao', 'Xu', email = 'z267xu@gmail.com', role = c("aut", "cre")),
   person('R. Wayne', 'Oldford', email = 'rwoldford@uwaterloo.ca', role = c("aut")),
   person("Teun", "van den Brand", role = "ctb")
   )
