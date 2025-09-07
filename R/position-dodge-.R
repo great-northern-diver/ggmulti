@@ -5,11 +5,11 @@
 #' @details It is built based on \code{\link[ggplot2]{position_dodge}}, but used for multiple locations, such as
 #' \code{geom_hist_()} or \code{geom_density_()}. Check examples to see the difference.
 #' @seealso
-#' See \code{\link{geom_hist_}} and \code{\link{geom_serialaxes_hist}} for more examples.
+#' See \code{\link[ggmulti]{geom_hist_}} and \code{\link[ggmulti]{geom_serialaxes_hist}} for more examples.
 #'
 #' Other position adjustments for multiple locations:
-#' \code{\link{position_identity_}},
-#' \code{\link{position_stack_}}, \code{\link{position_fill_}}
+#' \code{\link[ggmulti]{position_identity_}},
+#' \code{\link[ggmulti]{position_stack_}}, \code{\link[ggmulti]{position_fill_}}
 #'
 #' Parent: \code{\link[ggplot2]{position_dodge}}
 #'

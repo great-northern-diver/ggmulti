@@ -18,5 +18,10 @@ Authors:
   \item R. Wayne Oldford \email{rwoldford@uwaterloo.ca}
 }
 
+Other contributors:
+\itemize{
+  \item Teun van den Brand [contributor]
+}
+
 }
 \keyword{internal}

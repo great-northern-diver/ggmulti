@@ -5,8 +5,8 @@
 #' @inheritParams geom_serialaxes
 #' @inheritParams geom_density_
 #' @export
-#' @seealso \code{\link{geom_density_}}, \code{\link{geom_serialaxes}},
-#' \code{\link{geom_serialaxes_quantile}}, \code{\link{geom_serialaxes_hist}}
+#' @seealso \code{\link[ggmulti]{geom_density_}}, \code{\link[ggmulti]{geom_serialaxes}},
+#' \code{\link[ggmulti]{geom_serialaxes_quantile}}, \code{\link[ggmulti]{geom_serialaxes_hist}}
 #' @examples
 #' p <- ggplot(iris, mapping = aes(Sepal.Length = Sepal.Length,
 #'                                 Sepal.Width = Sepal.Width,

@@ -1,7 +1,7 @@
 #' @title Don't adjust position
 #' @seealso Other position adjustments for multiple locations:
-#' \code{\link{position_stack_}}, \code{\link{position_fill_}},
-#' \code{\link{position_dodge_}}, \code{\link{position_dodge2_}}
+#' \code{\link[ggmulti]{position_stack_}}, \code{\link[ggmulti]{position_fill_}},
+#' \code{\link[ggmulti]{position_dodge_}}, \code{\link[ggmulti]{position_dodge2_}}
 #' @export
 position_identity_ <- function() {
   PositionIdentity_

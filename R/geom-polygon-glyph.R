@@ -32,7 +32,7 @@
 #'
 #'
 #' @return a \code{geom} layer
-#' @seealso \code{\link{geom_serialaxes_glyph}}, \code{\link{geom_image_glyph}}
+#' @seealso \code{\link[ggmulti]{geom_serialaxes_glyph}}, \code{\link[ggmulti]{geom_image_glyph}}
 #'
 #' @examples
 #' # polygon glyph

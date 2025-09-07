@@ -60,7 +60,7 @@ stat_serialaxes <- function(mapping = NULL, data = NULL,
 #' to specify how the data is scaled.
 #' @param transform A transformation function, can be either \code{andrews}, \code{legendre} or
 #' some other customized transformation functions.
-#' @seealso Andrews plot \code{\link{andrews}}, Legendre polynomials \code{\link{legendre}}
+#' @seealso Andrews plot \code{\link[ggmulti]{andrews}}, Legendre polynomials \code{\link[ggmulti]{legendre}}
 #' @export
 stat_dotProduct <- function(mapping = NULL, data = NULL,
                             geom = "path", position = "identity",

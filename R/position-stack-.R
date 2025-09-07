@@ -3,16 +3,16 @@
 #' @name position_stack_
 #' @inherit ggplot2::position_stack
 #' @details It is built based on \code{\link[ggplot2]{position_stack}}, but used for multiple locations, such as
-#' \code{\link{geom_hist_}} or \code{\link{geom_density_}}. Rather than stack everything on top of each other,
+#' \code{\link[ggmulti]{geom_hist_}} or \code{\link[ggmulti]{geom_density_}}. Rather than stack everything on top of each other,
 #' \code{position_stack_} stacks bars based on locations.
 #' Check examples to see the difference.
 #' @seealso
-#' See \code{\link{geom_hist_}}, \code{\link{geom_density_}},
-#' \code{\link{geom_serialaxes_density}} and \code{\link{geom_serialaxes_hist}} for more examples.
+#' See \code{\link[ggmulti]{geom_hist_}}, \code{\link[ggmulti]{geom_density_}},
+#' \code{\lin[ggmulti]k{geom_serialaxes_density}} and \code{\link[ggmulti]{geom_serialaxes_hist}} for more examples.
 #'
 #' Other position adjustments for multiple locations:
-#' \code{\link{position_identity_}},
-#' \code{\link{position_dodge_}}, \code{\link{position_dodge2_}}
+#' \code{\link[ggmulti]{position_identity_}},
+#' \code{\link[ggmulti]{position_dodge_}}, \code{\link[ggmulti]{position_dodge2_}}
 #'
 #' Parent: \code{\link[ggplot2]{position_stack}}
 #'

@@ -5,8 +5,8 @@
 #' @inheritParams geom_serialaxes
 #' @param quantiles numeric vector of probabilities with values in [0,1]. (Values up to 2e-14 outside that
 #' range are accepted and moved to the nearby endpoint.)
-#' @seealso \code{\link{geom_density_}}, \code{\link{geom_serialaxes}},
-#' \code{\link{geom_serialaxes_density}}, \code{\link{geom_serialaxes_hist}}
+#' @seealso \code{\link[ggmulti]{geom_density_}}, \code{\link[ggmulti]{geom_serialaxes}},
+#' \code{\link[ggmulti]{geom_serialaxes_density}}, \code{\link[ggmulti]{geom_serialaxes_hist}}
 #' @export
 #' @examples
 #' # lower quantile, median and upper quantile

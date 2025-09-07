@@ -5,8 +5,8 @@
 #' @inheritParams geom_serialaxes
 #' @inheritParams geom_hist_
 #' @export
-#' @seealso \code{\link{geom_hist_}}, \code{\link{geom_serialaxes}},
-#' \code{\link{geom_serialaxes_quantile}}, \code{\link{geom_serialaxes_density}}
+#' @seealso \code{\link[ggmulti]{geom_hist_}}, \code{\link[ggmulti]{geom_serialaxes}},
+#' \code{\link[ggmulti]{geom_serialaxes_quantile}}, \code{\link[ggmulti]{geom_serialaxes_density}}
 #' @examples
 #' p <- ggplot(NBAstats2021,
 #'             mapping = aes(`FG%` = `FG%`,

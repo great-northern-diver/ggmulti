@@ -12,7 +12,7 @@
 #' Function \code{geom_hist_} and \code{geom_histogram_} understand \code{stack_} (stacks bars on top of each other),
 #' or \code{dodge_} and \code{dodge2_} (overlapping objects side-to-side) instead of \code{stack}, \code{dodge} or \code{dodge2}
 #' @eval rd_orientation()
-#' @seealso \code{\link[ggplot2]{geom_histogram}}, \code{\link{geom_density_}}
+#' @seealso \code{\link[ggplot2]{geom_histogram}}, \code{\link[ggmulti]{geom_density_}}
 #' @export
 #' @importFrom tidyr pivot_longer
 #' @details

@@ -36,6 +36,28 @@ Dodging preserves the vertical position of an geom while adjusting the horizonta
 It is built based on \code{\link[ggplot2]{position_dodge}}, but used for multiple locations, such as
 \code{geom_hist_()} or \code{geom_density_()}. Check examples to see the difference.
 }
+\section{Aesthetics}{
+
+
+\code{position_dodge()} understands the following aesthetics. Required aesthetics are displayed in bold and defaults are displayed for optional aesthetics:
+\tabular{rll}{
+ • \tab \code{order} \tab → \code{NULL} \cr
+}
+
+Learn more about setting these aesthetics in \code{vignette("ggplot2-specs")}.
+
+
+
+
+\code{position_dodge()} understands the following aesthetics. Required aesthetics are displayed in bold and defaults are displayed for optional aesthetics:
+\tabular{rll}{
+ • \tab \code{order} \tab → \code{NULL} \cr
+}
+
+Learn more about setting these aesthetics in \code{vignette("ggplot2-specs")}.
+
+}
+
 \examples{
 if(require(dplyr)) {
 p <- iris \%>\%
