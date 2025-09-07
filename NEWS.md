@@ -1,3 +1,11 @@
+# ggmulti 1.0.8
+
+All changes are made to accommodate the new release of `ggplot2` 4.0.0.
+
+# ggmulti 1.0.7
+
+Updating email addresses
+
 # ggmulti 1.0.6
 
 Bug fix:

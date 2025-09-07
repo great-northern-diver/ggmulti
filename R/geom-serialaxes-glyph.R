@@ -35,7 +35,7 @@
 #' corresponding shape and stroke.
 #'
 #' @return a \code{geom} layer
-#' @seealso \code{\link{geom_polygon_glyph}}, \code{\link{geom_image_glyph}}
+#' @seealso \code{\link[ggmulti]{geom_polygon_glyph}}, \code{\link[ggmulti]{geom_image_glyph}}
 #'
 #' @examples
 #' # serial axes glyph

@@ -11,8 +11,8 @@
 #' @param merge Should \code{axes.sequence} be merged with mapping aesthetics
 #' as a single mapping \code{uneval} object?
 #' @importFrom tidyr pivot_longer
-#' @seealso \code{\link{coord_serialaxes}}, \code{\link{geom_serialaxes_density}},
-#' \code{\link{geom_serialaxes_quantile}}, \code{\link{geom_serialaxes_hist}}
+#' @seealso \code{\link[ggmulti]{coord_serialaxes}}, \code{\link[ggmulti]{geom_serialaxes_density}},
+#' \code{\link[ggmulti]{geom_serialaxes_quantile}}, \code{\link[ggmulti]{geom_serialaxes_hist}}
 #' @details The difference between the "lengthens" data and "widens" data can be found in
 #' \href{http://vita.had.co.nz/papers/tidy-data.pdf}{Tidy Data}.
 #' How to transform one to the other is explained in \href{https://tidyr.tidyverse.org/articles/pivot.html}{tidyr}
