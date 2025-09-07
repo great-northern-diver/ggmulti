@@ -188,14 +188,12 @@ US +
                    images = Warriors,
                    imagewidth = 1, 
                    imageheight = 1, 
-                   colour = NA,
-                   size = 3) + 
+                   colour = NA) + 
   geom_image_glyph(data = Toronto,
                    mapping = aes(x = lon, y = lat), 
                    imagewidth = 1, 
                    imageheight = 1, 
                    colour = NA,
-                   size = 3,
                    images = Raptors) + 
   ggtitle("2019 NBA Finals")
 ```
