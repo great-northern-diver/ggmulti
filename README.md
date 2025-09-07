@@ -33,7 +33,7 @@ p <- ggplot(iris,
                           Petal.Width = Petal.Width,
                           colour = Species)) +
        geom_path(alpha = 0.2) +
-       coord_serialaxes()
+       coord_serialaxes(scaling = 'variable')
 p
 ```
 
@@ -72,7 +72,7 @@ p <- ggplot() +
                      polygon_x = x_maple,
                      polygon_y = y_maple, 
                      fill = "red",
-                     size = 12) + 
+                     size = 2) + 
   scale_fill_manual(values = c("red", "white")) + 
   theme_void() + 
   theme(legend.position = "none")

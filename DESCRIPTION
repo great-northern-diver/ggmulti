@@ -1,10 +1,11 @@
 Package: ggmulti
 Type: Package
 Title: High Dimensional Data Visualization
-Version: 1.0.6
+Version: 1.0.8
 Authors@R: c(
   person('Zehao', 'Xu', email = 'z267xu@uwaterloo.ca', role = c("aut", "cre")),
-  person('R. Wayne', 'Oldford', email = 'rwoldford@uwaterloo.ca', role = c("aut"))
+  person('R. Wayne', 'Oldford', email = 'rwoldford@uwaterloo.ca', role = c("aut")),
+  person("Teun", "van den Brand", role = "ctb")
   )
 Description: It provides materials (i.e. 'serial axes' objects, Andrew's plot, various glyphs for scatter plot) to visualize high dimensional data. 
 License: GPL-2
